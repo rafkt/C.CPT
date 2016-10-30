@@ -17,17 +17,19 @@ EXEFLAGS=-o ./program.out
 BUILD_PATH = Build
 INCLUDE_PATH  = include
 SEQUENCE_PATH = src/SequenceDatabase
-INVERTEDINDEX_PATH = src/Interfaces/II
-CCPT_path = src/Predictor/CCPT/
+INTERFACE_PATH = src/Interfaces
+CCPT_path = src/Predictor/CCPT
 
-test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o
+test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o
 	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(EXEFLAGS)
 $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/Sequence.cpp -o $(BUILD_PATH)/sequence.o
-$(BUILD_PATH)/InvertedIndex.o: $(INVERTEDINDEX_PATH)/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
-	$(CC) $(OFLAGS) $(FLAGS) $(INVERTEDINDEX_PATH)/InvertedIndex.cpp -o $(BUILD_PATH)/InvertedIndex.o
+$(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
+	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/II/InvertedIndex.cpp -o $(BUILD_PATH)/InvertedIndex.o
 $(BUILD_PATH)/II_bit_vector.o: $(CCPT_path)/II_bit_vector.cpp $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/II_bit_vector.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/II_bit_vector.cpp -o $(BUILD_PATH)/II_bit_vector.o
+$(BUILD_PATH)/PredictionTree.o: $(INTERFACE_PATH)/Trie/PredictionTree.cpp $(INCLUDE_PATH)/PredictionTree.h
+	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Trie/PredictionTree.cpp -o $(BUILD_PATH)/PredictionTree.o
 
 clean:
 	$(REM) $(BUILD_PATH)/*$(XF)

@@ -5,10 +5,10 @@
 class PredictionTree{
 	public:
 		virtual ~PredictionTree();
-		uint64_t Support;
-		uint64_t item;
-		PredictionTree* parent;
-		std::vector<PredictionTree*> children;
+		uint64_t getSupport();
+		uint64_t getItem();
+		PredictionTree* getParrent();
+		std::vector<PredictionTree*> getChildren();
 		uint64_t getChildrenCount();
 	protected:
 		PredictionTree();
@@ -17,6 +17,9 @@ class PredictionTree{
 		bool hasChild(uint64_t);
 		PredictionTree* getChild(uint64_t);
 	private:
-
-}
+		uint64_t Support;
+		uint64_t item;
+		PredictionTree* parent;
+		std::vector<PredictionTree*> children;
+};
 #endif
