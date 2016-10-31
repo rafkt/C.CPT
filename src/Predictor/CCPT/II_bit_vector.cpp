@@ -26,26 +26,26 @@ uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 	return nullptr;
 }
 
-int main(){
+// int main(){
 
-	vector<uint64_t> seq1 = {1, 2, 3, 4, 5};
-	Sequence* s1 = new Sequence(seq1);
+// 	vector<uint64_t> seq1 = {1, 2, 3, 4, 5};
+// 	Sequence* s1 = new Sequence(seq1);
 
-	vector<uint64_t> seq2 = {6, 7, 8, 1};
-	Sequence* s2 = new Sequence(seq2);
+// 	vector<uint64_t> seq2 = {6, 7, 8, 1};
+// 	Sequence* s2 = new Sequence(seq2);
 
 
-	vector<uint64_t> seq3 = {10, 1, 12};
-	Sequence* s3 = new Sequence(seq3);
+// 	vector<uint64_t> seq3 = {10, 1, 12};
+// 	Sequence* s3 = new Sequence(seq3);
 
-	std::vector<Sequence*> v = {s1, s2, s3};
+// 	std::vector<Sequence*> v = {s1, s2, s3};
 
-	InvertedIndex* II = new II_bit_vector(v);
+// 	InvertedIndex* II = new II_bit_vector(v);
 
-	delete II;
-	delete s1;
-	delete s2;
-	delete s3;
+// 	delete II;
+// 	delete s1;
+// 	delete s2;
+// 	delete s3;
 
-	return 0;
-}
+// 	return 0;
+// }
