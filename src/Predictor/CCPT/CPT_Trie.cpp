@@ -1,5 +1,6 @@
 #include "../../../include/CPT_Trie.h"
 #include "../../../include/II_bit_vector.h"
+#include "../../../include/CPTPredictor.h"
 #include <vector>
 
 using namespace std;

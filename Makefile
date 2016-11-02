@@ -19,9 +19,10 @@ INCLUDE_PATH  = include
 SEQUENCE_PATH = src/SequenceDatabase
 INTERFACE_PATH = src/Interfaces
 CCPT_path = src/Predictor/CCPT
+PREDICTOR_path = src/Predictor
 
-test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o
-	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(EXEFLAGS)
+test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o
+	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(EXEFLAGS)
 $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/Sequence.cpp -o $(BUILD_PATH)/sequence.o
 $(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
@@ -30,8 +31,13 @@ $(BUILD_PATH)/II_bit_vector.o: $(CCPT_path)/II_bit_vector.cpp $(INCLUDE_PATH)/In
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/II_bit_vector.cpp -o $(BUILD_PATH)/II_bit_vector.o
 $(BUILD_PATH)/PredictionTree.o: $(INTERFACE_PATH)/Trie/PredictionTree.cpp $(INCLUDE_PATH)/PredictionTree.h
 	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Trie/PredictionTree.cpp -o $(BUILD_PATH)/PredictionTree.o
-$(BUILD_PATH)/CPT_Trie.o: $(CCPT_path)/CPT_Trie.cpp $(INCLUDE_PATH)/CPT_Trie.h
+$(BUILD_PATH)/CPT_Trie.o: $(CCPT_path)/CPT_Trie.cpp $(INCLUDE_PATH)/CPT_Trie.h $(INCLUDE_PATH)/PredictionTree.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPT_Trie.cpp -o $(BUILD_PATH)/CPT_Trie.o
+$(BUILD_PATH)/Predictor.o: $(PREDICTOR_path)/Predictor.cpp $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h
+	$(CC) $(OFLAGS) $(FLAGS) $(PREDICTOR_path)/Predictor.cpp -o $(BUILD_PATH)/Predictor.o
+$(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h
+	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
+
 
 clean:
 	$(REM) $(BUILD_PATH)/*$(XF)
