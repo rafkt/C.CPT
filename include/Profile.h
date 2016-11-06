@@ -11,7 +11,7 @@ class Profile{
 		int paramInt(std::string);
 		float paramFloat(std::string);
 		bool paramBool(std::string);
-		void apply();
+		virtual void apply();
 	private:
 		std::unordered_map<std::string, std::string> parameters;
 };
