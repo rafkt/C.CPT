@@ -10,6 +10,7 @@ class  CPT_Trie : public PredictionTree{
 		void addChild(uint64_t);
 		bool hasChild(uint64_t);
 		PredictionTree* getChild(uint64_t);
+		PredictionTree* getParent();
 		uint64_t getItem();
 };
 #endif

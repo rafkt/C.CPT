@@ -30,7 +30,7 @@ uint64_t PredictionTree::getSupport(){
 uint64_t PredictionTree::getItem(){
 	return item;
 }
-PredictionTree* PredictionTree::getParrent(){
+PredictionTree* PredictionTree::getParent(){
 	return parent;
 }
 vector<PredictionTree*> PredictionTree::getChildren(){

@@ -26,6 +26,10 @@ uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 	return nullptr;
 }
 
+uint64_t II_bit_vector::getCardinality(uint64_t item){
+	return 0;
+}
+
 // int main(){
 
 // 	vector<uint64_t> seq1 = {1, 2, 3, 4, 5};

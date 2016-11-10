@@ -10,6 +10,7 @@ class II_bit_vector : public InvertedIndex{
 		II_bit_vector(std::vector<Sequence*>);
 		~II_bit_vector();
 		uint64_t* query(uint64_t*, uint64_t);
+		uint64_t getCardinality(uint64_t);
 	private:
 		std::unordered_map<uint64_t, uint64_t*> bit_vectors_table;
 };

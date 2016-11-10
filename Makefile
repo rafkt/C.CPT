@@ -22,8 +22,8 @@ CCPT_path = src/Predictor/CCPT
 PREDICTOR_path = src/Predictor
 PROFILE_path = src/Profile
 
-test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/CPTPredictor.o
-	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/CPTPredictor.o $(EXEFLAGS)
+test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o
+	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(EXEFLAGS)
 $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/Sequence.cpp -o $(BUILD_PATH)/sequence.o
 $(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
@@ -39,7 +39,7 @@ $(BUILD_PATH)/Predictor.o: $(PREDICTOR_path)/Predictor.cpp $(INCLUDE_PATH)/Predi
 $(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
 $(BUILD_PATH)/Profile.o: $(PROFILE_path)/Profile.cpp $(INCLUDE_PATH)/Profile.h
-	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/CPTPredictor.o
+	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/Profile.o
 
 
 clean:

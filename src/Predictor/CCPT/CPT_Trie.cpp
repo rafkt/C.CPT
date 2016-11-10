@@ -14,6 +14,10 @@ CPT_Trie::CPT_Trie(uint64_t item) : PredictionTree(item){
 CPT_Trie::~CPT_Trie(){
 
 }
+PredictionTree* CPT_Trie::getParent(){
+	return PredictionTree::getParent();
+}
+
 void CPT_Trie::addChild(uint64_t item){
 	PredictionTree::addChild(item);
 }

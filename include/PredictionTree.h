@@ -7,7 +7,7 @@ class PredictionTree{
 		virtual ~PredictionTree();
 		uint64_t getSupport();
 		virtual uint64_t getItem();
-		PredictionTree* getParrent();
+		virtual PredictionTree* getParent();
 		std::vector<PredictionTree*> getChildren();
 		uint64_t getChildrenCount();
 		virtual void addChild(uint64_t);
