@@ -69,19 +69,19 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		
 		set<uint64_t> hashTargetTMP(hashTarget);
 		vector<uint64_t>::reverse_iterator r_it;
-		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(r_it);
+		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);
 
 		for (; r_it != branch.rend(); r_it++){
 			float oldValue = 0;
-		// 	if(CountTable.containsKey(branch.get(i).val)) {
-		// 		oldValue = CountTable.get(branch.get(i).val);
-		// 	}
+			if(countTable.find(*r_it) != countTable.end()) {
+				oldValue = countTable[*r_it];
+			}
 
 		// 	//Update the countable with the right weight and value
-		// 	float curValue = 1f /((float)indexes.size());
-		// 	CountTable.put(branch.get(i).val, oldValue + weight /((float)indexes.size()) );
+			float curValue = 1.0 /((float)indexes.size());
+			countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
 			
-		// 	hashSidVisited.add(index);
+			hashSidVisited.insert(index);
 		}
 	}
 
@@ -181,12 +181,24 @@ void CPTPredictor::RecursiveDivider(std::vector<Sequence*>& result, Sequence* ta
 		RecursiveDivider(result, newSequence, minsize);
 	}
 }
-std::vector<Sequence*> CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t lengt){
-	std::vector<Sequence*> v;
-	v.push_back(nullptr);
-	return v;
+vector<Sequence*> CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t length){
+	vector<Sequence*> cutted; //result
+		
+	if(sequence->size() <= length){ 
+		cutted.push_back(sequence);
+		return cutted; //nothing to do for this sequence
+	}
+	vector<uint64_t> v;
+	uint64_t* seq_items = sequence->getItems();
+	for (uint64_t i = sequence->size() - length; i < sequence->size(); i++) v.push_back(seq_items[i]);
+	Sequence tmp_seq(v);
+	sequence = tmp_seq;
+	cutted.push_back(sequencee);
+	
+	return cutted;
 }
-std::vector<Sequence*> CPTPredictor::slice(Sequence* sequence, uint64_t length){
+vector<Sequence*> CPTPredictor::slice(Sequence* sequence, uint64_t length){
+	cout << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
 	std::vector<Sequence*> v;
 	v.push_back(nullptr);
 	return v;

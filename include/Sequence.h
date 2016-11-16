@@ -11,6 +11,7 @@ class Sequence
 		void print();
 		uint64_t* getItems();
 		uint64_t size();
+		void operator = (const Sequence&);
 	private:
 		uint64_t* sequenceItems;
 		uint64_t _size;
