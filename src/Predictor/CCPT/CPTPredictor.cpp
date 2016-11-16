@@ -66,19 +66,13 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 			//Going up the tree
 			curNode = curNode->getParent();
 		}
-		//Collections.reverse(branch);
 		
 		set<uint64_t> hashTargetTMP(hashTarget);
-		// int i = 0;
-		// for(i = 0 ; i < branch.size() && hashTargetTMP.size() > 0; i++ ) {
-			
-		// 	if(hashTargetTMP.contains(branch.get(i).val)== true) {
-		// 		hashTargetTMP.remove(branch.get(i).val);
-		// 	}	
-		// }
-		
-		// for(;i < branch.size(); i++) {
-		// 	float oldValue = 0;
+		vector<uint64_t>::reverse_iterator r_it;
+		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(r_it);
+
+		for (; r_it != branch.rend(); r_it++){
+			float oldValue = 0;
 		// 	if(CountTable.containsKey(branch.get(i).val)) {
 		// 		oldValue = CountTable.get(branch.get(i).val);
 		// 	}
@@ -87,8 +81,8 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		// 	float curValue = 1f /((float)indexes.size());
 		// 	CountTable.put(branch.get(i).val, oldValue + weight /((float)indexes.size()) );
 			
-		// 	hashSidVisited.add(index); 
-		// }
+		// 	hashSidVisited.add(index);
+		}
 	}
 
 
