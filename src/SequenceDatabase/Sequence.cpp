@@ -21,17 +21,17 @@ void Sequence::print(){
 	}
 	cout << endl;
 }
-uint64_t* Sequence::getItems(){
+uint64_t* Sequence::getItems() const{
 	return sequenceItems;
 }
-uint64_t Sequence::size(){
+uint64_t Sequence::size() const{
  return _size;
 }
-void operator = (const Sequence& S){
+void Sequence::operator = (const Sequence& S){
 	if (this != &S){
 		delete[] this->sequenceItems;
-		this->_size = s.size();
-		uint64_t* s_items = s.getItems();
+		this->_size = S.size();
+		uint64_t* s_items = S.getItems();
 		this->sequenceItems = new uint64_t[this->_size];
 		for (uint64_t i = 0; i < S.size(); i++) this->sequenceItems[i] = s_items[i];
 	}

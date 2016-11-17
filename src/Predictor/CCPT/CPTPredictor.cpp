@@ -2,6 +2,7 @@
 #include "../../../include/CPT_Trie.h"
 #include "../../../include/II_bit_vector.h"
 #include <set>
+#include <iostream>
 using namespace std;
 
 CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences) : Predictor(){
@@ -28,12 +29,20 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 	return nullptr;
 }
 uint64_t CPTPredictor::size(){
-	return 0;
+	return nodeNumber;
 }
 std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
-	std::vector<uint64_t> v;
-	v.push_back(0);
-	return v;
+	//find all sequences that have all the target's items
+	//for each item in the target sequence
+	uint64_t* items = target->getItems();
+	uint64_t* intersection = II.query(items, target->size());
+	vector<uint64_t> indexes;
+
+	for (uint64_t  i = 0; i < ..; i ++){
+		uint64_t bit =  (bv_tmp[(*it) / 64] >> ((*it) % 64)) & 1;
+	
+
+	return indexes;
 }
 void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float> countTable, std::set<uint64_t> hashSidVisited){
 	vector<uint64_t> indexes = getMatchingSequences(target); 
@@ -181,25 +190,20 @@ void CPTPredictor::RecursiveDivider(std::vector<Sequence*>& result, Sequence* ta
 		RecursiveDivider(result, newSequence, minsize);
 	}
 }
-vector<Sequence*> CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t length){
-	vector<Sequence*> cutted; //result
-		
-	if(sequence->size() <= length){ 
-		cutted.push_back(sequence);
-		return cutted; //nothing to do for this sequence
-	}
+Sequence* CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t length){
+	if(sequence->size() <= length) return sequence;
+
 	vector<uint64_t> v;
 	uint64_t* seq_items = sequence->getItems();
 	for (uint64_t i = sequence->size() - length; i < sequence->size(); i++) v.push_back(seq_items[i]);
 	Sequence tmp_seq(v);
-	sequence = tmp_seq;
-	cutted.push_back(sequencee);
+	sequence = &tmp_seq;
 	
-	return cutted;
+	return sequence;
 }
 vector<Sequence*> CPTPredictor::slice(Sequence* sequence, uint64_t length){
 	cout << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
-	std::vector<Sequence*> v;
+	vector<Sequence*> v;
 	v.push_back(nullptr);
 	return v;
 }

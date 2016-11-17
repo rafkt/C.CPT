@@ -27,7 +27,7 @@ class CPTPredictor : public Predictor{
 		Sequence* getBestSequenceFromCountTable(std::unordered_map<uint64_t, float>, bool);
 		//static functions
 		static void RecursiveDivider(std::vector<Sequence*>&, Sequence*, uint64_t);
-		static std::vector<Sequence*> sliceBasic(Sequence*, uint64_t);
+		static Sequence* sliceBasic(Sequence*, uint64_t);
 		static std::vector<Sequence*> slice(Sequence*, uint64_t);
 };
 #endif

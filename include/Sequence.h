@@ -9,8 +9,8 @@ class Sequence
 		Sequence(std::vector<uint64_t>);
 		~Sequence();
 		void print();
-		uint64_t* getItems();
-		uint64_t size();
+		uint64_t* getItems() const;
+		uint64_t size() const;
 		void operator = (const Sequence&);
 	private:
 		uint64_t* sequenceItems;

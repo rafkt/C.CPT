@@ -4,7 +4,7 @@
 
 using namespace std;
 
-InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()){
+InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), sequenceNumber(sqDB.size()){
 	II_database = new Sequence*[_size];
 	for (uint64_t i = 0; i < _size; i++){
 		II_database[i] = sqDB[i];
@@ -25,6 +25,9 @@ InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()){
 		}
 	}
 }
+
+uint64_t InvertedIndex::getSigma(){return Sigma;}
+uint64_t InvertedIndex::getSequenceNumber(){return sequenceNumber;}
 
 InvertedIndex::~InvertedIndex(){
 	//Sequence pointers should be handled by the evaluator
