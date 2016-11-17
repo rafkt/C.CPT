@@ -12,6 +12,7 @@ class InvertedIndex{
 		virtual uint64_t getCardinality(uint64_t) = 0;
 		uint64_t getSigma();
 		uint64_t getSequenceNumber();
+		bool itemIsValidAlphabet(uint64_t);
 	protected:
 		InvertedIndex(std::vector<Sequence*>);
 		Sequence** II_database;

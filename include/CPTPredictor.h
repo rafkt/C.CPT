@@ -19,7 +19,7 @@ class CPTPredictor : public Predictor{
 	private:
 		PredictionTree* root;
 		InvertedIndex *II;
-		CPT_Trie** LT;
+		PredictionTree** LT;
 		uint64_t nodeNumber;
 		std::vector<Sequence*> tmp_sequences;
 		std::vector<uint64_t> getMatchingSequences(Sequence*);

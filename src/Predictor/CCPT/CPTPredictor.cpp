@@ -10,7 +10,7 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences) : Predictor(){
 	root = new CPT_Trie();
 	II = new II_bit_vector(trainingSequences);
 	Train(trainingSequences);
-	LT = new CPT_Trie*[trainingSequences.size()];
+	LT = new PredictionTree*[trainingSequences.size()];
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -35,13 +35,12 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 	//find all sequences that have all the target's items
 	//for each item in the target sequence
 	uint64_t* items = target->getItems();
-	uint64_t* intersection = II.query(items, target->size());
+	uint64_t* intersection = II->query(items, target->size());
 	vector<uint64_t> indexes;
 
-	for (uint64_t  i = 0; i < ..; i ++){
-		uint64_t bit =  (bv_tmp[(*it) / 64] >> ((*it) % 64)) & 1;
-	
-
+	for (uint64_t  i = 0; i < II->getSequenceNumber(); i ++)
+		if ((intersection[(i) / 64] >> ((i) % 64)) & 1) indexes.push_back(i);
+	delete[] intersection;
 	return indexes;
 }
 void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float> countTable, std::set<uint64_t> hashSidVisited){

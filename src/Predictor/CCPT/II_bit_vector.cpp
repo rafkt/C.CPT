@@ -23,11 +23,29 @@ II_bit_vector::~II_bit_vector(){
 }
 
 uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
-	return nullptr;
+	unsigned int bitvectorRawSize = sequenceNumber / 64;
+	bitvectorRawSize = sequenceNumber%64 != 0 ? bitvectorRawSize + 1 : bitvectorRawSize;
+
+	uint64_t* results = new uint64_t[bitvectorRawSize];
+	for (int j = 0; j < bitvectorRawSize; j++) results[j] = (uint64_t)-1;
+
+	for (int i = 0; i < size; i++) {
+
+		uint64_t* tmp_bv = bit_vectors_table[items[i]];
+		//uint64_t* tmp_bvRawData = tmp_bv.data();
+		for (int j = 0; j < bitvectorRawSize; j++) { // for every uint64_t of the bit_vector make a bitwise-and with the result bit_vector
+			results[j] = results[j] & tmp_bv[j];
+		}
+	}
+	return results;
 }
 
 uint64_t II_bit_vector::getCardinality(uint64_t item){
-	return 0;
+	uint64_t cardinalityCounter = 0;
+	uint64_t* tmp_bv = bit_vectors_table[item];
+	for (uint64_t  i = 0; i < sequenceNumber; i ++)
+		if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
+	return cardinalityCounter;
 }
 
 // int main(){
