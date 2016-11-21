@@ -36,7 +36,7 @@ $(BUILD_PATH)/CPT_Trie.o: $(CCPT_path)/CPT_Trie.cpp $(INCLUDE_PATH)/CPT_Trie.h $
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPT_Trie.cpp -o $(BUILD_PATH)/CPT_Trie.o
 $(BUILD_PATH)/Predictor.o: $(PREDICTOR_path)/Predictor.cpp $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PREDICTOR_path)/Predictor.cpp -o $(BUILD_PATH)/Predictor.o
-$(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h
+$(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
 $(BUILD_PATH)/Profile.o: $(PROFILE_path)/Profile.cpp $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/Profile.o

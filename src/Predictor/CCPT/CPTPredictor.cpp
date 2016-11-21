@@ -5,12 +5,11 @@
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences) : Predictor(){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile){
 	TAG = "CPT";
 	root = new CPT_Trie();
-	II = new II_bit_vector(trainingSequences);
-	Train(trainingSequences);
 	LT = new PredictionTree*[trainingSequences.size()];
+	Train(trainingSequences);
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -22,8 +21,52 @@ CPTPredictor::~CPTPredictor(){
 bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 	nodeNumber = 0;
 	uint64_t seqId = 0;
+		
+	// //Slicing sequences, so no sequence has a length > maxTreeHeight
+
+	vector<Sequence*> newTrainingSet;
+	for(uint64_t i = 0; i < trainingSequences.size(); i++) {
+		
+		if(trainingSequences[i]->size() > profile->paramInt("splitLength") && profile->paramInt("splitMethod") > 0) {
+			if(profile->paramInt("splitMethod") == 1)
+				newTrainingSet.push_back(sliceBasic(trainingSequences[i], profile->paramInt("splitLength")));
+			else
+				newTrainingSet.push_back(slice(trainingSequences[i], profile->paramInt("splitLength")));
+		}else{
+			Sequence* tmp = new Sequence();
+			tmp = trainingSequences[i];
+			newTrainingSet.push_back(tmp);
+		}		
+	}
 	
-	return false;
+	
+	// //For each line (sequence) in file
+	for(uint64_t i = 0; i < newTrainingSet.size(); i++) {
+		
+		PredictionTree* curNode = root;
+		
+		//for each item in this sequence
+		uint64_t* cur_seq_items = newTrainingSet[i]->getItems();
+		for(uint64_t j = 0; j < newTrainingSet[i]->size(); j++) {
+			
+			//if item is not in compact tree then we add it
+			if(curNode->hasChild(cur_seq_items[j]) == false) {
+				curNode->addChild(cur_seq_items[j]);
+				nodeNumber++;
+			}
+			curNode = curNode->getChild(cur_seq_items[j]);
+		}
+		
+		LT[seqId++] = curNode; //adding <sequence id, last node in sequence>
+		 //increment sequence id number
+	}
+
+	II = new II_bit_vector(newTrainingSet);
+	//delete newTrainingSet since it is not longer needed
+	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
+	
+
+	return true;
 }
 Sequence* CPTPredictor::Predict(Sequence* target){
 	return nullptr;
@@ -195,14 +238,13 @@ Sequence* CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t length){
 	vector<uint64_t> v;
 	uint64_t* seq_items = sequence->getItems();
 	for (uint64_t i = sequence->size() - length; i < sequence->size(); i++) v.push_back(seq_items[i]);
-	Sequence tmp_seq(v);
-	sequence = &tmp_seq;
+	Sequence* tmp_seq = new Sequence(v);
+	//sequence = &tmp_seq;
 	
-	return sequence;
+	return tmp_seq;
 }
-vector<Sequence*> CPTPredictor::slice(Sequence* sequence, uint64_t length){
+Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 	cout << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
-	vector<Sequence*> v;
-	v.push_back(nullptr);
-	return v;
+
+	return nullptr;
 }
