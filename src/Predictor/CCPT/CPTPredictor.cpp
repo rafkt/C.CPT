@@ -18,6 +18,24 @@ CPTPredictor::~CPTPredictor(){
 	//delete vector with new sequences created from recursive divider method
 	//delete the pointer created on getBestSequenceFromCountTable
 }
+
+void CPTPredictor::deleteTrie(PredictionTree* root){
+    // int i;
+
+    // // recursive case (go to end of trie)
+    // for (i = 0; i < 27; i++)
+    // {
+    //     if (curs->children[i] != NULL)
+    //     {
+    //         free_all(curs->children[i]);
+    //     }
+    // }
+
+    // // base case
+    // free(curs);
+
+}
+
 bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 	nodeNumber = 0;
 	uint64_t seqId = 0;
@@ -64,12 +82,58 @@ bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 	II = new II_bit_vector(newTrainingSet);
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
-	
-
 	return true;
 }
 Sequence* CPTPredictor::Predict(Sequence* target){
-	return nullptr;
+	//remove items that were never seen before from the Target sequence before LLCT try to make a prediction
+	uint64_t* target_items = target->getItems();
+	vector<uint64_t> cleared_target;
+	for(uint64_t i = 0; i < target->size(); i++) {
+		// if there is no bitset for that item (we have never seen it)
+		if(II->itemIsValidAlphabet(target_items[i])){
+			// then added to the cleared target.
+			cleared_target.push_back(target_items[i]);  
+		}
+	}
+
+	Sequence* cleared_target_seq = new Sequence(cleared_target);
+	
+	Sequence* prediction = new Sequence();
+	uint8_t minRecursion = profile->paramInt("recursiveDividerMin");
+	uint8_t maxRecursion = (profile->paramInt("recursiveDividerMax") > cleared_target_seq->size()) ? cleared_target_seq->size() : profile->paramInt("recursiveDividerMax");
+
+	
+	for(uint64_t i = minRecursion ; i < cleared_target_seq->size() && prediction->size() == 0 && i < maxRecursion; i++) {
+	
+		set<uint64_t> hashSidVisited;  // PFV
+		
+		//TODO: use those as global parameters
+		//TODO: int minSize = (target.size() > 3) ? target.size() - 3 : 1;
+		//int minSize = (target.size() > 3) ? target.size() - 3 : 1;
+		uint64_t minSize = cleared_target_seq->size() - i;
+		bool useLift = false;
+		
+		//Dividing the target sequence into sub sequences
+		vector<Sequence*> subSequences;
+		RecursiveDivider(subSequences, cleared_target_seq, minSize);
+		
+		//For each subsequence, updating the CountTable
+		unordered_map<uint64_t, float> countTable;
+		for(uint64_t j = 0; j < subSequences.size(); j++) {
+			
+			//Setting up the weight multiplier for the countTable
+			float weight = (float)subSequences[j]->size() / cleared_target_seq->size();
+			
+			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
+		}
+	
+		//Getting the best sequence out of the CountTable
+		prediction = getBestSequenceFromCountTable(countTable, useLift);
+	}
+
+	for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
+
+	return prediction;
 }
 uint64_t CPTPredictor::size(){
 	return nodeNumber;
@@ -86,7 +150,7 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 	delete[] intersection;
 	return indexes;
 }
-void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float> countTable, std::set<uint64_t> hashSidVisited){
+void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float>& countTable, set<uint64_t>& hashSidVisited){
 	vector<uint64_t> indexes = getMatchingSequences(target); 
 		
 	//creating an HashMap of the target's item (for O(1) search time)
