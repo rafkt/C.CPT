@@ -2,7 +2,7 @@
 
 using namespace std;
 
-PredictionTree::PredictionTree() : Support(0), item(0){
+PredictionTree::PredictionTree() : Support(0), item(0), parent(nullptr){
 }
 PredictionTree::~PredictionTree(){
 	

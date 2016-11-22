@@ -13,26 +13,28 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
+	deleteTrie(root);
 	//delete II_bit_vector
+	delete II;
 	//delete LT
-	//delete vector with new sequences created from recursive divider method
-	//delete the pointer created on getBestSequenceFromCountTable
+	delete[] LT;
 }
 
-void CPTPredictor::deleteTrie(PredictionTree* root){
-    // int i;
+void CPTPredictor::deleteTrie(PredictionTree* node){
+   
 
-    // // recursive case (go to end of trie)
-    // for (i = 0; i < 27; i++)
-    // {
-    //     if (curs->children[i] != NULL)
-    //     {
-    //         free_all(curs->children[i]);
-    //     }
-    // }
+    // recursive case (go to end of trie)
+    for (uint64_t i = 0; i < node->getChildren().size(); i++)
+    {
+        if (node->getChildren()[i]->getChildren().size() > 0)
+        {
+            deleteTrie(node->getChildren()[i]);
+        }
+        delete node->getChildren()[i];
+    }
 
-    // // base case
-    // free(curs);
+    // base case
+    delete node;
 
 }
 
@@ -126,12 +128,12 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 			
 			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
 		}
+
+		for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 	
 		//Getting the best sequence out of the CountTable
 		prediction = getBestSequenceFromCountTable(countTable, useLift);
 	}
-
-	for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 
 	return prediction;
 }
