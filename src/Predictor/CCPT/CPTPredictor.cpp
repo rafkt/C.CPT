@@ -321,9 +321,9 @@ Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 
 
 int main(){
-	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT);
 	Profile* pf = new Profile();
 	pf->apply();
+	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
 	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
 
 	delete cpt_pr;

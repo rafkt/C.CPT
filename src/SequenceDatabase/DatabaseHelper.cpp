@@ -8,13 +8,13 @@
 using namespace std;
 
 
-DatabaseHelper::DatabaseHelper(string filename, Format fm){
+DatabaseHelper::DatabaseHelper(string filename, Format fm, Profile* pf){
 	switch (fm){
 		case SPMF:
-			loadSPMFFormat(filename);
+			loadSPMFFormat(filename, pf->paramInt("sequenceMinSize"));
 			break;
 		case TXT:
-			loadTXTFormat(filename);
+			loadTXTFormat(filename, pf->paramInt("sequenceMinSize"));
 			break;
 	}
 	
@@ -25,7 +25,7 @@ DatabaseHelper::~DatabaseHelper(){
 vector<Sequence*> DatabaseHelper::getDatabase(){
 	return _database;
 }
-void DatabaseHelper::loadSPMFFormat(string filename){
+void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq_length){
 	ifstream file(getFullPath(filename));
 	string line;
 	while(getline(file, line)){
@@ -40,7 +40,7 @@ void DatabaseHelper::loadSPMFFormat(string filename){
 		_database.push_back(s);
 	}
 }
-void DatabaseHelper::loadTXTFormat(string filename){
+void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq_length){
 	ifstream file(getFullPath(filename));
 	string line;
 	while(getline(file, line)){

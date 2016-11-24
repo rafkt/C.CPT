@@ -40,7 +40,7 @@ $(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTP
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
 $(BUILD_PATH)/Profile.o: $(PROFILE_path)/Profile.cpp $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/Profile.o
-$(BUILD_PATH)/DatabaseHelper.o: $(SEQUENCE_PATH)/DatabaseHelper.cpp $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Sequence.h
+$(BUILD_PATH)/DatabaseHelper.o: $(SEQUENCE_PATH)/DatabaseHelper.cpp $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/DatabaseHelper.cpp -o $(BUILD_PATH)/DatabaseHelper.o
 
 

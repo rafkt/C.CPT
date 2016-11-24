@@ -8,7 +8,7 @@ class Profile{
 		Profile();
 		~Profile();
 		double paramDouble(std::string);
-		int paramInt(std::string);
+		uint64_t paramInt(std::string);
 		float paramFloat(std::string);
 		bool paramBool(std::string);
 		virtual void apply();

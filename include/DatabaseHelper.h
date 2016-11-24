@@ -1,4 +1,5 @@
 #include "Sequence.h"
+#include "Profile.h"
 #include <vector>
 #include <string>
 
@@ -8,12 +9,12 @@
 class DatabaseHelper{
 	public:
 		enum Format{SPMF, TXT};
-		DatabaseHelper(std::string, Format); //use as  DatabaseHelper db(fileName, DatabaseHelper::SPMF);
+		DatabaseHelper(std::string, Format,  Profile*); //use as  DatabaseHelper db(fileName, DatabaseHelper::SPMF);
 		~DatabaseHelper();
 		std::vector<Sequence*> getDatabase();
 	private:
-		void loadSPMFFormat(std::string);
-		void loadTXTFormat(std::string);
+		void loadSPMFFormat(std::string, uint64_t);
+		void loadTXTFormat(std::string, uint64_t);
 		std::string getFullPath(std::string);
 		std::vector<Sequence*> _database;
 };

@@ -9,8 +9,8 @@ Profile::~Profile(){
 double Profile::paramDouble(string name){
 	return stod(parameters[name]);
 }
-int Profile::paramInt(string name){
-	return stoi(parameters[name]);
+uint64_t Profile::paramInt(string name){
+	return stoull(parameters[name]);
 }
 float Profile::paramFloat(string name){
 	return stof(parameters[name]);
@@ -21,11 +21,11 @@ bool Profile::paramBool(string name){
 void Profile::apply(){
 	//Global parameters
 		//Pre-processing
-		parameters.insert(make_pair("sequenceMinSize", "6"));
+		parameters.insert(make_pair("sequenceMinSize", "3"));
 		parameters.insert(make_pair("sequenceMaxSize", "999"));
 		parameters.insert(make_pair("removeDuplicatesMethod", "1"));
 		parameters.insert(make_pair("consequentSize", "1")); 
-		parameters.insert(make_pair("windowSize", "5")); 
+		parameters.insert(make_pair("windowSize", "2")); 
 		
 		parameters.insert(make_pair("predictionsNumber", "2"));//raf
 		parameters.insert(make_pair("stepsToFlushCache", "10"));//raf
@@ -33,8 +33,8 @@ void Profile::apply(){
 		///////////////
 		//CPT parameters
 		//Training
-		parameters.insert(make_pair("splitMethod", "0")); //0 for no split", "1 for basicSplit", "2 for complexSplit
-		parameters.insert(make_pair("splitLength", "999")); // max tree height
+		parameters.insert(make_pair("splitMethod", "1")); //0 for no split", "1 for basicSplit", "2 for complexSplit
+		parameters.insert(make_pair("splitLength", "6")); // max tree height
 
 		//Prediction
 		parameters.insert(make_pair("recursiveDividerMin", "4")); //should be >= 0 and < recursiveDividerMax 
