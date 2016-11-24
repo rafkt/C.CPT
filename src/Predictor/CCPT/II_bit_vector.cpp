@@ -6,13 +6,12 @@
 using namespace std;
 
 II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
+	uint64_t bv_size = ceil(_size / 64.0);
+	uint64_t set_bit = 1;
 	for (unordered_map<uint64_t, vector<uint64_t>>::iterator it = alphabet2sequences_table.begin(); it != alphabet2sequences_table.end(); it++){
-		uint64_t bv_size = ceil(_size / 64.0);
 		uint64_t* tmp_bv = new uint64_t[bv_size];
-		for (uint64_t i = 0; i < bv_size; i++) 
-			tmp_bv[i] = 0;
-		for (uint64_t i = 0; i < it->second.size(); i++) 
-			tmp_bv[it->second[i] / 64] |= 1 << (it->second[i] % 64);
+		for (uint64_t i = 0; i < bv_size; i++) tmp_bv[i] = 0;
+		for (uint64_t i = 0; i < it->second.size(); i++) tmp_bv[it->second[i] / 64] |= set_bit << (it->second[i] % 64);
 		bit_vectors_table.insert({it->first, tmp_bv});
 	}
 	delete[] II_database;
@@ -70,10 +69,9 @@ int main(){
 
 	InvertedIndex* II = new II_bit_vector(db.getDatabase());
 	uint64_t counter = 0;
-	for(uint64_t i = 0; i < db.getDatabase().size(); i++){
-		if (i == 1) break;
+	for(uint64_t i = 0; i < 5000; i++){
 	 	uint64_t* answer = II->query(db.getDatabase()[i]->getItems(), db.getDatabase()[i]->size());
-	 	for (uint64_t  j = 0; j < II->getSequenceNumber(); j++)
+	 	for (uint64_t j = 0; j < II->getSequenceNumber(); j++)
 			if ((answer[(j) / 64] >> ((j) % 64)) & 1) counter++;
 		delete[] answer;
 	 }
