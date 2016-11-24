@@ -1,6 +1,7 @@
 #include "../../../include/CPTPredictor.h"
 #include "../../../include/CPT_Trie.h"
 #include "../../../include/II_bit_vector.h"
+#include "../../../include/DatabaseHelper.h"
 #include <set>
 #include <iostream>
 using namespace std;
@@ -10,6 +11,8 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	Train(trainingSequences);
+
+	cout << nodeNumber << endl;
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -30,7 +33,6 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
         {
             deleteTrie(node->getChildren()[i]);
         }
-        delete node->getChildren()[i];
     }
 
     // base case
@@ -54,7 +56,7 @@ bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 				newTrainingSet.push_back(slice(trainingSequences[i], profile->paramInt("splitLength")));
 		}else{
 			Sequence* tmp = new Sequence();
-			tmp = trainingSequences[i];
+			*tmp = *trainingSequences[i];
 			newTrainingSet.push_back(tmp);
 		}		
 	}
@@ -313,4 +315,21 @@ Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 	cout << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
 
 	return nullptr;
+}
+
+
+
+
+int main(){
+	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT);
+	Profile* pf = new Profile();
+	pf->apply();
+	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
+
+	delete cpt_pr;
+	delete pf;
+	delete db;
+
+
+	return 0;
 }

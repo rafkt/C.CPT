@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Sequence::Sequence() : _size(0){}
+Sequence::Sequence() : _size(0), sequenceItems(nullptr){}
 
 Sequence::Sequence(vector<uint64_t> itemList) : _size(itemList.size()){
 	sequenceItems = new uint64_t[_size];
@@ -29,7 +29,7 @@ uint64_t Sequence::size() const{
 }
 void Sequence::operator = (const Sequence& S){
 	if (this != &S){
-		delete[] this->sequenceItems;
+		if (sequenceItems) delete[] this->sequenceItems;
 		this->_size = S.size();
 		uint64_t* s_items = S.getItems();
 		this->sequenceItems = new uint64_t[this->_size];
