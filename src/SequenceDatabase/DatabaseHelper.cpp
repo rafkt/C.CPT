@@ -9,10 +9,11 @@ using namespace std;
 
 
 DatabaseHelper::DatabaseHelper(string filename, Format fm){
-
+	loadSPMFFormat(filename)
 }
 DatabaseHelper::~DatabaseHelper(){
-
+	for (uint64_t i = 0; i < _database.size(); i++) delete _database[i];
+		
 }
 vector<Sequence*> DatabaseHelper::getDatabase(){
 	return _database;
