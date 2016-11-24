@@ -9,11 +9,18 @@ using namespace std;
 
 
 DatabaseHelper::DatabaseHelper(string filename, Format fm){
-	loadSPMFFormat(filename)
+	switch (fm){
+		case SPMF:
+			loadSPMFFormat(filename);
+			break;
+		case TXT:
+			loadTXTFormat(filename);
+			break;
+	}
+	
 }
 DatabaseHelper::~DatabaseHelper(){
-	for (uint64_t i = 0; i < _database.size(); i++) delete _database[i];
-		
+	for (uint64_t i = 0; i < _database.size(); i++) delete _database[i];	
 }
 vector<Sequence*> DatabaseHelper::getDatabase(){
 	return _database;
@@ -26,8 +33,21 @@ void DatabaseHelper::loadSPMFFormat(string filename){
 		vector<uint64_t> tmp_v;
 		for(string word; linestream >> word;){
 			uint64_t tmp = atoi(word.c_str());
-			//reading from quest datasets
 			if (tmp == -1 || tmp == -2) continue;
+			tmp_v.push_back(tmp);
+		}
+		Sequence* s = new Sequence(tmp_v);
+		_database.push_back(s);
+	}
+}
+void DatabaseHelper::loadTXTFormat(string filename){
+	ifstream file(getFullPath(filename));
+	string line;
+	while(getline(file, line)){
+		stringstream linestream(line);
+		vector<uint64_t> tmp_v;
+		for(string word; linestream >> word;){
+			uint64_t tmp = atoi(word.c_str());
 			tmp_v.push_back(tmp);
 		}
 		Sequence* s = new Sequence(tmp_v);
@@ -37,3 +57,15 @@ void DatabaseHelper::loadSPMFFormat(string filename){
 string DatabaseHelper::getFullPath(string filename){
 	return "./Datasets/" + filename;
 }
+
+
+// int main(){
+// 	DatabaseHelper db("BIBLE.txt", DatabaseHelper::TXT);
+// 	for(uint64_t i = 0; i < db.getDatabase().size(); i++){
+// 		db.getDatabase()[i]->print();
+// 	}
+	
+// 	return 0;
+// }
+
+
