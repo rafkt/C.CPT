@@ -37,10 +37,10 @@ void Profile::apply(){
 		parameters.insert(make_pair("splitLength", "6")); // max tree height
 
 		//Prediction
-		parameters.insert(make_pair("recursiveDividerMin", "4")); //should be >= 0 and < recursiveDividerMax 
-		parameters.insert(make_pair("recursiveDividerMax", "99")); //should be > recusiveDividerMax and < windowSize
-		parameters.insert(make_pair("minPredictionRatio", "2.0f")); //should be over 0
-		parameters.insert(make_pair("noiseRatio", "1.0f")); //should be in the range ]0,1]
+		parameters.insert(make_pair("recursiveDividerMin", "0")); //should be >= 0 and < recursiveDividerMax 
+		parameters.insert(make_pair("recursiveDividerMax", "5")); //should be > recusiveDividerMax and < windowSize
+		parameters.insert(make_pair("minPredictionRatio", "0.0f")); //should be over 0
+		parameters.insert(make_pair("noiseRatio", "0.0f")); //should be in the range ]0,1]
 
 		//best prediction from the count table
 		parameters.insert(make_pair("firstVote", "1")); //1 for confidence", "2 for lift
