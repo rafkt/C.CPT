@@ -156,10 +156,16 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 	for (uint64_t  i = 0; i < II->getSequenceNumber(); i ++)
 		if ((intersection[(i) / 64] >> ((i) % 64)) & 1) indexes.push_back(i);
 	delete[] intersection;
+	cout << "Matched: " << indexes.size() << endl;
 	return indexes;
 }
 void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float>& countTable, set<uint64_t>& hashSidVisited){
 	vector<uint64_t> indexes = getMatchingSequences(target); 
+	// cout << "---COUNT TABLE----" << endl;
+	// for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) { 
+	// 	cout << it->first << ": " << it->second << endl;
+	// 	cout << "------------------" << endl;
+	// }
 		
 	//creating an HashMap of the target's item (for O(1) search time)
 	set<uint64_t> hashTarget;
@@ -188,16 +194,18 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 			//Going up the tree
 			curNode = curNode->getParent();
 		}
-
 		
 		set<uint64_t> hashTargetTMP(hashTarget);
 		vector<uint64_t>::reverse_iterator r_it;
 
-		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);
+		// cout << "Branch: ";
+		// for (r_it = branch.rbegin(); r_it != branch.rend(); r_it++) cout << *r_it << " ";
+		// cout << endl;
 
-		//cout << "Remaining Items" << endl;
+		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);
+		//cout << "Remaining Items: ";
 		for (; r_it != branch.rend(); r_it++){
-			//cout << *r_it << endl;
+			//cout << *r_it << " ";
 			float oldValue = 0;
 			if(countTable.find(*r_it) != countTable.end()) {
 				oldValue = countTable[*r_it];
@@ -205,13 +213,27 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 
 		// 	//Update the countable with the right weight and value
 			float curValue = 1.0 /((float)indexes.size());
-			countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
-			//cout << oldValue + weight /((float)indexes.size()) << endl;
+			if (!oldValue) countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
+			else countTable[*r_it] = oldValue + weight /((float)indexes.size());
+			if(*r_it == 24){
+				cout << "-----" << endl;
+				cout << "(" << oldValue << ", " << ", " << weight << ", " << ((float)indexes.size()) << ") " << endl;
+				cout << "Result: " << oldValue + weight /((float)indexes.size()) << " Inserted: " << countTable[*r_it] << endl;
+				cout << "-----" << endl;
+			}
+			//cout << "(" << oldValue << ", " << ", " << weight << ", " << ((float)indexes.size()) << ") ";
 			
 			hashSidVisited.insert(index);
 		}
+	//cout << endl;
 	}
 
+	// for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
+		
+	// 	cout << "---COUNT TABLE----" << endl; 
+	// 	cout << it->first << ": " << it->second << endl;
+	// 	cout << "------------------" << endl;
+	// }
 
 }
 Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_t, float> countTable, bool useLift){
