@@ -102,8 +102,6 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 	}
 
 	Sequence* cleared_target_seq = new Sequence(cleared_target);
-
-	cout << cleared_target_seq->size() << " HERE" << endl;
 	
 	Sequence* prediction = new Sequence();
 	uint8_t minRecursion = profile->paramInt("recursiveDividerMin");
@@ -123,23 +121,24 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 		//Dividing the target sequence into sub sequences
 		vector<Sequence*> subSequences;
 		RecursiveDivider(subSequences, cleared_target_seq, minSize);
-		cout << subSequences.size() << endl;
+		cout << "Subseq size: " << subSequences.size() << endl;
 		//For each subsequence, updating the CountTable
 		unordered_map<uint64_t, float> countTable;
 		for(uint64_t j = 0; j < subSequences.size(); j++) {
 			
 			//Setting up the weight multiplier for the countTable
 			float weight = (float)subSequences[j]->size() / cleared_target_seq->size();
-			
-			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
+
+			cout << "Seqence: " << endl;
 			subSequences[j]->print();
+			cout << "Weight: " << weight << endl;
+			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
 		}
 
 		//for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 	
 		//Getting the best sequence out of the CountTable
 		prediction = getBestSequenceFromCountTable(countTable, useLift);
-		cout << prediction->size() << "Break?" << endl;
 	}
 	prediction->print();
 	return prediction;
@@ -169,7 +168,6 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		hashTarget.insert(targetItems[i]);
 	}
 	
-	
 	//For each branch 
 	for(uint64_t i = 0; i < indexes.size(); i++) {
 		uint64_t index = indexes[i];
@@ -190,12 +188,16 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 			//Going up the tree
 			curNode = curNode->getParent();
 		}
+
 		
 		set<uint64_t> hashTargetTMP(hashTarget);
 		vector<uint64_t>::reverse_iterator r_it;
+
 		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);
 
+		//cout << "Remaining Items" << endl;
 		for (; r_it != branch.rend(); r_it++){
+			//cout << *r_it << endl;
 			float oldValue = 0;
 			if(countTable.find(*r_it) != countTable.end()) {
 				oldValue = countTable[*r_it];
@@ -220,9 +222,9 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
 		
-		cout << "---COUNT TABLE----" << endl; 
-		cout << it->first << ": " << it->second << endl;
-		cout << "------------------" << endl;
+		// cout << "---COUNT TABLE----" << endl; 
+		// cout << it->first << ": " << it->second << endl;
+		// cout << "------------------" << endl;
 
 		double lift = it->second / II->getCardinality(it->first);
 		double support = II->getCardinality(it->first);
@@ -279,7 +281,6 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 		}			
 		items.push_back((uint64_t)newBestItem);
 	}
-	cout << items.size() << endl;
 	Sequence* predicted = new Sequence(items);	
 	predicted->print();	
 	return predicted;
