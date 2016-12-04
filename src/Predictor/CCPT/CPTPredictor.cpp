@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()){
 	TAG = "CPT";
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
@@ -21,6 +21,10 @@ CPTPredictor::~CPTPredictor(){
 	delete II;
 	//delete LT
 	delete[] LT;
+}
+
+float CPTPredictor::memoryInMB(){
+	return (8 + 8 * trainingSequenceNumber + 8 + nodeNumber * 32 + (nodeNumber - 1) * 8) * 8 * 1.25 * pow(10, -7) + II->memoryInMB();
 }
 
 void CPTPredictor::deleteTrie(PredictionTree* node){
@@ -100,16 +104,17 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 		}
 	}
 
-	Sequence* cleared_target_seq = new Sequence(cleared_target);
 	
 	Sequence* prediction = new Sequence();
 	uint8_t minRecursion = profile->paramInt("recursiveDividerMin");
-	uint8_t maxRecursion = (profile->paramInt("recursiveDividerMax") > cleared_target_seq->size()) ? cleared_target_seq->size() : profile->paramInt("recursiveDividerMax");
+	uint8_t maxRecursion = (profile->paramInt("recursiveDividerMax") > cleared_target.size()) ? cleared_target.size() : profile->paramInt("recursiveDividerMax");
 
 	
-	for(uint64_t i = minRecursion ; i < cleared_target_seq->size() && prediction->size() == 0 && i < maxRecursion; i++) {
+	for(uint64_t i = minRecursion ; i < cleared_target.size() && prediction->size() == 0 && i < maxRecursion; i++) {
 	
 		set<uint64_t> hashSidVisited;  // PFV
+
+		Sequence* cleared_target_seq = new Sequence(cleared_target);
 		
 		//TODO: use those as global parameters
 		//TODO: int minSize = (target.size() > 3) ? target.size() - 3 : 1;
@@ -131,10 +136,12 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
 		}
 
-		//for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
+		for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 	
 		//Getting the best sequence out of the CountTable
-		prediction = getBestSequenceFromCountTable(countTable, useLift);
+		Sequence* bstSequence = getBestSequenceFromCountTable(countTable, useLift);
+		*prediction = *bstSequence;
+		delete bstSequence;
 	}
 
 	return prediction;
@@ -333,8 +340,11 @@ int main(){
 	cout << "Prtedicted: " << endl;
 	predicted->print();
 	cout << endl;
+	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
 	delete cpt_pr;
 	delete pf;
 	delete db;
+	delete target;
+	delete predicted;
 }

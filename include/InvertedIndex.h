@@ -13,6 +13,7 @@ class InvertedIndex{
 		uint64_t getSigma();
 		uint64_t getSequenceNumber();
 		bool itemIsValidAlphabet(uint64_t);
+		virtual float memoryInMB();
 	protected:
 		InvertedIndex(std::vector<Sequence*>);
 		Sequence** II_database;
