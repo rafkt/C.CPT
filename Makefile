@@ -22,8 +22,8 @@ CCPT_path = src/Predictor/CCPT
 PREDICTOR_path = src/Predictor
 PROFILE_path = src/Profile
 
-test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o
-	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(EXEFLAGS)
+test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o
+	$(CC) $(FLAGS) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(EXEFLAGS)
 $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/Sequence.cpp -o $(BUILD_PATH)/sequence.o
 $(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
@@ -34,9 +34,11 @@ $(BUILD_PATH)/PredictionTree.o: $(INTERFACE_PATH)/Trie/PredictionTree.cpp $(INCL
 	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Trie/PredictionTree.cpp -o $(BUILD_PATH)/PredictionTree.o
 $(BUILD_PATH)/CPT_Trie.o: $(CCPT_path)/CPT_Trie.cpp $(INCLUDE_PATH)/CPT_Trie.h $(INCLUDE_PATH)/PredictionTree.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPT_Trie.cpp -o $(BUILD_PATH)/CPT_Trie.o
+$(BUILD_PATH)/CPT_SD_Tree.o: $(CCPT_path)/CPT_SD_Tree.cpp $(INCLUDE_PATH)/CPT_SD_Tree.h $(INCLUDE_PATH)/PredictionTree.h
+	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPT_SD_Tree.cpp -o $(BUILD_PATH)/CPT_SD_Tree.o
 $(BUILD_PATH)/Predictor.o: $(PREDICTOR_path)/Predictor.cpp $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PREDICTOR_path)/Predictor.cpp -o $(BUILD_PATH)/Predictor.o
-$(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/Profile.h
+$(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/Profile.h $(INCLUDE_PATH)/Predictor.h
 	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
 $(BUILD_PATH)/Profile.o: $(PROFILE_path)/Profile.cpp $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/Profile.o
