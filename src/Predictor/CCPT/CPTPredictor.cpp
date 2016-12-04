@@ -131,7 +131,7 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
 		}
 
-		for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
+		//for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 	
 		//Getting the best sequence out of the CountTable
 		prediction = getBestSequenceFromCountTable(countTable, useLift);
@@ -198,7 +198,8 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 
 		// 	//Update the countable with the right weight and value
 			float curValue = 1.0 /((float)indexes.size());
-			countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
+			if (!oldValue) countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
+			else countTable[*r_it] = oldValue + weight /((float)indexes.size());
 			
 			hashSidVisited.insert(index);
 		}
@@ -270,7 +271,6 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	}
 	
 	Sequence* predicted = new Sequence(items);	
-			
 	return predicted;
 }
 
@@ -326,10 +326,15 @@ int main(){
 	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
 	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
 
+
+	vector<uint64_t> v = {356, 122};
+	Sequence* target = new Sequence(v);
+	Sequence* predicted = cpt_pr->Predict(target);
+	cout << "Prtedicted: " << endl;
+	predicted->print();
+	cout << endl;
+
 	delete cpt_pr;
 	delete pf;
 	delete db;
-
-
-	return 0;
 }
