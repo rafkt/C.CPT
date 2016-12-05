@@ -6,14 +6,13 @@
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()){
 	TAG = "CPT";
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	Train(trainingSequences);
 
 	cout << nodeNumber << endl;
-	cout << trainingSequences.size() << endl;
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -22,6 +21,10 @@ CPTPredictor::~CPTPredictor(){
 	delete II;
 	//delete LT
 	delete[] LT;
+}
+
+float CPTPredictor::memoryInMB(){
+	return (8 + 8 * trainingSequenceNumber + 8 + nodeNumber * 32 + (nodeNumber - 1) * 8) * 8 * 1.25 * pow(10, -7) + II->memoryInMB();
 }
 
 void CPTPredictor::deleteTrie(PredictionTree* node){
@@ -101,18 +104,17 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 		}
 	}
 
-	Sequence* cleared_target_seq = new Sequence(cleared_target);
-
-	cout << cleared_target_seq->size() << " HERE" << endl;
 	
 	Sequence* prediction = new Sequence();
 	uint8_t minRecursion = profile->paramInt("recursiveDividerMin");
-	uint8_t maxRecursion = (profile->paramInt("recursiveDividerMax") > cleared_target_seq->size()) ? cleared_target_seq->size() : profile->paramInt("recursiveDividerMax");
+	uint8_t maxRecursion = (profile->paramInt("recursiveDividerMax") > cleared_target.size()) ? cleared_target.size() : profile->paramInt("recursiveDividerMax");
 
 	
-	for(uint64_t i = minRecursion ; i < cleared_target_seq->size() && prediction->size() == 0 && i < maxRecursion; i++) {
-		cout << "Rep " << i << endl;
+	for(uint64_t i = minRecursion ; i < cleared_target.size() && prediction->size() == 0 && i < maxRecursion; i++) {
+	
 		set<uint64_t> hashSidVisited;  // PFV
+
+		Sequence* cleared_target_seq = new Sequence(cleared_target);
 		
 		//TODO: use those as global parameters
 		//TODO: int minSize = (target.size() > 3) ? target.size() - 3 : 1;
@@ -123,7 +125,7 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 		//Dividing the target sequence into sub sequences
 		vector<Sequence*> subSequences;
 		RecursiveDivider(subSequences, cleared_target_seq, minSize);
-		cout << subSequences.size() << endl;
+		
 		//For each subsequence, updating the CountTable
 		unordered_map<uint64_t, float> countTable;
 		for(uint64_t j = 0; j < subSequences.size(); j++) {
@@ -132,16 +134,16 @@ Sequence* CPTPredictor::Predict(Sequence* target){
 			float weight = (float)subSequences[j]->size() / cleared_target_seq->size();
 			
 			UpdateCountTable(subSequences[j], weight, countTable, hashSidVisited);
-			subSequences[j]->print();
 		}
 
-		//for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
+		for(uint64_t i = 0; i < subSequences.size(); i++) delete subSequences[i];
 	
 		//Getting the best sequence out of the CountTable
-		prediction = getBestSequenceFromCountTable(countTable, useLift);
-		cout << prediction->size() << "Break?" << endl;
+		Sequence* bstSequence = getBestSequenceFromCountTable(countTable, useLift);
+		*prediction = *bstSequence;
+		delete bstSequence;
 	}
-	prediction->print();
+
 	return prediction;
 }
 uint64_t CPTPredictor::size(){
@@ -203,8 +205,8 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 
 		// 	//Update the countable with the right weight and value
 			float curValue = 1.0 /((float)indexes.size());
-			countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
-			//cout << oldValue + weight /((float)indexes.size()) << endl;
+			if (!oldValue) countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
+			else countTable[*r_it] = oldValue + weight /((float)indexes.size());
 			
 			hashSidVisited.insert(index);
 		}
@@ -220,10 +222,6 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
 		
-		cout << "---COUNT TABLE----" << endl; 
-		cout << it->first << ": " << it->second << endl;
-		cout << "------------------" << endl;
-
 		double lift = it->second / II->getCardinality(it->first);
 		double support = II->getCardinality(it->first);
 		double confidence = it->second;
@@ -239,7 +237,6 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 			secondMaxValue = score; //updating the second best value
 		}
 	}
-
 	
 	vector<uint64_t> items;
 
@@ -279,9 +276,8 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 		}			
 		items.push_back((uint64_t)newBestItem);
 	}
-	cout << items.size() << endl;
+	
 	Sequence* predicted = new Sequence(items);	
-	predicted->print();	
 	return predicted;
 }
 
@@ -289,8 +285,7 @@ void CPTPredictor::RecursiveDivider(std::vector<Sequence*>& result, Sequence* ta
 	uint64_t size = target->size();
 
 	result.push_back(target); //adding the resulting sequence to the result list
-	cout << "REC= " << result.size() << endl;
-	cout << "---" << size << minsize << endl;
+
 	//if the target is small enough or already too small
 	if(size <= minsize) {
 		return;
@@ -345,11 +340,11 @@ int main(){
 	cout << "Prtedicted: " << endl;
 	predicted->print();
 	cout << endl;
+	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
 	delete cpt_pr;
 	delete pf;
 	delete db;
-
-
-	return 0;
+	delete target;
+	delete predicted;
 }

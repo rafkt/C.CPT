@@ -15,6 +15,7 @@ class CPTPredictor : public Predictor{
 		~CPTPredictor();
 		Sequence* Predict(Sequence*);
 		uint64_t size();
+		float memoryInMB();
 	protected:
 		bool Train(std::vector<Sequence*>);
 	private:
@@ -22,6 +23,7 @@ class CPTPredictor : public Predictor{
 		InvertedIndex *II;
 		PredictionTree** LT;
 		uint64_t nodeNumber;
+		uint64_t trainingSequenceNumber;
 		Profile* profile;
 		std::vector<Sequence*> tmp_sequences;
 		std::vector<uint64_t> getMatchingSequences(Sequence*);
