@@ -1,4 +1,5 @@
 #include "PredictionTree.h"
+#include <sdsl/bit_vectors.hpp>
 
 #ifndef CPT_SD_TREE_H
 #define CPT_SD_TREE_H
