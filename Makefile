@@ -42,7 +42,7 @@ $(BUILD_PATH)/CPT_SD_Tree.o: $(CCPT_path)/CPT_SD_Tree.cpp $(INCLUDE_PATH)/CPT_SD
 $(BUILD_PATH)/Predictor.o: $(PREDICTOR_path)/Predictor.cpp $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PREDICTOR_path)/Predictor.cpp -o $(BUILD_PATH)/Predictor.o
 $(BUILD_PATH)/CPTPredictor.o: $(CCPT_path)/CPTPredictor.cpp $(INCLUDE_PATH)/CPTPredictor.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/PredictionTree.h $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/Profile.h $(INCLUDE_PATH)/Predictor.h
-	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
+	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(CCPT_path)/CPTPredictor.cpp -o $(BUILD_PATH)/CPTPredictor.o
 $(BUILD_PATH)/Profile.o: $(PROFILE_path)/Profile.cpp $(INCLUDE_PATH)/Profile.h
 	$(CC) $(OFLAGS) $(FLAGS) $(PROFILE_path)/Profile.cpp -o $(BUILD_PATH)/Profile.o
 $(BUILD_PATH)/DatabaseHelper.o: $(SEQUENCE_PATH)/DatabaseHelper.cpp $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/Profile.h

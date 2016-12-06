@@ -1,18 +1,21 @@
 #include "../../../include/CPTPredictor.h"
 #include "../../../include/CPT_Trie.h"
+#include "../../../include/CPT_SD_Tree.h"
 #include "../../../include/II_bit_vector.h"
 #include "../../../include/DatabaseHelper.h"
 #include <set>
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
 	TAG = "CPT";
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	Train(trainingSequences);
 
 	cout << nodeNumber << endl;
+
+	PredictionTree* sd_tree = new CPT_SD_Tree(root);
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -45,7 +48,6 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
 }
 
 bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
-	nodeNumber = 0;
 	uint64_t seqId = 0;
 		
 	// //Slicing sequences, so no sequence has a length > maxTreeHeight
@@ -330,21 +332,21 @@ Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 int main(){
 	Profile* pf = new Profile();
 	pf->apply();
-	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
+	DatabaseHelper* db = new DatabaseHelper("test.txt", DatabaseHelper::TXT, pf);
 	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
 
 
-	vector<uint64_t> v = {356, 122};
-	Sequence* target = new Sequence(v);
-	Sequence* predicted = cpt_pr->Predict(target);
-	cout << "Prtedicted: " << endl;
-	predicted->print();
-	cout << endl;
-	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+	// vector<uint64_t> v = {356, 122};
+	// Sequence* target = new Sequence(v);
+	// Sequence* predicted = cpt_pr->Predict(target);
+	// cout << "Prtedicted: " << endl;
+	// predicted->print();
+	// cout << endl;
+	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
-	delete cpt_pr;
-	delete pf;
-	delete db;
-	delete target;
-	delete predicted;
+	// delete cpt_pr;
+	// delete pf;
+	// delete db;
+	// delete target;
+	// delete predicted;
 }

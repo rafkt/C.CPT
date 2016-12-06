@@ -5,8 +5,9 @@
 #define CPT_SD_TREE_H
 class  CPT_SD_Tree : public PredictionTree{
 	public:
-		CPT_SD_Tree(PredictionTree*, PredictionTree**, uint64_t);
+		CPT_SD_Tree(PredictionTree*);
 		~CPT_SD_Tree();
+		void levelOrderTraverse(PredictionTree*);
 		void addChild(uint64_t);
 		bool hasChild(uint64_t);
 		PredictionTree* getChild(uint64_t);
