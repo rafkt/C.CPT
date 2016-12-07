@@ -5,7 +5,10 @@
 
 using namespace std;
 
-bool cmpNodes (PredictionTree* i, PredictionTree* j) { return (i->getItem() < j->getItem());}
+bool cmpNodes (const PredictionTree* i, const PredictionTree* j) { 
+	if (*i < *j) return true;
+	else return false;
+}
 
 CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie){
 //good idea to have a node number attribute in every node of trie;
@@ -29,7 +32,7 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root){
 		nodesInCurrentLevel--;
 		if (currNode) {
 			cout << currNode->getItem() << " ";
-			sort(currNode->getChildren().begin(), currNode->getChildren().end(), cmpNodes);
+		sort(currNode->getChildren().begin(), currNode->getChildren().end(), cmpNodes);
 			for (uint64_t i = 0; i < currNode->getChildren().size(); i++)
 				nodesQueue.push(currNode->getChildren()[i]);
 			nodesInNextLevel += currNode->getChildren().size();
@@ -63,7 +66,7 @@ PredictionTree* CPT_SD_Tree::getChild(uint64_t item){
 	cerr << "CPT_SD_TREE (getChild): Operation Not supported" << endl;
 	return nullptr;
 }
-uint64_t CPT_SD_Tree::getItem(){
+uint64_t CPT_SD_Tree::getItem() const{
 	cerr << "CPT_SD_TREE (getItem): Operation Not supported" << endl;
 	return 0;
 }

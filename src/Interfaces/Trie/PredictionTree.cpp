@@ -27,12 +27,16 @@ PredictionTree* PredictionTree::getChild(uint64_t item){
 uint64_t PredictionTree::getSupport(){
 	return Support;
 }
-uint64_t PredictionTree::getItem(){
+uint64_t PredictionTree::getItem() const{
 	return item;
 }
 PredictionTree* PredictionTree::getParent(){
 	return parent;
 }
-vector<PredictionTree*> PredictionTree::getChildren(){
+vector<PredictionTree*>& PredictionTree::getChildren(){
 	return children;
+}
+
+bool PredictionTree::operator < (const PredictionTree& node) const{
+        return (item < node.item);
 }

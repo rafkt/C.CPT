@@ -11,6 +11,6 @@ class  CPT_Trie : public PredictionTree{
 		bool hasChild(uint64_t);
 		PredictionTree* getChild(uint64_t);
 		PredictionTree* getParent();
-		uint64_t getItem();
+		uint64_t getItem() const;
 };
 #endif

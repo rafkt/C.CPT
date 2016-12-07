@@ -25,7 +25,7 @@ bool CPT_Trie::hasChild(uint64_t item){
 PredictionTree* CPT_Trie::getChild(uint64_t item){
 	return PredictionTree::getChild(item);
 }
-uint64_t CPT_Trie::getItem(){
+uint64_t CPT_Trie::getItem() const{
 	return PredictionTree::getItem();
 }
 

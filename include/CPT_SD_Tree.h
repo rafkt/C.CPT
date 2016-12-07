@@ -13,6 +13,6 @@ class  CPT_SD_Tree : public PredictionTree{
 		PredictionTree* getChild(uint64_t);
 		PredictionTree* getParent();
 		std::vector<uint64_t> getNodesToRoot();
-		uint64_t getItem();
+		uint64_t getItem() const;
 };
 #endif
