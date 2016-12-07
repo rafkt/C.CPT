@@ -5,14 +5,16 @@
 #define CPT_SD_TREE_H
 class  CPT_SD_Tree : public PredictionTree{
 	public:
-		CPT_SD_Tree(PredictionTree*);
+		CPT_SD_Tree(PredictionTree*, std::map<uint64_t, uint64_t>, uint64_t);
 		~CPT_SD_Tree();
-		void levelOrderTraverse(PredictionTree*);
+		void levelOrderTraverse(PredictionTree*, std::map<uint64_t, uint64_t>);
 		void addChild(uint64_t);
 		bool hasChild(uint64_t);
 		PredictionTree* getChild(uint64_t);
 		PredictionTree* getParent();
 		std::vector<uint64_t> getNodesToRoot();
 		uint64_t getItem() const;
+	private:
+		sdsl::bit_vector* bitstring;
 };
 #endif

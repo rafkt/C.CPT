@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile, map<uint64_t, uint64_t> sigmaIndex) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
 	TAG = "CPT";
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
@@ -15,7 +15,7 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile
 
 	cout << nodeNumber << endl;
 
-	PredictionTree* sd_tree = new CPT_SD_Tree(root);
+	PredictionTree* sd_tree = new CPT_SD_Tree(root, sigmaIndex, nodeNumber);
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -333,7 +333,7 @@ int main(){
 	Profile* pf = new Profile();
 	pf->apply();
 	DatabaseHelper* db = new DatabaseHelper("test.txt", DatabaseHelper::TXT, pf);
-	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
+	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf, db->getSigmaIndex());
 
 
 	// vector<uint64_t> v = {356, 122};

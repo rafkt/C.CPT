@@ -6,12 +6,13 @@
 #include <unordered_map>
 #include <set>
 #include "Profile.h"
+#include <map>
 
 #ifndef CPTPREDICTOR_H
 #define CPTPREDICTOR_H
 class CPTPredictor : public Predictor{
 	public:
-		CPTPredictor(std::vector<Sequence*>, Profile*);
+		CPTPredictor(std::vector<Sequence*>, Profile*, std::map<uint64_t, uint64_t>);
 		~CPTPredictor();
 		Sequence* Predict(Sequence*);
 		uint64_t size();

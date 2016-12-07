@@ -14,6 +14,9 @@ class PredictionTree{
 		virtual bool hasChild(uint64_t);
 		virtual PredictionTree* getChild(uint64_t);
 		bool operator < (const PredictionTree&) const;
+		#ifdef SD_CONSTRACTION
+		uint64_t id;
+		#endif
 	protected:
 		PredictionTree();
 		PredictionTree(uint64_t);
