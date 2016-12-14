@@ -11,7 +11,7 @@ bool cmpNodes (const PredictionTree* i, const PredictionTree* j) {
 	else return false;
 }
 
-CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaIndex, uint64_t nodeNumber) : sigma(sigmaIndex.size()){
+CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaIndex, uint64_t nodeNumber) : sigma(sigmaIndex.size()), nodeNumber(nodeNumber){
 //good idea to have a node number attribute in every node of trie;
 //no need to set up this in advance since the tree will be parced here in Level order - so we can assign the attribute here. Alternatively along with the k-ary bitstring create a vector of PredictionTree*. This will not affect the current memory of CPT_Trie.
 //Do next - print a tries nodes in Level order - create main
@@ -24,7 +24,10 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 	sd_bitstring = new sd_vector<>(*bitstring);
 
 	sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
-	cout  << "Parent of 15 is " << (*sd_bitstring_select)(15) / 4 << endl;
+	cout  << "Path to root from 15 is ";
+	std::vector<uint64_t> v = getNodesToRoot(100);
+	for (uint64_t i : v) cout << i << " ";
+	cout << endl;
 	delete bitstring;// we don't need this since we 've created an sd-vector from that.
 }
 CPT_SD_Tree::~CPT_SD_Tree(){	
@@ -69,14 +72,27 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 	cout << endl;
 }
 
+float CPT_SD_Tree::memoryInMB() const{
+	return size_in_mega_bytes(*sd_bitstring);
+}
+
 PredictionTree* CPT_SD_Tree::getParent(){
 	cerr << "CPT_SD_TREE (getParent): Operation Not supported" << endl;
 	return nullptr;
 }
-vector<uint64_t> CPT_SD_Tree::getNodesToRoot(){
-	
-	vector<uint64_t> v;
-	return v;
+uint64_t CPT_SD_Tree::getParentIndex(uint64_t node){
+	return node > 0 ? (*sd_bitstring_select)(node) / sigma : 0;
+}
+vector<uint64_t> CPT_SD_Tree::getNodesToRoot(uint64_t node){
+	vector<uint64_t> nodesIndex;
+	if (node > nodeNumber) return nodesIndex;
+	while (node){
+		uint64_t i = (*sd_bitstring_select)(node);
+		nodesIndex.push_back(sArray[i % sigma]);
+		node = i / sigma;
+	}
+	nodesIndex.push_back(0);
+	return nodesIndex;
 }
 void CPT_SD_Tree::addChild(uint64_t item){
 	cerr << "CPT_SD_TREE (addChild): Operation Not supported" << endl;	
