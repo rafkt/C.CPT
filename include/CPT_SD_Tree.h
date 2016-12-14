@@ -20,5 +20,6 @@ class  CPT_SD_Tree : public PredictionTree{
 		sdsl::sd_vector<>* sd_bitstring;
 		uint64_t sigma;
 		uint64_t* sArray;
+		sdsl::sd_vector<>::select_1_type* sd_bitstring_select;
 };
 #endif

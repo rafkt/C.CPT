@@ -23,11 +23,14 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 	levelOrderTraverse(trie, sigmaIndex);
 	sd_bitstring = new sd_vector<>(*bitstring);
 
+	sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
+	cout  << "Parent of 15 is " << (*sd_bitstring_select)(15) / 4 << endl;
 	delete bitstring;// we don't need this since we 've created an sd-vector from that.
 }
 CPT_SD_Tree::~CPT_SD_Tree(){	
 	delete[] sArray;
 	delete sd_bitstring;
+	delete sd_bitstring_select;
 }
 
 void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_t> sigmaIndex){
