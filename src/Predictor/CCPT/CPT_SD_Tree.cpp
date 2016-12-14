@@ -11,15 +11,23 @@ bool cmpNodes (const PredictionTree* i, const PredictionTree* j) {
 	else return false;
 }
 
-CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaIndex, uint64_t nodeNumber){
+CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaIndex, uint64_t nodeNumber) : sigma(sigmaIndex.size()){
 //good idea to have a node number attribute in every node of trie;
 //no need to set up this in advance since the tree will be parced here in Level order - so we can assign the attribute here. Alternatively along with the k-ary bitstring create a vector of PredictionTree*. This will not affect the current memory of CPT_Trie.
 //Do next - print a tries nodes in Level order - create main
+	sArray = new uint64_t[sigma];
+	for (map<uint64_t, uint64_t>::iterator it = sigmaIndex.begin(); it != sigmaIndex.end(); it++){
+		sArray[it->second] = it->first;
+	}
 	bitstring = new bit_vector(nodeNumber * sigmaIndex.size(), 0);
 	levelOrderTraverse(trie, sigmaIndex);
-}
-CPT_SD_Tree::~CPT_SD_Tree(){
+	sd_bitstring = new sd_vector<>(*bitstring);
 
+	delete bitstring;// we don't need this since we 've created an sd-vector from that.
+}
+CPT_SD_Tree::~CPT_SD_Tree(){	
+	delete[] sArray;
+	delete sd_bitstring;
 }
 
 void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_t> sigmaIndex){
@@ -53,6 +61,8 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 		nodeCounter++;
 	}
 	for (uint64_t i = 0; i < bitstring->size(); i++) cout << (*bitstring)[i];
+	cout << endl;
+	for (uint64_t i = 0; i < bitstring->size(); i++) if ((*bitstring)[i] == 1) cout << sArray[i % sigma] << " ";
 	cout << endl;
 }
 

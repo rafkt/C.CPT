@@ -1,6 +1,7 @@
 #include "PredictionTree.h"
 #include <sdsl/bit_vectors.hpp>
 
+
 #ifndef CPT_SD_TREE_H
 #define CPT_SD_TREE_H
 class  CPT_SD_Tree : public PredictionTree{
@@ -16,5 +17,8 @@ class  CPT_SD_Tree : public PredictionTree{
 		uint64_t getItem() const;
 	private:
 		sdsl::bit_vector* bitstring;
+		sdsl::sd_vector<>* sd_bitstring;
+		uint64_t sigma;
+		uint64_t* sArray;
 };
 #endif
