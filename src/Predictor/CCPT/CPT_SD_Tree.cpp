@@ -25,7 +25,7 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 
 	sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
 	cout  << "Path to root from 15 is ";
-	std::vector<uint64_t> v = getNodesToRoot(100);
+	std::vector<uint64_t> v = getNodesToRoot(15);
 	for (uint64_t i : v) cout << i << " ";
 	cout << endl;
 	delete bitstring;// we don't need this since we 've created an sd-vector from that.

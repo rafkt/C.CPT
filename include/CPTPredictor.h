@@ -19,7 +19,6 @@ class CPTPredictor : public Predictor{
 		float memoryInMB();
 	protected:
 		bool Train(std::vector<Sequence*>);
-	private:
 		PredictionTree* root;
 		InvertedIndex *II;
 		PredictionTree** LT;
@@ -28,7 +27,7 @@ class CPTPredictor : public Predictor{
 		Profile* profile;
 		std::vector<Sequence*> tmp_sequences;
 		std::vector<uint64_t> getMatchingSequences(Sequence*);
-		void UpdateCountTable(Sequence*, float, std::unordered_map<uint64_t, float>&, std::set<uint64_t>&);
+		virtual void UpdateCountTable(Sequence*, float, std::unordered_map<uint64_t, float>&, std::set<uint64_t>&);
 		Sequence* getBestSequenceFromCountTable(std::unordered_map<uint64_t, float>, bool);
 		void deleteTrie(PredictionTree*);
 		//static functions
