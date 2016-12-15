@@ -7,6 +7,13 @@ SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* p
 
 	sd_tree = new CPT_SD_Tree(root, sigmaIndex, nodeNumber);
 
+	LT_SD = new uint64_t[trainingSequences.size()];
+	for (uint64_t i = 0; i < trainingSequences.size(); i ++) LT_SD[i] = LT[i]->id;
+
+	cout << "LT_SD nodes: ";
+	for (uint64_t i = 0; i < trainingSequences.size(); i ++) cout << LT_SD[i] << " ";
+	cout << endl;
+
 	//after sucessfull construction, delete CPTPredictor structures
 	deleteTrie(root);
 	delete II;
@@ -15,6 +22,7 @@ SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* p
 }
 SD_CPTPredictor::~SD_CPTPredictor(){
 	delete sd_tree;
+	delete LT_SD;
 }
 
 int main(){

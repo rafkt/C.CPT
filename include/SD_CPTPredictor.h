@@ -8,5 +8,6 @@ class SD_CPTPredictor : public CPTPredictor{
 		~SD_CPTPredictor();
 	private:
 		PredictionTree* sd_tree;
+		uint64_t* LT_SD;
 };
 #endif
