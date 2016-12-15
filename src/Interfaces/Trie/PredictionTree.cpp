@@ -1,11 +1,11 @@
 #include "../../../include/PredictionTree.h"
+#include <iostream>
 
 using namespace std;
 
 PredictionTree::PredictionTree() : Support(0), item(0), parent(nullptr){
 }
 PredictionTree::~PredictionTree(){
-	
 }
 PredictionTree::PredictionTree(uint64_t item) : Support(0), item(item){
 }

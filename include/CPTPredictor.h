@@ -13,7 +13,7 @@
 class CPTPredictor : public Predictor{
 	public:
 		CPTPredictor(std::vector<Sequence*>, Profile*, std::map<uint64_t, uint64_t>);
-		~CPTPredictor();
+		virtual ~CPTPredictor();
 		Sequence* Predict(Sequence*);
 		uint64_t size();
 		float memoryInMB();

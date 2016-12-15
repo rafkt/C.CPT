@@ -1,6 +1,5 @@
 #include "../../../include/CPTPredictor.h"
 #include "../../../include/CPT_Trie.h"
-#include "../../../include/CPT_SD_Tree.h"
 #include "../../../include/II_bit_vector.h"
 #include "../../../include/DatabaseHelper.h"
 #include <set>
@@ -12,18 +11,14 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	Train(trainingSequences);
-
-	cout << nodeNumber << endl;
-
-	PredictionTree* sd_tree = new CPT_SD_Tree(root, sigmaIndex, nodeNumber);
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
-	deleteTrie(root);
+	if (root) deleteTrie(root);
 	//delete II_bit_vector
-	delete II;
+	if (II) delete II;
 	//delete LT
-	delete[] LT;
+	if  (LT) delete[] LT;
 }
 
 float CPTPredictor::memoryInMB(){
@@ -329,24 +324,24 @@ Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 
 
 
-int main(){
-	Profile* pf = new Profile();
-	pf->apply();
-	DatabaseHelper* db = new DatabaseHelper("test.txt", DatabaseHelper::TXT, pf);
-	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf, db->getSigmaIndex());
+// int main(){
+// 	Profile* pf = new Profile();
+// 	pf->apply();
+// 	DatabaseHelper* db = new DatabaseHelper("test.txt", DatabaseHelper::TXT, pf);
+// 	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf, db->getSigmaIndex());
 
 
-	// vector<uint64_t> v = {356, 122};
-	// Sequence* target = new Sequence(v);
-	// Sequence* predicted = cpt_pr->Predict(target);
-	// cout << "Prtedicted: " << endl;
-	// predicted->print();
-	// cout << endl;
-	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+// 	// vector<uint64_t> v = {356, 122};
+// 	// Sequence* target = new Sequence(v);
+// 	// Sequence* predicted = cpt_pr->Predict(target);
+// 	// cout << "Prtedicted: " << endl;
+// 	// predicted->print();
+// 	// cout << endl;
+// 	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
-	// delete cpt_pr;
-	// delete pf;
-	// delete db;
-	// delete target;
-	// delete predicted;
-}
+// 	// delete cpt_pr;
+// 	// delete pf;
+// 	// delete db;
+// 	// delete target;
+// 	// delete predicted;
+// }

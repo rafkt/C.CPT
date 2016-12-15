@@ -1,5 +1,4 @@
 #include "CPTPredictor.h"
-#include "CPT_SD_Tree.h"
 
 #ifndef SD_CPTPREDICTOR_H
 #define SD_CPTPREDICTOR_H

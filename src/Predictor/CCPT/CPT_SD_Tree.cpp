@@ -32,8 +32,8 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 }
 CPT_SD_Tree::~CPT_SD_Tree(){	
 	delete[] sArray;
-	delete sd_bitstring;
 	delete sd_bitstring_select;
+	delete sd_bitstring;
 }
 
 void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_t> sigmaIndex){
