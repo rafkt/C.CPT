@@ -34,5 +34,7 @@ class CPTPredictor : public Predictor{
 		static void RecursiveDivider(std::vector<Sequence*>&, Sequence*, uint64_t);
 		static Sequence* sliceBasic(Sequence*, uint64_t);
 		static Sequence* slice(Sequence*, uint64_t);
+
+		virtual std::vector<uint64_t> getBranch(uint64_t);
 };
 #endif

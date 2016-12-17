@@ -1,4 +1,5 @@
 #include "CPTPredictor.h"
+#include "CPT_SD_Tree.h"
 
 #ifndef SD_CPTPREDICTOR_H
 #define SD_CPTPREDICTOR_H
@@ -7,7 +8,8 @@ class SD_CPTPredictor : public CPTPredictor{
 		SD_CPTPredictor(std::vector<Sequence*>, Profile*, std::map<uint64_t, uint64_t>);
 		~SD_CPTPredictor();
 	private:
-		PredictionTree* sd_tree;
+		CPT_SD_Tree* sd_tree;
 		uint64_t* LT_SD;
+		virtual std::vector<uint64_t> getBranch(uint64_t);
 };
 #endif

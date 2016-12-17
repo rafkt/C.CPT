@@ -158,6 +158,21 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 	delete[] intersection;
 	return indexes;
 }
+
+vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
+	cout << " get branch called" << endl;
+	PredictionTree* curNode = LT[index];
+	vector<uint64_t> branch;
+	while(curNode->getParent() != root) {
+		
+		branch.push_back(curNode->getItem());
+		
+		//Going up the tree
+		curNode = curNode->getParent();
+	}
+	return branch;
+}
+
 void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float>& countTable, set<uint64_t>& hashSidVisited){
 	vector<uint64_t> indexes = getMatchingSequences(target); 
 		
@@ -178,17 +193,19 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		}   
 		
 		//Getting the branch's leaf
-		PredictionTree* curNode = LT[index];
+		// PredictionTree* curNode = LT[index];
 		
-		//Transform this branch in a list
-		vector<uint64_t> branch;
-		while(curNode->getParent() != root) {
+		// //Transform this branch in a list
+		 vector<uint64_t> branch;
+		// while(curNode->getParent() != root) {
 			
-			branch.push_back(curNode->getItem());
+		// 	branch.push_back(curNode->getItem());
 			
-			//Going up the tree
-			curNode = curNode->getParent();
-		}
+		// 	//Going up the tree
+		// 	curNode = curNode->getParent();
+		// }
+
+		branch = getBranch(index);
 		
 		set<uint64_t> hashTargetTMP(hashTarget);
 		vector<uint64_t>::reverse_iterator r_it;

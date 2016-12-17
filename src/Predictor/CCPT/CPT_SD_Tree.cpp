@@ -24,10 +24,7 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 	sd_bitstring = new sd_vector<>(*bitstring);
 
 	sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
-	cout  << "Path to root from 15 is ";
-	std::vector<uint64_t> v = getNodesToRoot(15);
-	for (uint64_t i : v) cout << i << " ";
-	cout << endl;
+	
 	delete bitstring;// we don't need this since we 've created an sd-vector from that.
 }
 CPT_SD_Tree::~CPT_SD_Tree(){	
@@ -52,8 +49,8 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 			if (currNode->getItem() != 0){
 				(*bitstring)[currNode->getParent()->id * sigmaIndex.size() + sigmaIndex[currNode->getItem()]] = 1;
 			}
-			cout << "Nn: " << nodeCounter << " ";
-			cout << currNode->getItem() << " ";
+			// cout << "Nn: " << nodeCounter << " ";
+			// cout << currNode->getItem() << " ";
 			sort(currNode->getChildren().begin(), currNode->getChildren().end(), cmpNodes);
 			for (uint64_t i = 0; i < currNode->getChildren().size(); i++)
 				nodesQueue.push(currNode->getChildren()[i]);
@@ -66,10 +63,10 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 		}
 		nodeCounter++;
 	}
-	for (uint64_t i = 0; i < bitstring->size(); i++) cout << (*bitstring)[i];
-	cout << endl;
-	for (uint64_t i = 0; i < bitstring->size(); i++) if ((*bitstring)[i] == 1) cout << sArray[i % sigma] << " ";
-	cout << endl;
+	// for (uint64_t i = 0; i < bitstring->size(); i++) cout << (*bitstring)[i];
+	// cout << endl;
+	// for (uint64_t i = 0; i < bitstring->size(); i++) if ((*bitstring)[i] == 1) cout << sArray[i % sigma] << " ";
+	// cout << endl;
 }
 
 float CPT_SD_Tree::memoryInMB() const{
