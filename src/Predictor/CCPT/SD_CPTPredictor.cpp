@@ -2,9 +2,9 @@
 #include "../../../include/DatabaseHelper.h"
 using namespace std;
 
-SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile, map<uint64_t, uint64_t> sigmaIndex): CPTPredictor(trainingSequences, profile, sigmaIndex){
+SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile): CPTPredictor(trainingSequences, profile){
 
-	sd_tree = new CPT_SD_Tree(root, sigmaIndex, nodeNumber);
+	sd_tree = new CPT_SD_Tree(root, mapSigmaIndex, nodeNumber);
 
 	LT_SD = new uint64_t[trainingSequences.size()];
 	for (uint64_t i = 0; i < trainingSequences.size(); i ++) LT_SD[i] = LT[i]->id;
@@ -32,7 +32,7 @@ SD_CPTPredictor::~SD_CPTPredictor(){
 }
 
 vector<uint64_t> SD_CPTPredictor::getBranch(uint64_t index){
-	cout << "SD get branch called" << endl;
+	//cout << "SD get branch called" << endl;
 	return sd_tree->getNodesToRoot(LT_SD[index]);
 }
 
@@ -41,7 +41,7 @@ int main(){
 	Profile* pf = new Profile();
 	pf->apply();
 	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
-	Predictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf, db->getSigmaIndex());
+	Predictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf);
 
 
 	 vector<uint64_t> v = {356, 122};
@@ -55,6 +55,6 @@ int main(){
 	 delete cpt_pr;
 	 delete pf;
 	 delete db;
-	// delete target;
-	// delete predicted;
+	 delete target;
+	 delete predicted;
 }

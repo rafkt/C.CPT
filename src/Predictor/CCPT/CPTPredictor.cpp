@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile, map<uint64_t, uint64_t> sigmaIndex) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
+CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
 	TAG = "CPT";
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
@@ -42,6 +42,19 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
 
 }
 
+void CPTPredictor::sigmaIndex(vector<Sequence*> trainingSet){
+	for (Sequence* s : trainingSet){
+		uint64_t* items = s->getItems();
+		for (uint64_t i = 0; i < s->size(); i++) {
+			mapSigmaIndex.insert({items[i], 0});
+			if (items[i] == 0){ cerr << "Input error: 0/-1 are not a valid aplhabet items."; exit(1);}
+		}
+	}
+	uint64_t counter = 0;
+	for (map<uint64_t, uint64_t>::iterator it = mapSigmaIndex.begin(); it != mapSigmaIndex.end(); it++) it->second = counter++;
+	//for(pair<uint64_t, uint64_t> i : mapSigmaIndex) cout << i.first << ": " << i.second << endl;
+}
+
 bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 	uint64_t seqId = 0;
 		
@@ -61,6 +74,10 @@ bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
 			newTrainingSet.push_back(tmp);
 		}		
 	}
+
+	#ifdef SD_CONSTRACTION
+		sigmaIndex(newTrainingSet);
+	#endif
 	
 	
 	// //For each line (sequence) in file
@@ -160,10 +177,10 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 }
 
 vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
-	cout << " get branch called" << endl;
+	//cout << " get branch called" << endl;
 	PredictionTree* curNode = LT[index];
 	vector<uint64_t> branch;
-	while(curNode->getParent() != root) {
+	while(curNode != root) {
 		
 		branch.push_back(curNode->getItem());
 		
@@ -206,7 +223,10 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		// }
 
 		branch = getBranch(index);
-		
+		// for (uint64_t k = 0; k < branch.size(); k++)cout << branch[k] << " ";
+		// cout << endl;
+
+
 		set<uint64_t> hashTargetTMP(hashTarget);
 		vector<uint64_t>::reverse_iterator r_it;
 		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);

@@ -12,7 +12,7 @@
 #define CPTPREDICTOR_H
 class CPTPredictor : public Predictor{
 	public:
-		CPTPredictor(std::vector<Sequence*>, Profile*, std::map<uint64_t, uint64_t>);
+		CPTPredictor(std::vector<Sequence*>, Profile*);
 		virtual ~CPTPredictor();
 		Sequence* Predict(Sequence*);
 		uint64_t size();
@@ -34,6 +34,11 @@ class CPTPredictor : public Predictor{
 		static void RecursiveDivider(std::vector<Sequence*>&, Sequence*, uint64_t);
 		static Sequence* sliceBasic(Sequence*, uint64_t);
 		static Sequence* slice(Sequence*, uint64_t);
+
+		#ifdef SD_CONSTRACTION
+		std::map<uint64_t, uint64_t> mapSigmaIndex;
+		void sigmaIndex(std::vector<Sequence*>);
+		#endif
 
 		virtual std::vector<uint64_t> getBranch(uint64_t);
 };

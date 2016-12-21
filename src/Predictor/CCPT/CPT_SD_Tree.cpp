@@ -57,7 +57,6 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 			nodesInNextLevel += currNode->getChildren().size();
 		}
 		if (nodesInCurrentLevel == 0) {
-			cout << endl;
 			nodesInCurrentLevel = nodesInNextLevel;
 			nodesInNextLevel = 0;
 		}

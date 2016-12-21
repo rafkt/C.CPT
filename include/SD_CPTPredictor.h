@@ -5,7 +5,7 @@
 #define SD_CPTPREDICTOR_H
 class SD_CPTPredictor : public CPTPredictor{
 	public:
-		SD_CPTPredictor(std::vector<Sequence*>, Profile*, std::map<uint64_t, uint64_t>);
+		SD_CPTPredictor(std::vector<Sequence*>, Profile*);
 		~SD_CPTPredictor();
 	private:
 		CPT_SD_Tree* sd_tree;
