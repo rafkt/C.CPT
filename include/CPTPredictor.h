@@ -16,7 +16,7 @@ class CPTPredictor : public Predictor{
 		virtual ~CPTPredictor();
 		Sequence* Predict(Sequence*);
 		uint64_t size();
-		float memoryInMB();
+		virtual float memoryInMB();
 	protected:
 		bool Train(std::vector<Sequence*>);
 		PredictionTree* root;

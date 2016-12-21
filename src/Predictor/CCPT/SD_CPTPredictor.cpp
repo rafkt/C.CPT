@@ -31,6 +31,14 @@ SD_CPTPredictor::~SD_CPTPredictor(){
 	delete LT_SD;
 }
 
+float SD_CPTPredictor::memoryInMB(){
+	//to implemented after II and LT finalisation
+	// sd_tree->get_memory_in_mega_bytes() + II_EF
+	// LT should be part of II_EF so no need to add any extra calculation
+
+	return sd_tree->memoryInMB();
+}
+
 vector<uint64_t> SD_CPTPredictor::getBranch(uint64_t index){
 	//cout << "SD get branch called" << endl;
 	return sd_tree->getNodesToRoot(LT_SD[index]);

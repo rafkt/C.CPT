@@ -7,6 +7,7 @@ class SD_CPTPredictor : public CPTPredictor{
 	public:
 		SD_CPTPredictor(std::vector<Sequence*>, Profile*);
 		~SD_CPTPredictor();
+		float memoryInMB();
 	private:
 		CPT_SD_Tree* sd_tree;
 		uint64_t* LT_SD;
