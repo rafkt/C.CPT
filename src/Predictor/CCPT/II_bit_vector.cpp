@@ -17,8 +17,10 @@ II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
 }
 
 II_bit_vector::~II_bit_vector(){
-	for (unordered_map<uint64_t, uint64_t*>::iterator it = bit_vectors_table.begin(); it != bit_vectors_table.end(); it++)
-		delete[] it->second;
+	for (unordered_map<uint64_t, uint64_t*>::iterator it = bit_vectors_table.begin(); it != bit_vectors_table.end(); it++){
+		if (it->second) delete[] it->second;
+		it->second = nullptr;
+	}
 }
 
 uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
