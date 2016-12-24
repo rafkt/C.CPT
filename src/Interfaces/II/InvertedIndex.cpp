@@ -29,10 +29,6 @@ InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), seque
 uint64_t InvertedIndex::getSigma(){return Sigma;}
 uint64_t InvertedIndex::getSequenceNumber(){return sequenceNumber;}
 float InvertedIndex::memoryInMB(){return (8 + Sigma * (8 + 8 * ceil(sequenceNumber/64.0))) * 8 * 1.25 * pow(10, -7);}
-bool InvertedIndex::itemIsValidAlphabet(uint64_t item){
-	if (alphabet2sequences_table.find(item) == alphabet2sequences_table.end()) return false;
-	return true;
-}
 
 InvertedIndex::~InvertedIndex(){
 	//Sequence pointers should be handled by the evaluator

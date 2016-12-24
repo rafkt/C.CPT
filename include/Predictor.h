@@ -10,6 +10,7 @@ class Predictor{
 		virtual Sequence* Predict(Sequence*) = 0;
 		virtual uint64_t size() = 0;
 		std::string getTAG();
+		virtual void createII() = 0;
 	protected:
 		virtual bool Train(std::vector<Sequence*>) = 0;
 		std::string TAG;

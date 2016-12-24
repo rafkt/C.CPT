@@ -17,6 +17,7 @@ class CPTPredictor : public Predictor{
 		Sequence* Predict(Sequence*);
 		uint64_t size();
 		virtual float memoryInMB();
+		virtual void createII();
 	protected:
 		bool Train(std::vector<Sequence*>);
 		PredictionTree* root;
@@ -39,7 +40,7 @@ class CPTPredictor : public Predictor{
 		std::map<uint64_t, uint64_t> mapSigmaIndex;
 		void sigmaIndex(std::vector<Sequence*>);
 		#endif
-
+		std::vector<Sequence*> newTrainingSet;
 		virtual std::vector<uint64_t> getBranch(uint64_t);
 };
 #endif

@@ -14,6 +14,7 @@ II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
 		bit_vectors_table.insert({it->first, tmp_bv});
 	}
 	delete[] II_database;
+	alphabet2sequences_table.erase(alphabet2sequences_table.begin(), alphabet2sequences_table.end());
 }
 
 II_bit_vector::~II_bit_vector(){
@@ -21,6 +22,11 @@ II_bit_vector::~II_bit_vector(){
 		if (it->second) delete[] it->second;
 		it->second = nullptr;
 	}
+}
+
+bool II_bit_vector::itemIsValidAlphabet(uint64_t item){
+	if (bit_vectors_table.find(item) == bit_vectors_table.end()) return false;
+	return true;
 }
 
 uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
