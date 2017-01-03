@@ -46,7 +46,7 @@ void SD_CPTPredictor::createII(){
 	II = new EF_II_bit_vector(newTrainingSet, LT_SD, nodeNumber);
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
-	delete LT_SD; LT_SD = nullptr;
+	delete[] LT_SD; LT_SD = nullptr;
 }
 
 bool SD_CPTPredictor::visited(set<uint64_t>& hashSidVisited, uint64_t index){
