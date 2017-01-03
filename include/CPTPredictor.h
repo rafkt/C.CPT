@@ -27,7 +27,7 @@ class CPTPredictor : public Predictor{
 		uint64_t trainingSequenceNumber;
 		Profile* profile;
 		std::vector<Sequence*> tmp_sequences;
-		std::vector<uint64_t> getMatchingSequences(Sequence*);
+		virtual std::vector<uint64_t> getMatchingSequences(Sequence*);
 		virtual void UpdateCountTable(Sequence*, float, std::unordered_map<uint64_t, float>&, std::set<uint64_t>&);
 		Sequence* getBestSequenceFromCountTable(std::unordered_map<uint64_t, float>, bool);
 		void deleteTrie(PredictionTree*);
@@ -42,5 +42,7 @@ class CPTPredictor : public Predictor{
 		#endif
 		std::vector<Sequence*> newTrainingSet;
 		virtual std::vector<uint64_t> getBranch(uint64_t);
+		virtual bool visited(std::set<uint64_t>&, uint64_t);
+		virtual void gotVisit(std::set<uint64_t>& , uint64_t);
 };
 #endif

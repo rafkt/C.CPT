@@ -87,7 +87,7 @@ vector<uint64_t> CPT_SD_Tree::getNodesToRoot(uint64_t node){
 		nodesIndex.push_back(sArray[i % sigma]);
 		node = i / sigma;
 	}
-	nodesIndex.push_back(0);
+	//nodesIndex.push_back(0);
 	return nodesIndex;
 }
 void CPT_SD_Tree::addChild(uint64_t item){

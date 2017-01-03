@@ -52,11 +52,9 @@ void CPTPredictor::sigmaIndex(vector<Sequence*> trainingSet){
 	}
 	uint64_t counter = 0;
 	for (map<uint64_t, uint64_t>::iterator it = mapSigmaIndex.begin(); it != mapSigmaIndex.end(); it++) it->second = counter++;
-	//for(pair<uint64_t, uint64_t> i : mapSigmaIndex) cout << i.first << ": " << i.second << endl;
 }
 
 void CPTPredictor::createII(){
-	cout << "Raw" << endl;
 	II = new II_bit_vector(newTrainingSet);
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
@@ -178,7 +176,6 @@ std::vector<uint64_t> CPTPredictor::getMatchingSequences(Sequence* target){
 }
 
 vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
-	//cout << " get branch called" << endl;
 	PredictionTree* curNode = LT[index];
 	vector<uint64_t> branch;
 	while(curNode != root) {
@@ -189,6 +186,14 @@ vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
 		curNode = curNode->getParent();
 	}
 	return branch;
+}
+
+bool CPTPredictor::visited(set<uint64_t>& hashSidVisited, uint64_t index){
+	if(hashSidVisited.find(reinterpret_cast<uintptr_t>(LT[index])) != hashSidVisited.end()) return true;
+	return false;
+}
+void CPTPredictor::gotVisit(set<uint64_t>& hashSidVisited, uint64_t index){
+	hashSidVisited.insert(reinterpret_cast<uintptr_t>(LT[index]));
 }
 
 void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unordered_map<uint64_t, float>& countTable, set<uint64_t>& hashSidVisited){
@@ -206,7 +211,7 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 	for(uint64_t i = 0; i < indexes.size(); i++) {
 		uint64_t index = indexes[i];
 
-		if(hashSidVisited.find(index) != hashSidVisited.end()){
+		if(visited(hashSidVisited, index)){
 			continue;    
 		}   
 		
@@ -224,8 +229,6 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 		// }
 
 		branch = getBranch(index);
-		// for (uint64_t k = 0; k < branch.size(); k++)cout << branch[k] << " ";
-		// cout << endl;
 
 
 		set<uint64_t> hashTargetTMP(hashTarget);
@@ -243,7 +246,7 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 			if (!oldValue) countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
 			else countTable[*r_it] = oldValue + weight /((float)indexes.size());
 			
-			hashSidVisited.insert(index);
+			gotVisit(hashSidVisited, index);
 		}
 	}
 
@@ -256,8 +259,6 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	double secondMaxValue = -1;
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
-
-		cout << it->first << ": " << it->second << endl;
 		
 		double lift = it->second / II->getCardinality(it->first);
 		double support = II->getCardinality(it->first);
@@ -356,7 +357,7 @@ Sequence* CPTPredictor::sliceBasic(Sequence* sequence,  uint64_t length){
 	return tmp_seq;
 }
 Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
-	cout << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
+	cerr << "PLEASE USE sliceBasic - slice not yet implemented" << endl;
 
 	return nullptr;
 }

@@ -9,9 +9,10 @@ class InvertedIndex{
 	public:
 		virtual ~InvertedIndex();
 		virtual uint64_t* query(uint64_t*, uint64_t) = 0;
+		virtual std::vector<uint64_t> query_(uint64_t*, uint64_t) = 0;
 		virtual uint64_t getCardinality(uint64_t) = 0;
 		uint64_t getSigma();
-		uint64_t getSequenceNumber();
+		virtual uint64_t getSequenceNumber();
 		virtual bool itemIsValidAlphabet(uint64_t) = 0;
 		virtual float memoryInMB();
 	protected:

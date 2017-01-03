@@ -10,6 +10,7 @@ class II_bit_vector : public InvertedIndex{
 		II_bit_vector(std::vector<Sequence*>);
 		virtual ~II_bit_vector();
 		virtual uint64_t* query(uint64_t*, uint64_t);
+		virtual std::vector<uint64_t> query_(uint64_t*, uint64_t);
 		virtual uint64_t getCardinality(uint64_t);
 		bool itemIsValidAlphabet(uint64_t);
 	protected:

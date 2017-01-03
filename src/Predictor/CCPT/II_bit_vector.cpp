@@ -29,6 +29,12 @@ bool II_bit_vector::itemIsValidAlphabet(uint64_t item){
 	return true;
 }
 
+vector<uint64_t> II_bit_vector::query_(uint64_t* items, uint64_t size){
+	cerr << "NOT IMPLEMTED ON RAW II" << endl;
+	std::vector<uint64_t> v;
+	return v;
+}
+
 uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 	uint64_t bitvectorRawSize = sequenceNumber / 64;
 	bitvectorRawSize = sequenceNumber%64 != 0 ? bitvectorRawSize + 1 : bitvectorRawSize;

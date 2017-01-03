@@ -5,10 +5,15 @@
 using namespace std;
 using namespace sdsl;
 
-EF_II_bit_vector::EF_II_bit_vector(vector<Sequence*> trainingSet) : InvertedIndex(trainingSet){
-	uint64_t bv_size = ceil(sequenceNumber / 64.0);
+EF_II_bit_vector::EF_II_bit_vector(vector<Sequence*> trainingSet, uint64_t* LT, uint64_t nodeNumber) : InvertedIndex(trainingSet), nodeNumber(nodeNumber){
+
 	for (unordered_map<uint64_t, vector<uint64_t>>::iterator it = alphabet2sequences_table.begin(); it != alphabet2sequences_table.end(); it++){
-		Elias_Fano* ef_arr = new Elias_Fano(&it->second[0], it->second.size());
+		vector<uint64_t> v = it->second;
+		for (uint64_t i = 0; i < v.size(); i++){
+			v[i] = LT[v[i]];
+		}
+		sort(v.begin(), v.end());
+		Elias_Fano* ef_arr = new Elias_Fano(&v[0], v.size());
 		EF_II_bvs.insert({it->first, ef_arr});
 	}
 	delete[] II_database;
@@ -20,6 +25,11 @@ EF_II_bit_vector::~EF_II_bit_vector(){
 		it->second = nullptr;
 	}
 }
+
+uint64_t EF_II_bit_vector::getSequenceNumber(){
+	return nodeNumber;
+}
+
 float EF_II_bit_vector::memoryInMB(){
 	float counter = 0;
 	for (unordered_map<uint64_t, Elias_Fano*>::iterator it = EF_II_bvs.begin(); it != EF_II_bvs.end(); it++){
@@ -33,12 +43,17 @@ bool EF_II_bit_vector::itemIsValidAlphabet(uint64_t item){
 }
 
 uint64_t* EF_II_bit_vector::query(uint64_t* items, uint64_t size){
-	uint64_t bitvectorRawSize = sequenceNumber / 64;
-	bitvectorRawSize = sequenceNumber%64 != 0 ? bitvectorRawSize + 1 : bitvectorRawSize;
+	cerr << "NOT IMPLEMENTED ON EF_II - USE query_" << endl;
+ 	return nullptr;
+}
+
+vector<uint64_t> EF_II_bit_vector::query_(uint64_t* items, uint64_t size){
+	uint64_t bitvectorRawSize = nodeNumber / 64;
+	bitvectorRawSize = nodeNumber%64 != 0 ? bitvectorRawSize + 1 : bitvectorRawSize;
 
 	uint64_t* II_results = new uint64_t[bitvectorRawSize];
 
-	uint64_t minSize = sequenceNumber;
+	uint64_t minSize = nodeNumber;
 	for (int j = 0; j < bitvectorRawSize; j++){
 		II_results[j] = 0;
 	} 
@@ -50,7 +65,7 @@ uint64_t* EF_II_bit_vector::query(uint64_t* items, uint64_t size){
 
 	//obtaining first EF_set belonging to first query item
 	uint64_t i = 0;
-	set<uint64_t> ef_seqs;
+	vector<uint64_t> ef_seqs;
 	Elias_Fano* ef_table;
 	do{
 		if (EF_II_bvs[items[i]]->getSize() < minSize){
@@ -86,15 +101,15 @@ uint64_t* EF_II_bit_vector::query(uint64_t* items, uint64_t size){
 				break;
 			}
 		}
-		ef_seqs.insert(current_number);	
+		ef_seqs.push_back(current_number);	
 	}
 
 	for (int i = 0; i < size; i++){
 		Elias_Fano* ef_table =EF_II_bvs[items[i]];
 		if (i == first_EF_index) continue;
-		set<uint64_t> tmp;
-		for (set<uint64_t>::iterator it = ef_seqs.begin(); it != ef_seqs.end(); ++it){
-			if (ef_table->find(*it)) tmp.insert(*it);
+		vector<uint64_t> tmp;
+		for (vector<uint64_t>::iterator it = ef_seqs.begin(); it != ef_seqs.end(); ++it){
+			if (ef_table->find(*it)) tmp.push_back(*it);
 		}
 		ef_seqs = tmp;
 	}
@@ -105,12 +120,12 @@ uint64_t* EF_II_bit_vector::query(uint64_t* items, uint64_t size){
 	//At this point you should be merging the two results
 	//It would be a good idea to check the sizes of each result by an extra experiment. That way you can decide the way to proceed next.
 	//cout << ef_seqs.size() << endl;
-	for (set<uint64_t>::iterator it = ef_seqs.begin(); it != ef_seqs.end(); ++it){
-		uint64_t bit =  1;
-		II_results[(*it) / 64] |= bit << ((*it) % 64);
-	}
+	// for (vector<uint64_t>::iterator it = ef_seqs.begin(); it != ef_seqs.end(); ++it){
+	// 	uint64_t bit =  1;
+	// 	II_results[(*it) / 64] |= bit << ((*it) % 64);
+	// }
 
-	return II_results;
+	return ef_seqs;
 }
 uint64_t EF_II_bit_vector::getCardinality(uint64_t item){
 	return EF_II_bvs[item]->getSize();

@@ -13,6 +13,9 @@ class SD_CPTPredictor : public CPTPredictor{
 	private:
 		CPT_SD_Tree* sd_tree;
 		uint64_t* LT_SD;
-		virtual std::vector<uint64_t> getBranch(uint64_t);
+		std::vector<uint64_t> getBranch(uint64_t);
+		std::vector<uint64_t> getMatchingSequences(Sequence*);
+		bool visited(std::set<uint64_t>&, uint64_t);
+		void gotVisit(std::set<uint64_t>& , uint64_t);
 };
 #endif
