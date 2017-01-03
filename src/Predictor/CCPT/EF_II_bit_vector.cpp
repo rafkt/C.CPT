@@ -48,15 +48,8 @@ uint64_t* EF_II_bit_vector::query(uint64_t* items, uint64_t size){
 }
 
 vector<uint64_t> EF_II_bit_vector::query_(uint64_t* items, uint64_t size){
-	uint64_t bitvectorRawSize = nodeNumber / 64;
-	bitvectorRawSize = nodeNumber%64 != 0 ? bitvectorRawSize + 1 : bitvectorRawSize;
-
-	uint64_t* II_results = new uint64_t[bitvectorRawSize];
 
 	uint64_t minSize = nodeNumber;
-	for (int j = 0; j < bitvectorRawSize; j++){
-		II_results[j] = 0;
-	} 
 	bool flag = false;
 	uint64_t first_EF_index = 0;
 
