@@ -1,6 +1,7 @@
 #include "Sequence.h"
 #include <vector>
 #include <unordered_map>
+#include <cstdint>
 
 #ifndef INVERTEDINDEX_H
 #define INVERTEDINDEX_H

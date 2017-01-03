@@ -54,7 +54,7 @@ void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq_length){
 	}
 }
 string DatabaseHelper::getFullPath(string filename){
-	return "./Datasets/" + filename;
+	return "./datasets/" + filename;
 }
 
 

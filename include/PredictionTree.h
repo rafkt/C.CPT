@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstdint>
 
 #ifndef PREDICTIONTREE_H
 #define PREDICTIONTREE_H

@@ -1,7 +1,7 @@
 #include "../../../include/InvertedIndex.h"
 #include <iostream>
 #include <stdio.h>
-
+#include <algorithm>
 using namespace std;
 
 InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), sequenceNumber(sqDB.size()){

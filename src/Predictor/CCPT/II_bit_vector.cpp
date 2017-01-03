@@ -1,6 +1,7 @@
 #include "../../../include/II_bit_vector.h"
 #include "../../../include/Sequence.h"
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 

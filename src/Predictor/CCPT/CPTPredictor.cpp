@@ -4,6 +4,8 @@
 #include "../../../include/DatabaseHelper.h"
 #include <set>
 #include <iostream>
+#include <math.h>
+
 using namespace std;
 
 CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
