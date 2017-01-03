@@ -40,7 +40,7 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
     }
 
     // base case
-    delete node;
+    delete node; node = nullptr;
 
 }
 
