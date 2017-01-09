@@ -37,8 +37,8 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
         {
             deleteTrie(node->getChildren()[i]);
         }else{
-	   delete node->getChildren()[i];
-	}
+	   		delete node->getChildren()[i];
+		}
     }
 
     // base case
