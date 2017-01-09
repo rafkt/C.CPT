@@ -12,7 +12,7 @@ SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* p
 	//after sucessfull construction, delete CPTPredictor structures
 	deleteTrie(root);
 	//delete II;
-	delete LT;
+	delete[] LT;
 	root = nullptr; 
 	//II = nullptr; 
 	LT = nullptr;

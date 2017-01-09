@@ -36,7 +36,9 @@ void CPTPredictor::deleteTrie(PredictionTree* node){
         if (node->getChildren()[i]->getChildren().size() > 0)
         {
             deleteTrie(node->getChildren()[i]);
-        }
+        }else{
+	   delete node->getChildren()[i];
+	}
     }
 
     // base case
