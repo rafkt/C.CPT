@@ -37,7 +37,7 @@ $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence
 $(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
 	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/II/InvertedIndex.cpp -o $(BUILD_PATH)/InvertedIndex.o
 $(BUILD_PATH)/II_bit_vector.o: $(CCPT_path)/II_bit_vector.cpp $(INCLUDE_PATH)/InvertedIndex.h $(INCLUDE_PATH)/II_bit_vector.h
-	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/II_bit_vector.cpp -o $(BUILD_PATH)/II_bit_vector.o
+	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(CCPT_path)/II_bit_vector.cpp -o $(BUILD_PATH)/II_bit_vector.o
 $(BUILD_PATH)/PredictionTree.o: $(INTERFACE_PATH)/Trie/PredictionTree.cpp $(INCLUDE_PATH)/PredictionTree.h
 	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Trie/PredictionTree.cpp -o $(BUILD_PATH)/PredictionTree.o
 $(BUILD_PATH)/CPT_Trie.o: $(CCPT_path)/CPT_Trie.cpp $(INCLUDE_PATH)/CPT_Trie.h $(INCLUDE_PATH)/PredictionTree.h

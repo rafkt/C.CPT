@@ -1,26 +1,38 @@
 #include "../../../include/II_bit_vector.h"
 #include "../../../include/Sequence.h"
+
+// #include "../../../include/DatabaseHelper.h"
+// #include "../../../include/Profile.h"
+
+
 #include <iostream>
 #include <math.h>
 
 using namespace std;
+using namespace sdsl;
 
 II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
 	uint64_t bv_size = ceil(_size / 64.0);
 	uint64_t set_bit = 1;
 	for (unordered_map<uint64_t, vector<uint64_t>>::iterator it = alphabet2sequences_table.begin(); it != alphabet2sequences_table.end(); it++){
-		uint64_t* tmp_bv = new uint64_t[bv_size];
-		for (uint64_t i = 0; i < bv_size; i++) tmp_bv[i] = 0;
-		for (uint64_t i = 0; i < it->second.size(); i++) tmp_bv[it->second[i] / 64] |= set_bit << (it->second[i] % 64);
+		bit_vector* tmp_bv = new bit_vector(_size, 0);
+		uint64_t* tmp_bv_data = tmp_bv->data();
+		for (uint64_t i = 0; i < bv_size; i++) tmp_bv_data[i] = 0;
+		for (uint64_t i = 0; i < it->second.size(); i++) tmp_bv_data[it->second[i] / 64] |= set_bit << (it->second[i] % 64);
 		bit_vectors_table.insert({it->first, tmp_bv});
+		ii_bv_rank.insert({it->first, new bit_vector::rank_1_type(tmp_bv)});
 	}
 	delete[] II_database;
 	alphabet2sequences_table.erase(alphabet2sequences_table.begin(), alphabet2sequences_table.end());
 }
 
 II_bit_vector::~II_bit_vector(){
-	for (unordered_map<uint64_t, uint64_t*>::iterator it = bit_vectors_table.begin(); it != bit_vectors_table.end(); it++){
-		if (it->second) delete[] it->second;
+	for (unordered_map<uint64_t, bit_vector*>::iterator it = bit_vectors_table.begin(); it != bit_vectors_table.end(); it++){
+		if (it->second) delete it->second;
+		it->second = nullptr;
+	}
+	for (unordered_map<uint64_t, bit_vector::rank_1_type*>::iterator it = ii_bv_rank.begin(); it != ii_bv_rank.end(); it++){
+		if (it->second) delete it->second;
 		it->second = nullptr;
 	}
 }
@@ -44,8 +56,8 @@ uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 	for (uint64_t j = 0; j < bitvectorRawSize; j++) results[j] = (uint64_t)-1;
 
 	for (uint64_t i = 0; i < size; i++) {
-
-		uint64_t* tmp_bv = bit_vectors_table[items[i]];
+		
+		uint64_t* tmp_bv = bit_vectors_table[items[i]]->data();
 		//uint64_t* tmp_bvRawData = tmp_bv.data();
 		for (uint64_t j = 0; j < bitvectorRawSize; j++) { // for every uint64_t of the bit_vector make a bitwise-and with the result bit_vector
 			results[j] = results[j] & tmp_bv[j];
@@ -55,11 +67,11 @@ uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 }
 
 uint64_t II_bit_vector::getCardinality(uint64_t item){
-	uint64_t cardinalityCounter = 0;
-	uint64_t* tmp_bv = bit_vectors_table[item];
-	for (uint64_t  i = 0; i < sequenceNumber; i ++)
-		if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
-	return cardinalityCounter;
+	// uint64_t cardinalityCounter = 0;
+	// uint64_t* tmp_bv = bit_vectors_table[item];
+	// for (uint64_t  i = 0; i < sequenceNumber; i ++)
+	// 	if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
+	return (*(ii_bv_rank[item]))(_size - 1);
 }
 
 // int main(){
@@ -75,8 +87,9 @@ uint64_t II_bit_vector::getCardinality(uint64_t item){
 // 	// Sequence* s3 = new Sequence(seq3);
 
 // 	// std::vector<Sequence*> v = {s1, s2, s3};
-
-// 	DatabaseHelper db("BIBLE.txt", DatabaseHelper::TXT);
+// 	Profile* pf = new Profile();
+// 	pf->apply();
+// 	DatabaseHelper db("BIBLE.txt", DatabaseHelper::TXT, pf);
 // 	// for(uint64_t i = 0; i < db.getDatabase().size(); i++){
 // 	// 	db.getDatabase()[i]->print();
 // 	// }

@@ -52,7 +52,7 @@ void Evaluator::runPredictor(){
 }
 
 int main(){
-	Evaluator* ev = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::RAW);
+	Evaluator* ev = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::SD);
 
 	ev->runPredictor();
 

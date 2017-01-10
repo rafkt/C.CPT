@@ -264,8 +264,9 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
 		
-		double lift = it->second / II->getCardinality(it->first);
-		double support = II->getCardinality(it->first);
+		uint64_t cardinality = II->getCardinality(it->first);
+		double lift = it->second / cardinality;
+		double support = cardinality;
 		double confidence = it->second;
 		
 		double score = confidence; //Use confidence or lift, depending on Parameter.firstVote
