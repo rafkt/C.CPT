@@ -56,9 +56,9 @@ $(BUILD_PATH)/DatabaseHelper.o: $(SEQUENCE_PATH)/DatabaseHelper.cpp $(INCLUDE_PA
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/DatabaseHelper.cpp -o $(BUILD_PATH)/DatabaseHelper.o
 $(BUILD_PATH)/EF_II_bit_vector.o: $(INCLUDE_PATH)/II_bit_vector.h $(INCLUDE_PATH)/EF_II_bit_vector.h $(CCPT_path)/EF_II_bit_vector.cpp $(INCLUDE_PATH)/Elias_Fano.h
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(CCPT_path)/EF_II_bit_vector.cpp -o $(BUILD_PATH)/EF_II_bit_vector.o
-$(BUILD_PATH)/Elias_Fano.o: $(INCLUDE_PATH)/Elias_Fano.h
+$(BUILD_PATH)/Elias_Fano.o: $(INCLUDE_PATH)/Elias_Fano.h $(LIB_path)/Elias_Fano.cpp
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(LIB_path)/Elias_Fano.cpp -o $(BUILD_PATH)/Elias_Fano.o
-$(BUILD_PATH)/Evaluator.o: $(INCLUDE_PATH)/Evaluator.h $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h
+$(BUILD_PATH)/Evaluator.o: $(INCLUDE_PATH)/Evaluator.h $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h $(EVALUATOR_path)/Evaluator.cpp
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(EVALUATOR_path)/Evaluator.cpp -o $(BUILD_PATH)/Evaluator.o
 
 

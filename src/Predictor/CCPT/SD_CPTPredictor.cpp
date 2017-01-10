@@ -1,5 +1,5 @@
 #include "../../../include/SD_CPTPredictor.h"
-#include "../../../include/DatabaseHelper.h"
+//#include "../../../include/DatabaseHelper.h"
 using namespace std;
 
 SD_CPTPredictor::SD_CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile): CPTPredictor(trainingSequences, profile){
@@ -62,7 +62,7 @@ void SD_CPTPredictor::gotVisit(set<uint64_t>& hashSidVisited, uint64_t index){
 // 	Profile* pf = new Profile();
 // 	pf->apply();
 // 	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
-// 	Predictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf);
+// 	Predictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf);
 // 	cpt_pr->createII();
 
 // 	 vector<uint64_t> v = {356, 122};

@@ -1,29 +1,50 @@
 #include "../../include/Evaluator.h"
 #include "../../include/SD_CPTPredictor.h"
+#include "../../include/CPTPredictor.h"
+
 using namespace std;
 
-Evaluator::Evaluator(){}
-Evaluator::~Evaluator(){}
-
-int main(){
-	Profile* pf = new Profile();
+Evaluator::Evaluator(string datasetName, DatabaseHelper::Format fm, Predictor_Structures type){
+	pf = new Profile();
 	pf->apply();
-	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
-	Predictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf);
-	cpt_pr->createII();
+	db = new DatabaseHelper(datasetName, fm, pf);
+	switch(type){
+		case RAW:
+			pr = new CPTPredictor(db->getDatabase(), pf);
+			break;
+		case SD:
+			pr = new SD_CPTPredictor(db->getDatabase(), pf);
+			break;
+	}
+	pr->createII();
+}
+Evaluator::~Evaluator(){
+	delete pr;
+	delete pf;
+	delete db;
+}
+float Evaluator::getMemoryUsageInMB(){
+	return 0.0;
+}
+void Evaluator::runPredictor(){
+	vector<uint64_t> v = {356, 122};
+	Sequence* target = new Sequence(v);
+	Sequence* predicted = pr->Predict(target);
+	cout << "Prtedicted: " << endl;
+	predicted->print();
+	cout << endl;
+	cout << pr->memoryInMB() << endl;
 
-	 vector<uint64_t> v = {356, 122};
-	 Sequence* target = new Sequence(v);
-	 Sequence* predicted = cpt_pr->Predict(target);
-	 cout << "Prtedicted: " << endl;
-	 predicted->print();
-	 cout << endl;
-	 cout << cpt_pr->memoryInMB() << endl;
-	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
-
-	 delete cpt_pr;
-	 delete pf;
-	 delete db;
 	 delete target;
 	 delete predicted;
+}
+
+int main(){
+	Evaluator* ev = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::RAW);
+
+	ev->runPredictor();
+
+	delete ev;
+	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+	
 }
