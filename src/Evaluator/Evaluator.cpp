@@ -27,16 +27,28 @@ float Evaluator::getMemoryUsageInMB(){
 	return 0.0;
 }
 void Evaluator::runPredictor(){
-	vector<uint64_t> v = {356, 122};
-	Sequence* target = new Sequence(v);
-	Sequence* predicted = pr->Predict(target);
-	cout << "Prtedicted: " << endl;
-	predicted->print();
-	cout << endl;
-	cout << pr->memoryInMB() << endl;
+	auto begin_time = clock(), end_time = clock();
+	auto duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
+	duration = 0;
+	uint64_t counter = 0;
+	for(Sequence* s : db->getDatabase()){
+		if (s->size() < 3) continue;
+		if (counter == 1000) break; 
+		vector<uint64_t> v;
+		v.assign(s->getItems(), s->getItems() + 2);
+		Sequence* target = new Sequence(v);
+		begin_time = clock();
+		Sequence* predicted = pr->Predict(target);
+		end_time = clock();
+		duration += ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
+		delete predicted;
+		delete target;
+		counter++;
+	}
 
-	 delete target;
-	 delete predicted;
+
+	cout << "Memory: " << pr->memoryInMB() << endl;
+	cout << "Duration: " << duration << endl;
 }
 
 int main(){

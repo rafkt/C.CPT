@@ -33,7 +33,7 @@ void Profile::apply(){
 		///////////////
 		//CPT parameters
 		//Training
-		parameters.insert(make_pair("splitMethod", "0")); //0 for no split", "1 for basicSplit", "2 for complexSplit
+		parameters.insert(make_pair("splitMethod", "1")); //0 for no split", "1 for basicSplit", "2 for complexSplit
 		parameters.insert(make_pair("splitLength", "6")); // max tree height
 
 		//Prediction
