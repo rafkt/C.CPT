@@ -13,6 +13,7 @@ CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	Train(trainingSequences);
+	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPredictor::~CPTPredictor(){
 	//delete the CPT_Trie
@@ -62,6 +63,12 @@ void CPTPredictor::createII(){
 	II = new II_bit_vector(newTrainingSet);
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
+
+	cout << "Total CPT RAW size in megabytes: " << memoryInMB() << endl;
+	cout << "-----------------------------------" << endl;
+	cout << "II size in megabytes: " << II->memoryInMB() << endl;;
+	cout << "Trie size in megabytes: " << ((8 + nodeNumber * 32 + (nodeNumber - 1) * 8) * 8 * 1.25 * pow(10, -7)) << endl;
+	cout << "LT size in megabytes: " << ((8 + 8 * trainingSequenceNumber) * 8 * 1.25 * pow(10, -7)) << endl;
 }
 
 bool CPTPredictor::Train(std::vector<Sequence*> trainingSequences){
@@ -263,9 +270,9 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	double secondMaxValue = -1;
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
-		
-		double lift = it->second / II->getCardinality(it->first);
-		double support = II->getCardinality(it->first);
+		uint64_t cardinality = II->getCardinality(it->first);
+		double lift = it->second / cardinality;
+		double support = cardinality;
 		double confidence = it->second;
 		
 		double score = confidence; //Use confidence or lift, depending on Parameter.firstVote

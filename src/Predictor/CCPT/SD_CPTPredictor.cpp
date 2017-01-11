@@ -47,6 +47,13 @@ void SD_CPTPredictor::createII(){
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
 	delete[] LT_SD; LT_SD = nullptr;
+	
+	cout << "Total CPT SD size in megabytes: " << memoryInMB() << endl;
+	cout << "-----------------------------------" << endl;
+	cout << "II size in megabytes (bv length is node number): " << II->memoryInMB() << endl;;
+	cout << "SD tree (bitstring) size in megabytes: " << sd_tree->memoryInMB() << endl;
+	cout << "LT size in megabytes: 0, LT is now contained in II" << endl;
+
 }
 
 bool SD_CPTPredictor::visited(set<uint64_t>& hashSidVisited, uint64_t index){

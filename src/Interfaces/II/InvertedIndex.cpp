@@ -4,7 +4,7 @@
 #include <algorithm>
 using namespace std;
 
-InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), sequenceNumber(sqDB.size()){
+InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), sequenceNumber(sqDB.size()), Sigma(0){
 	II_database = new Sequence*[_size];
 	for (uint64_t i = 0; i < _size; i++){
 		II_database[i] = sqDB[i];
@@ -24,11 +24,13 @@ InvertedIndex::InvertedIndex(vector<Sequence*> sqDB) : _size(sqDB.size()), seque
 			}
 		}
 	}
+	cout << "Sigma: " << Sigma << endl;
+	cout << "Sequnce Number: " << sequenceNumber << endl;
 }
 
 uint64_t InvertedIndex::getSigma(){return Sigma;}
 uint64_t InvertedIndex::getSequenceNumber(){return sequenceNumber;}
-float InvertedIndex::memoryInMB(){return (8 + Sigma * (8 + 8 * ceil(sequenceNumber/64.0))) * 8 * 1.25 * pow(10, -7);}
+float InvertedIndex::memoryInMB(){return (8 + Sigma * (8 + 8 * ceil(sequenceNumber/64.0)) + 8 + Sigma * 8) * 8 * 1.25 * pow(10, -7);}
 
 InvertedIndex::~InvertedIndex(){
 	//Sequence pointers should be handled by the evaluator

@@ -15,5 +15,7 @@ class II_bit_vector : public InvertedIndex{
 		bool itemIsValidAlphabet(uint64_t);
 	protected:
 		std::unordered_map<uint64_t, uint64_t*> bit_vectors_table;
+	private:
+		std::unordered_map<uint64_t, uint64_t> ii_cardinalities;
 };
 #endif

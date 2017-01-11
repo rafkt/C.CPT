@@ -13,6 +13,7 @@ II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
 		for (uint64_t i = 0; i < bv_size; i++) tmp_bv[i] = 0;
 		for (uint64_t i = 0; i < it->second.size(); i++) tmp_bv[it->second[i] / 64] |= set_bit << (it->second[i] % 64);
 		bit_vectors_table.insert({it->first, tmp_bv});
+		ii_cardinalities.insert({it->first, it->second.size()});
 	}
 	delete[] II_database;
 	alphabet2sequences_table.erase(alphabet2sequences_table.begin(), alphabet2sequences_table.end());
@@ -55,11 +56,12 @@ uint64_t* II_bit_vector::query(uint64_t* items, uint64_t size){
 }
 
 uint64_t II_bit_vector::getCardinality(uint64_t item){
-	uint64_t cardinalityCounter = 0;
-	uint64_t* tmp_bv = bit_vectors_table[item];
-	for (uint64_t  i = 0; i < sequenceNumber; i ++)
-		if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
-	return cardinalityCounter;
+	// uint64_t cardinalityCounter = 0;
+	// uint64_t* tmp_bv = bit_vectors_table[item];
+	// for (uint64_t  i = 0; i < sequenceNumber; i ++)
+	// 	if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
+	// return cardinalityCounter;
+	return ii_cardinalities[item];
 }
 
 // int main(){
