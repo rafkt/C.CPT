@@ -1,0 +1,101 @@
+CPT RAW
+BMS1_spmf
+Trie node number: 59088
+Sigma: 497
+Sequnce Number: 59601
+Total CPT RAW size in megabytes: 6.55394
+-----------------------------------
+II size in megabytes: 3.7136
+Trie size in megabytes: 2.36352
+LT size in megabytes: 0.476816
+Duration / query: 0.000526391
+BMS2
+Trie node number: 231942
+Sigma: 3340
+Sequnce Number: 77512
+Total CPT RAW size in megabytes: 42.3359
+-----------------------------------
+II size in megabytes: 32.4381
+Trie size in megabytes: 9.27768
+LT size in megabytes: 0.620104
+Duration / query: 0.000448024
+BMS2_spmf
+Trie node number: 460435
+Sigma: 21145
+Sequnce Number: 69999
+Total CPT RAW size in megabytes: 204.377
+-----------------------------------
+II size in megabytes: 185.399
+Trie size in megabytes: 18.4174
+LT size in megabytes: 0.56
+Duration / query: 0.0548314
+SIGN
+Trie node number: 36839
+Sigma: 267
+Sequnce Number: 730
+Total CPT RAW size in megabytes: 1.50933
+-----------------------------------
+II size in megabytes: 0.02992
+Trie size in megabytes: 1.47356
+LT size in megabytes: 0.005848
+Duration / query: 0.000490266
+BIBLE
+Trie node number: 659811
+Sigma: 13906
+Sequnce Number: 36369
+Total CPT RAW size in megabytes: 90.206
+-----------------------------------
+II size in megabytes: 63.5226
+Trie size in megabytes: 26.3924
+LT size in megabytes: 0.29096
+Duration / query: 0.0170629
+LEVIATHAN
+Trie node number: 183206
+Sigma: 9025
+Sequnce Number: 5834
+Total CPT RAW size in megabytes: 14.1617
+-----------------------------------
+II size in megabytes: 6.78682
+Trie size in megabytes: 7.32824
+LT size in megabytes: 0.04668
+Duration / query: 0.00161662
+MSNBC
+Trie node number: 236799
+Sigma: 17
+Sequnce Number: 31790
+Total CPT RAW size in megabytes: 9.79417
+-----------------------------------
+II size in megabytes: 0.06788
+Trie size in megabytes: 9.47196
+LT size in megabytes: 0.254328
+Duration / query: 0.0101457
+FIFA
+Trie node number: 675229
+Sigma: 2990
+Sequnce Number: 20450
+Total CPT RAW size in megabytes: 34.875
+-----------------------------------
+II size in megabytes: 7.70226
+Trie size in megabytes: 27.0092
+LT size in megabytes: 0.163608
+Duration / query: 0.0145394
+NASA_access_log_Aug95
+Trie node number: 210891
+Sigma: 4018
+Sequnce Number: 70730
+Total CPT RAW size in megabytes: 44.6171
+-----------------------------------
+II size in megabytes: 35.6156
+Trie size in megabytes: 8.43564
+LT size in megabytes: 0.565848
+Duration / query: 0.00238008
+NASA_access_log_Jul95
+Trie node number: 306281
+Sigma: 4718
+Sequnce Number: 87749
+Total CPT RAW size in megabytes: 64.8135
+-----------------------------------
+II size in megabytes: 51.8603
+Trie size in megabytes: 12.2512
+LT size in megabytes: 0.702
+Duration / query: 0.0035209

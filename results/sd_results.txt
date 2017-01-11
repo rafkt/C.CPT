@@ -1,0 +1,101 @@
+CPT SD
+BMS1_spmf
+Trie node number: 59088
+Sigma: 497
+Sequnce Number: 59601
+Total CPT SD size in megabytes: 0.252613
+-----------------------------------
+II size in megabytes (bv length is node number): 0.16256
+SD tree (bitstring) size in megabytes: 0.0900526
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.000854357
+BMS2
+Trie node number: 231942
+Sigma: 3340
+Sequnce Number: 77512
+Total CPT SD size in megabytes: 0.995095
+-----------------------------------
+II size in megabytes (bv length is node number): 0.581463
+SD tree (bitstring) size in megabytes: 0.413632
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.00055959
+BMS2_spmf
+Trie node number: 460435
+Sigma: 21145
+Sequnce Number: 69999
+Total CPT SD size in megabytes: 2.36561
+-----------------------------------
+II size in megabytes (bv length is node number): 1.38802
+SD tree (bitstring) size in megabytes: 0.977597
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.0922886
+SIGN
+Trie node number: 36839
+Sigma: 267
+Sequnce Number: 730
+Total CPT SD size in megabytes: 0.0972137
+-----------------------------------
+II size in megabytes (bv length is node number): 0.046977
+SD tree (bitstring) size in megabytes: 0.0502367
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.00115739
+BIBLE
+Trie node number: 659811
+Sigma: 13906
+Sequnce Number: 36369
+Total CPT SD size in megabytes: 2.60126
+-----------------------------------
+II size in megabytes (bv length is node number): 1.23901
+SD tree (bitstring) size in megabytes: 1.36226
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.0261424
+LEVIATHAN
+Trie node number: 183206
+Sigma: 9025
+Sequnce Number: 5834
+Total CPT SD size in megabytes: 0.818705
+-----------------------------------
+II size in megabytes (bv length is node number): 0.460099
+SD tree (bitstring) size in megabytes: 0.358605
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.00303931
+MSNBC
+Trie node number: 236799
+Sigma: 17
+Sequnce Number: 31790
+Total CPT SD size in megabytes: 0.321097
+-----------------------------------
+II size in megabytes (bv length is node number): 0.125611
+SD tree (bitstring) size in megabytes: 0.195486
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.0187032
+FIFA
+Trie node number: 675229
+Sigma: 2990
+Sequnce Number: 20450
+Total CPT SD size in megabytes: 2.10142
+-----------------------------------
+II size in megabytes (bv length is node number): 0.952543
+SD tree (bitstring) size in megabytes: 1.14887
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.0253147
+NASA_access_log_Aug95
+Trie node number: 210891
+Sigma: 4018
+Sequnce Number: 70730
+Total CPT SD size in megabytes: 0.869905
+-----------------------------------
+II size in megabytes (bv length is node number): 0.48945
+SD tree (bitstring) size in megabytes: 0.380455
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.00564974
+NASA_access_log_Jul95
+Trie node number: 306281
+Sigma: 4718
+Sequnce Number: 87749
+Total CPT SD size in megabytes: 1.20861
+-----------------------------------
+II size in megabytes (bv length is node number): 0.638807
+SD tree (bitstring) size in megabytes: 0.5698
+LT size in megabytes: 0, LT is now contained in II
+Duration / query: 0.00787424
