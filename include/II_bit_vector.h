@@ -18,6 +18,6 @@ class II_bit_vector : public InvertedIndex{
 	protected:
 		std::unordered_map<uint64_t, sdsl::bit_vector*> bit_vectors_table;
 	private:
-		std::unordered_map<uint64_t, sdsl::bit_vector::rank_1_type*> ii_bv_rank;
+		std::unordered_map<uint64_t, uint64_t> ii_bv_rank;
 };
 #endif

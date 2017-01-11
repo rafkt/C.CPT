@@ -14,16 +14,26 @@ using namespace sdsl;
 II_bit_vector::II_bit_vector(std::vector<Sequence*> sq) : InvertedIndex(sq){
 	uint64_t bv_size = ceil(_size / 64.0);
 	uint64_t set_bit = 1;
+	uint64_t select_memory = 0;
+	uint64_t bv_memory = 0;
 	for (unordered_map<uint64_t, vector<uint64_t>>::iterator it = alphabet2sequences_table.begin(); it != alphabet2sequences_table.end(); it++){
 		bit_vector* tmp_bv = new bit_vector(_size, 0);
 		uint64_t* tmp_bv_data = tmp_bv->data();
 		for (uint64_t i = 0; i < bv_size; i++) tmp_bv_data[i] = 0;
 		for (uint64_t i = 0; i < it->second.size(); i++) tmp_bv_data[it->second[i] / 64] |= set_bit << (it->second[i] % 64);
 		bit_vectors_table.insert({it->first, tmp_bv});
-		ii_bv_rank.insert({it->first, new bit_vector::rank_1_type(tmp_bv)});
+		//bit_vector::rank_1_type* slc = new bit_vector::rank_1_type(tmp_bv);
+		ii_bv_rank.insert({it->first, it->second.size()});
+		//delete slc;
+		//select_memory += size_in_bytes(*slc);
+		bv_memory += size_in_bytes(*tmp_bv);
 	}
 	delete[] II_database;
 	alphabet2sequences_table.erase(alphabet2sequences_table.begin(), alphabet2sequences_table.end());
+	cout << "Sigma: " << Sigma << endl;
+	cout << "Extra array bytes: " << Sigma * 8 << endl;
+	cout << "Total select bytes: " << select_memory << endl;
+	cout << "Total BV bytes: " << bv_memory << endl;
 }
 
 II_bit_vector::~II_bit_vector(){
@@ -31,10 +41,10 @@ II_bit_vector::~II_bit_vector(){
 		if (it->second) delete it->second;
 		it->second = nullptr;
 	}
-	for (unordered_map<uint64_t, bit_vector::rank_1_type*>::iterator it = ii_bv_rank.begin(); it != ii_bv_rank.end(); it++){
-		if (it->second) delete it->second;
-		it->second = nullptr;
-	}
+	// for (unordered_map<uint64_t, bit_vector::rank_1_type*>::iterator it = ii_bv_rank.begin(); it != ii_bv_rank.end(); it++){
+	// 	if (it->second) delete it->second;
+	// 	it->second = nullptr;
+	// }
 }
 
 bool II_bit_vector::itemIsValidAlphabet(uint64_t item){
@@ -71,7 +81,8 @@ uint64_t II_bit_vector::getCardinality(uint64_t item){
 	// uint64_t* tmp_bv = bit_vectors_table[item];
 	// for (uint64_t  i = 0; i < sequenceNumber; i ++)
 	// 	if ((tmp_bv[(i) / 64] >> ((i) % 64)) & 1) cardinalityCounter++;
-	return (*(ii_bv_rank[item]))(_size - 1);
+	//return (*(ii_bv_rank[item]))(_size - 1);
+	return ii_bv_rank[item];
 }
 
 // int main(){

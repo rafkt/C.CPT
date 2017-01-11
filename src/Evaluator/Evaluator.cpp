@@ -52,10 +52,10 @@ void Evaluator::runPredictor(){
 }
 
 int main(){
-	Evaluator* ev = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::SD);
+	Evaluator* ev = new Evaluator("NASA_access_log_Aug95.txt", DatabaseHelper::TXT, Evaluator::RAW);
+
 
 	ev->runPredictor();
-
 	delete ev;
 	// cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 	
