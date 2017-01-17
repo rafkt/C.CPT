@@ -19,7 +19,7 @@ II size in megabytes (bv length is node number): 0.581463
 SD tree (bitstring) size in megabytes: 0.413632
 LT size in megabytes: 0, LT is now contained in II
 Duration / query: 0.00055959
-BMS2_spmf
+Kosarak
 Trie node number: 460435
 Sigma: 21145
 Sequnce Number: 69999

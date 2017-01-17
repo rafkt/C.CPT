@@ -19,7 +19,7 @@ II size in megabytes: 32.4381
 Trie size in megabytes: 9.27768
 LT size in megabytes: 0.620104
 Duration / query: 0.000448024
-BMS2_spmf
+Kosarak
 Trie node number: 460435
 Sigma: 21145
 Sequnce Number: 69999
