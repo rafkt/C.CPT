@@ -1,0 +1,82 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\sortlist[entry]{nty/global/}
+  \entry{Ferragina}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=FP}{%
+         family={Ferragina},
+         family_i={F\bibinitperiod},
+         given={P.},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=MG}{%
+         family={Manzini},
+         family_i={M\bibinitperiod},
+         given={G.},
+         given_i={G\bibinitperiod},
+      }}%
+    }
+    \keyw{computational complexity;data compression;data structures;database
+  indexing;database theory;Glimpse tool;data compression;data indexing;data
+  set;entropy;opportunistic data structures;query performance;search;sublinear
+  query time complexity;sublinear space complexity;succinct suffix array;suffix
+  array data structures;suffix tree data structures;Computer science;Costs;Data
+  engineering;Data structures;Entropy;Fault tolerance;Indexing;Plugs;Postal
+  services;Tree data structures}
+    \strng{namehash}{FPMG1}
+    \strng{fullhash}{FPMG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{booktitle}{Foundations of Computer Science, 2000. Proceedings. 41st
+  Annual Symposium on}
+    \verb{doi}
+    \verb 10.1109/SFCS.2000.892127
+    \endverb
+    \field{issn}{0272-5428}
+    \field{pages}{390\bibrangedash 398}
+    \field{title}{Opportunistic data structures with applications}
+    \field{year}{2000}
+  \endentry
+
+  \entry{2_kohl_2012}{article}{}
+    \name{author}{1}{}{%
+      {{hash=KM}{%
+         family={Kohl},
+         family_i={K\bibinitperiod},
+         given={Matthias},
+         given_i={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KM1}
+    \strng{fullhash}{KM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \verb{doi}
+    \verb 10.6000/1929-6029.2012.01.01.08
+    \endverb
+    \field{title}{Performance Measures in Binary Classification}
+    \field{journaltitle}{Int. J. Stats. Med. Res.}
+    \field{year}{2012}
+  \endentry
+\endsortlist
+\endinput
