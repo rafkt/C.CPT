@@ -1,0 +1,44 @@
+\documentclass[11pt,oneside]{article}
+\usepackage{import}
+\usepackage{myParameters}
+
+\title{First Year Report}
+\author{Rafael Ktistakis\\
+  \texttt{crk15@le.ac.uk}\\
+  {\small Supervised by: Prof. Rajeev Raman}\\
+  {\small Department of Computer Science}\\
+  {\small University of Leicester}}
+\date{January 2016}
+ 
+\begin{document}
+ 
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+\thispagestyle{empty}
+\listoffigures
+\listoftables
+\newpage
+
+ 
+\import{sections/}{sections.tex}
+
+\import{sections/}{appendix.tex}
+
+
+ 
+\newpage
+\clearpage
+
+\printbibliography[heading=bibintoc,title={References}]
+
+\newpage
+\thispagestyle{empty}
+\mbox{}
+ 
+\end{document}

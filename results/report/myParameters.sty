@@ -1,0 +1,52 @@
+\ProvidesPackage{myParameters}
+
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{comment}
+
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{amsmath}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+
+
+\usepackage[backend=bibtex,
+    style=numeric,
+    maxcitenames=2,maxbibnames=9,
+    sortcites,
+    sorting=nty,
+    backref,
+    natbib,
+    hyperref]{biblatex}
+\addbibresource{1stYearReport.bib}
+
+\graphicspath{{images/}}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+
+\usepackage{enumitem} 
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
+ 
+ % Definition of \maketitle
+\makeatletter         
+\def\@maketitle{
+\raggedright
+\begin{center}
+{\Huge \bfseries \sffamily \@title }\\[4ex] 
+{\Large  \@author}\\[4ex] 
+\@date\\[8ex]
+\includegraphics[width = 40mm]{leicester_uni_logo.png}
+\end{center}}
+\makeatother
+ 
