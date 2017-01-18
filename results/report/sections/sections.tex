@@ -3,7 +3,48 @@
 
 \end{comment}
 
-\section{Test Section}
-This is a test \cite{2_kohl_2012}. Another citation \cite{Ferragina}
+\section{Introduction}
+Predicting the next item of a sequence over a finite alphabet has various approaches where some of them contain a relatively extensive literature. The applications which are covered by these various prediction approaches vary and different challenges are addressed for each one. \emph{Lossless} approach is a new approach  recently introduced by \citeauthor{gueniche_fournier-viger_tseng_2013} \citeyear{gueniche_fournier-viger_tseng_2013}. Since it is a new approach, it is interesting to study it offering more solutions.
+\section{Problem Definition}
+Let a finite set of items (symbols) \(\Sigma = \{e_1, e_2,\ldots,e_\sigma\}\) be called \emph{alphabet}, then a \emph{sequence} \(S\) is a list of ordered items \(S=\langle i_1,i_2,\ldots,i_k\rangle\) where \(i_m \in \Sigma\ for\ 1\leq m \leq k\). A multiset of sequences \(D = \langle S_1, S_2,\ldots,S_l\rangle\) also called \emph{dataset} is constituted by sequences that created under a similar way. Given a dataset, a prediction algorithm is \emph{trained} on this dataset.  Once the prediction algorithm is trained, it will repeatedly accept a \emph{context} which is another sequence of symbols, and outputs a \emph{prediction}. The context is obtained from an unknown \emph{query sequence} which does not belong to the dataset but shares common characteristics with the dataset.  Loosely speaking, the context is derived from a part of the query sequence, and the prediction is about what comes \emph{after} the context in the query.
+
+\section{Lossless}
+Lossless sequence prediction is a relatively new approach and therefore appears to have quite a few challenges that someone that studies it has to cope with. It is clear that due to the fact that a whole dataset is utilised, a lossless approach achieves a higher space utilisation over a lossy approach. This fact leads to two results; firstly, it is somewhat intensive for an algorithm to go through all the data and extract the appropriate information needed for predictions, and secondly, keeping all the relative data \emph{in memory}, through the corresponding data structures, appears to be a considerably hard challenge because the represented structure's space utilisation often reaches an order of magnitude of the initial gathered data. As a result, a lossless sequence prediction approach needs sophisticated tools to search for patterns and sequences in \emph{Big Data} when simultaneously the aforementioned challenges are coped.
+\par On contrary, a \emph{lossy} approach can be less memory hungry by representing the given information of a dataset through models (like \emph{dependency graphs}). This leads to implementation that sometimes utilises less space and can be potentially faster. However, a lossy approach lacks accuracy especially in hard cases when information in a dataset is not repeating as other parts of informations or a repetition is either generalised or ignored by a model having a partly loss of information that is not reversible. Often such hard cases lead to more complex models that along with Big data is hard to make algorithms that produce predictions with efficiency and performance.
+\section{Motivation}
+\todo{refer briefly to some SPICE results}
+\section{CPT Predictor and its Data Structures}\label{CPT}
+CPT and CPT+ (\textbf{C}ompact \textbf{P}rediction \textbf{T}ree) introduced by \citeauthor{gueniche_fournier-viger_tseng_2013} \citeyear{gueniche_fournier-viger_tseng_2013} and later improved by \citeauthor{gueniche_fournier-viger_raman_tseng_2015} \citeyear{gueniche_fournier-viger_raman_tseng_2015}, is currently the only implementation in lossless sequence prediction. It is constituted by a Trie (\emph{Prediction Tree PT}), an Array of bit-vectors (\emph{Inverted Index II}) and an array of pointers to the last items of sequences inserted to the prediction tree (\emph{Look-up Table LT}). As a lossless approach, CPT utilises the whole dataset provided for building its structures. Each sequence from the dataset is inserted to the Prediction Tree and a pointer to the last item of the sequence is added to the Look-up Table. The Inverted Index has the role of finding which sequence contains which alphabet's items by simply executing a bitwise AND operation. Every bit-vector has the same length with the size of the dataset's alphabet while it notes, using 1/0, whether an alphabet item appears in the sequence or not.
+\par CPT can retrieve any searching sequence with specific alphabet items by using the inverted index along with a combination of the two other structures. A bitwise AND shows which sequences contain some given alphabet items and then these sequences can be located by using the Look-up Table which points to the end of each corresponding sequence.
+\todo{Predictor task - retrieving consequent}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{CPT-structure}
+    \caption{A Prediction Tree (PT), Inverted Index (II) and Lookup Table (LT)}
+    \label{fig:CPT-structure}
+\end{figure}
+
+In Figure \ref{fig:CPT-structure} it is shown an example of CPT during multiple sequence insertions.
+
+\subsection{Strengths \& Weaknesses}
+
+CPT (as a lossless approach) utilises all the available sequences in a tree where they are accessible through the II and the LT easily and fast by a bitwise AND for each sequence. Therefore, making predictions can be potentially fast and accurate as described in \citep{gueniche_fournier-viger_tseng_2013} and \citep{gueniche_fournier-viger_raman_tseng_2015}. Locating similar sequences can be a relatively easy task that makes CPT work as a good tool for predictors that exploit such sequences. Moreover, CPT can implement all the prediction tasks described in Section \ref{App:predtask}, offering a bigger diversity for implementations of several applications. 
+\par However, even though with the improvement of CPT, where size of the structures were reduced and speed was enhanced, some performance issues can be still addressed. Bit-vectors are the main element of II which is used for locating CPT's sequences. When more and more sequences are being added, the bitwise AND operations are becoming slower and slower, leading to performance issues and overall scalability issues since the vectors are becoming much larger. It is common for real life applications to deal with datasets that contain an enormous number of sequences. Therefore, Bit-vectors can be CPT's Achilles' heel regarding its peformance. Also, space usage of II in such cases can be wasteful since with Succinct Data Structures (see Section \ref{App:SDS}) a better and more memory efficient structure can be proposed.
+\subsection{Prediction Tree}
+\todo{operations used by the predictor}
+\subsection{Inverted Index}
+\todo{operations used by the predictor}
+\subsection{Look-Up Table}
+\todo{operations used by the predictor}
+\section{Succinct CPT}
+\subsection{SD-Vectors as a Prediction Tree}
+\subsection{Elias-Fano for Inverted indicies}
+\subsection{Look-Up Table ommition}
+\section{Experimental Results and Performance Comparison}
+\subsection{Space Comparison}
+\subsection{Speed Comparison}
+
+
 
 \newpage
