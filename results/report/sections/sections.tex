@@ -47,6 +47,7 @@ The Look-Up Table is the structure that adds the necessary ``glue" between the I
 Succinct CPT copes with all the memory disadvantages of CPT by introducing different succinct data structures for the roles of PT, II and LT. By using succinct data structures, fast operations like \emph{rank/select} (Appendix \ref{App:rank_select}) are offered. Thus, a significant memory reduction is achieved and performance is relatively retained.
 \subsection{Elias-Fano for Inverted indicies}
 The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item is contained in which sequence. However, every bit-vector can be treated as an inverted list of the positions of the set bits. Hence, the bit-vector for item \(A\) of the Figure \ref{fig:CPT-structure} can be written as \(\langle 1, 2, 3\rangle\). Since, every position in the bit-vector is correlated with a sequence serial number (1\textsuperscript{st}, 2\textsuperscript{nd}, \dots, l\textsuperscript{th} sequence) it is obvious to conclude that the aforementioned inverted list is monotone sequence of numbers. Thist is important because  the compression technique which is mainly being used and described next, is based on \emph{gap encoding}. As it will be proved later, gap encoding will make possible to store the II in space smaller or at least same as the space of the initial dataset. The techniques described below are based on a paper by Elias \cite{elias_efficient_1974} and a paper which demonstrates IIs which use such techiques \cite{vigna_quasi-succinct_2013}.
+\subsubsection{Elias Techinque}
 \par It is clear that every bit-vector of the II can be seen as an inverted list of the sequences that the alphabet item is contained. Because the list is monotone can be seen as \[0 \leq x\textsubscript{0} \leq x\textsubscript{1} \leq \dots \leq x\textsubscript{n - 2} \leq x\textsubscript{n - 1} \leq u \] where \(u > 0 \) as a known upper bound. That bound is always known because during prediction phase the dataset size is known too. Now, this list of numbers can be split in two bit arrays according to the formulas below:
 	\begin{description}
   	\item[lower bit array:] for every item of the list, the array continuously stores its \( \lambda = max\{0, \lfloor \log(u/n)\rfloor\}\) lower bits.
@@ -59,7 +60,7 @@ The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item i
     \caption{In this example we have a list of numbers 5, 8, 8, 15, 32 with upper bound 36. For the upper bit array \(\lambda = \lfloor \log36/5\rfloor = 2\). On right it is shown all the \(\lambda\) bits of all elements which are gathered together to create the lower-bets array. On left, the gaps for every number upper bits are calculated and stored sequentially in unary code in the upper-bits array.}
     \label{fig:ef_ex}
 \end{figure}	
-
+\subsubsection{Space property}
 \par Space wise, it can be proven \cite{vigna_quasi-succinct_2013} that for every item of a list it is used at most \(2 + \lceil\log(u/n)\rceil\) bits. The dataset containing the sequences, from where the II will be created, can be considered as a memoryless source. Then, every symbol appears with a probability of \(p_{\kappa} = \frac{1}{\sigma} \) in the dataset. The bits needed to code a symbol will be \( \sum_{\kappa = 1}^{\sigma} p_{\kappa} \cdot \log(\frac{1}{p_{\kappa}}) = \log(\sigma)\). An II that uses Elias way of recording the set bit positions for every bit-vector, will take a total space:
 
 \begin{equation} \label{II_ef_mem}
@@ -92,8 +93,20 @@ In last equation (\ref{II_ef_mem_final}) and by claiming that the oversimplifica
 	\sum_{\iota = 1}^{\sigma} M\cdot p_{\iota}\cdot ( \log(\frac{1}{p_{\iota}})) \leq M\cdot log(\sigma)
 \end{equation}
 This final statement is important due to the fact that most of the times a usual data structure consumes space that is a factor of the initial dataset size. In the above case, the space is usually less or the same. It is not guaranteed but experiments with real life datasets (presented in Section \ref{experimental}) follow the aforementioned behaviour is followed most of the times.
-\todo{Continue by explaining API for doing bit-wise AND} 
+\subsubsection{Accessing Values}
+\par Accessing and retrieving back any random value \(x_i\) stored with this way can be done  by following the steps on the upper bit array:
+\begin{enumerate}
+	\item \(\lbrack \frac{x_i}{2^{\lambda}} \rbrack = \theta \)
+	\item \(\varrho = select_0(\theta)\)
+	\item \(\zeta = rank_1(\varrho)\)
+	\item concatenate (the binary representations) of \(\varrho - \zeta\) with the value of lower bit array at index \(\zeta\)
+\end{enumerate}
+Similarly, we can continue accessing all the values sequentially by keeping track of the number of the $0_s$ parsed in every position of the upper array. Every time that an $1$ is met then we have met a new stored value and therefore we should concatenate our bits. A $0$ means that we have to increase our variable that counts zeros since the gap to our next number is being increased.
+\subsubsection{Instructions for CPT predictor}
+CPT predictor uses the II in order to determine which sequences contain specific alphabet items. With an II which uses bit-vectors this can be done by applying a bit-wise AND to the relevant bit-vectors. In inverted indices that follow the Elias a gap encoding way, the same functionality can be achieved by \emph{decoding} every list of values for every alphabet item and them by applying an intersection among the relevant lists. However, intersecting lists that might contain a relative big amount of values is inefficient because every intersection will depend on the length of the largest list. With Elias-Fano II we can take advantage of the fact that we can \emph{jump in} a specific value of a list and complete an intersection in relation to the smallest list. Therefore, the overall speed performance is not affected much as shown in experimental evaluation.
+
 \subsection{Prediction Tree Encoding and Storing}
+
 \subsection{Look-Up Table Omission}
 \section{Experimental Results and Performance Comparison} \label{experimental}
 \subsection{Space Comparison}
