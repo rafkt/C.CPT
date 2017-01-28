@@ -63,7 +63,7 @@ int main(){
 	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev2->runPredictor();
 
-	cout << "BMS2_spmf" << endl;
+	cout << "Kosarak" << endl;
 	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev3->runPredictor();
 
