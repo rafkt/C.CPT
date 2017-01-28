@@ -106,8 +106,8 @@ Similarly, we can continue accessing all the values sequentially by keeping trac
 CPT predictor uses the II in order to determine which sequences contain specific alphabet items. With an II which uses bit-vectors this can be done by applying a bit-wise AND to the relevant bit-vectors. In inverted indices that follow the Elias a gap encoding way, the same functionality can be achieved by \emph{decoding} every list of values for every alphabet item and them by applying an intersection among the relevant lists. However, intersecting lists that might contain a relative big amount of values is inefficient because every intersection will depend on the length of the largest list. With Elias-Fano II we can take advantage of the fact that we can \emph{jump in} a specific value of a list and complete an intersection in relation to the smallest list. Therefore, the overall speed performance is not affected much as shown in experimental evaluation.
 
 \subsection{Prediction Tree Encoding and Storing}
-Currently CPT uses trie as a structure in order to store the sequences of a dataset and retrieve the sequences back during prediction phase (Figure \ref{fig:CPT-structure}). However as it has already been mentioned the pointers need to every child node and to parent to represent this linking relation among the nodes, make this kind of representation wasteful of space. On the other hand, having pointer to link nodes together, provide us fast with a convenient and a rapid traversal of the trie. Below, it is described a way to reduce the space by a factor of 20 times (	in most cases) and without sacrificing and speed performance in terms of the CPT predictor needs.
-\subsubsection{Binary tree as a level-order bitmap}
+Currently CPT uses trie as a structure in order to store the sequences of a dataset and retrieve the sequences back during prediction phase (Figure \ref{fig:CPT-structure}). However as it has already been mentioned the pointers need to every child node and to parent to represent this linking relation among the nodes, make this kind of representation wasteful of space. On the other hand, having pointer to link nodes together, provide us fast with a convenient and a rapid traversal of the trie. Below, it is described a way to reduce the space by a factor of 20 times (in most cases) and without sacrificing and speed performance in terms of the CPT predictor needs.
+\subsubsection{Binary Tree as a Level-order Bitmap}
 
 \begin{figure}
 	 \centering
@@ -115,6 +115,29 @@ Currently CPT uses trie as a structure in order to store the sequences of a data
     \caption{Level-order bitmap representation}
     \label{fig:binary_bm}
 \end{figure}
+
+A binary tree can be represented as a series of bits, called \emph{bitmap} \cite{jacobson_space-efficient_1989} . Later, it will be shown how relations among nodes can be achieved, same as having a normal binary tree and it can be generalised for any \emph{k-ary} trees. Figure \ref{fig:binary_bm} shows a bitmap representation of a binary tree. In order to produce the bitmap of the binary tree, the tree has to be traversed in level order beginning from the root and writing down the first $1$ of the bitmap. Then, the next level should be traversed where an $1$ is put in the bitmap if there is a node or $0$ in case a node does not exist at the appropriate position. As it can be seen from the figure, the number of $1_s$ written in the bitmap equals to the number of nodes of the binary tree. The overall length of the bitmap is $2 \cdot \eta  + 1$ where $\eta$ is the overall number of nodes of binary tree.
+\par Accessing a child or parent node of the tree can now be achieved by applying rank/select operations on the bitmap itself.
+\begin{description}
+	\item [get child]
+	\item [get sibling]
+	\item [get parent]
+\end{description}
+
+\subsubsection{K-ary Trees as Level-order Bitmap}
+
+\begin{figure}
+	 \centering
+    \includegraphics[width=0.75\textwidth]{k-ary_bitmap}
+    \caption{Generalized Jacobson encoding of a 4-ary tree: 1111 1111 1111 1011 1110 1101 1001 0000 0011 0000 1111 0010 1111 1001 1101 1100 0011 1101 1011 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000--- 200 bits}
+    \label{fig:binary_bm}
+\end{figure}
+
+\subsubsection{Storing bitmap}
+
+
+
+
 
 \todo{REFER TO CPT+ frequent patterns and encoder structure} 
 \subsection{Look-Up Table Omission}
