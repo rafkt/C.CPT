@@ -1,0 +1,385 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.7 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\sortlist[entry]{nty/global/}
+  \entry{bentley_fast_1997}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=BJL}{%
+         family={Bentley},
+         family_i={B\bibinitperiod},
+         given={Jon\bibnamedelima L.},
+         given_i={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+      }}%
+      {{hash=SR}{%
+         family={Sedgewick},
+         family_i={S\bibinitperiod},
+         given={Robert},
+         given_i={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BJLSR1}
+    \strng{fullhash}{BJLSR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{booktitle}{{SODA}}
+  \field{howpublished}{\url{http://www.akira.ruc.dk/~keld/teaching/algoritmedesign_f04/Artikler/04/Bentley99.pdf}}
+    \field{pages}{360\bibrangedash 369}
+    \field{title}{Fast algorithms for sorting and searching strings}
+    \field{volume}{97}
+    \field{year}{1997}
+    \field{urlday}{19}
+    \field{urlmonth}{01}
+    \field{urlyear}{2017}
+  \endentry
+
+  \entry{dillabaugh_2007}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=DC}{%
+         family={Dillabaugh},
+         family_i={D\bibinitperiod},
+         given={Craig},
+         given_i={C\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{DC1}
+    \strng{fullhash}{DC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{title}{Succinct Data Structures}
+    \field{year}{2007}
+  \endentry
+
+  \entry{elias_efficient_1974}{article}{}
+    \name{author}{1}{}{%
+      {{hash=EP}{%
+         family={Elias},
+         family_i={E\bibinitperiod},
+         given={Peter},
+         given_i={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{EP1}
+    \strng{fullhash}{EP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{abstract}{%
+    We consider a set of static files or inventories, each consisting of the
+  same number of entries, each entry a binary word of the same fixed length
+  selected (with replacement) from the set of all binary sequences of that
+  length, and the entries in each file sorted into lexical order. We also
+  consider several retrieval questions of interest for each such file. One is
+  to find the value of the jth entry, another to find the number of entries of
+  value less than k. When a binary representation of such a file is stored in
+  computer memory and an algorithm or machine which knows only the file
+  parameters (i.e. number of entries, number of possible values per entry)
+  accesses some of the stored bits to answer a retrieval question, the number
+  of bits stored and the number of bits accessed per retrieval question are two
+  cost measures for the storage and retrieval task which have been used by
+  Minsky and Papert. Bits stored depends on the representation chosen: bits
+  accessed also depends on the retrieval question asked and on the algorithm
+  used. We give firm lower bounds to minimax measures of bits stored and bits
+  accessed for each of four retrieval questions, and construct representations
+  and algorithms for a bit-addressable machine which come within factors of two
+  or three of attaining all four bounds at once for files of any size. All four
+  factors approach one for large enough files.%
+    }
+    \verb{doi}
+    \verb 10.1145/321812.321820
+    \endverb
+    \field{howpublished}{\url{http://doi.acm.org/10.1145/321812.321820}}
+    \field{issn}{0004-5411}
+    \field{number}{2}
+    \field{pages}{246\bibrangedash 260}
+    \field{title}{Efficient Storage and Retrieval by Content and Address of
+  Static Files}
+    \field{volume}{21}
+    \field{journaltitle}{J. {ACM}}
+    \field{month}{04}
+    \field{year}{1974}
+    \field{urlday}{24}
+    \field{urlmonth}{01}
+    \field{urlyear}{2017}
+  \endentry
+
+  \entry{Ferragina}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=FP}{%
+         family={Ferragina},
+         family_i={F\bibinitperiod},
+         given={P.},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=MG}{%
+         family={Manzini},
+         family_i={M\bibinitperiod},
+         given={G.},
+         given_i={G\bibinitperiod},
+      }}%
+    }
+    \keyw{computational complexity;data compression;data structures;database
+  indexing;database theory;Glimpse tool;data compression;data indexing;data
+  set;entropy;opportunistic data structures;query performance;search;sublinear
+  query time complexity;sublinear space complexity;succinct suffix array;suffix
+  array data structures;suffix tree data structures;Computer science;Costs;Data
+  engineering;Data structures;Entropy;Fault tolerance;Indexing;Plugs;Postal
+  services;Tree data structures}
+    \strng{namehash}{FPMG1}
+    \strng{fullhash}{FPMG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{booktitle}{Foundations of Computer Science, 2000. Proceedings. 41st
+  Annual Symposium on}
+    \verb{doi}
+    \verb 10.1109/SFCS.2000.892127
+    \endverb
+    \field{issn}{0272-5428}
+    \field{pages}{390\bibrangedash 398}
+    \field{title}{Opportunistic data structures with applications}
+    \field{year}{2000}
+  \endentry
+
+  \entry{gueniche_fournier-viger_tseng_2013}{article}{}
+    \name{author}{3}{}{%
+      {{hash=GT}{%
+         family={Gueniche},
+         family_i={G\bibinitperiod},
+         given={Ted},
+         given_i={T\bibinitperiod},
+      }}%
+      {{hash=FVP}{%
+         family={Fournier-Viger},
+         family_i={F\bibinitperiod-V\bibinitperiod},
+         given={Philippe},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=TVS}{%
+         family={Tseng},
+         family_i={T\bibinitperiod},
+         given={Vincent\bibnamedelima S.},
+         given_i={V\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GT+1}
+    \strng{fullhash}{GTFVPTVS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.1007/978-3-642-53917-6_16
+    \endverb
+    \field{pages}{177\bibrangedash 188}
+    \field{title}{Compact Prediction Tree: A Lossless Model for Accurate
+  Sequence Prediction}
+    \field{journaltitle}{Advanced Data Mining and Applications}
+    \field{year}{2013}
+  \endentry
+
+  \entry{gueniche_fournier-viger_raman_tseng_2015}{article}{}
+    \name{author}{4}{}{%
+      {{hash=GT}{%
+         family={Gueniche},
+         family_i={G\bibinitperiod},
+         given={Ted},
+         given_i={T\bibinitperiod},
+      }}%
+      {{hash=FVP}{%
+         family={Fournier-Viger},
+         family_i={F\bibinitperiod-V\bibinitperiod},
+         given={Philippe},
+         given_i={P\bibinitperiod},
+      }}%
+      {{hash=RR}{%
+         family={Raman},
+         family_i={R\bibinitperiod},
+         given={Rajeev},
+         given_i={R\bibinitperiod},
+      }}%
+      {{hash=TVS}{%
+         family={Tseng},
+         family_i={T\bibinitperiod},
+         given={Vincent\bibnamedelima S.},
+         given_i={V\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GT+1}
+    \strng{fullhash}{GTFVPRRTVS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \verb{doi}
+    \verb 10.1007/978-3-319-18032-8_49
+    \endverb
+    \field{pages}{625\bibrangedash 636}
+    \field{title}{CPT+: Decreasing the Time/Space Complexity of the Compact
+  Prediction Tree}
+    \field{journaltitle}{Lecture Notes in Computer Science}
+    \field{year}{2015}
+  \endentry
+
+  \entry{jacobson_space-efficient_1989}{inproceedings}{}
+    \name{author}{1}{}{%
+      {{hash=JG}{%
+         family={Jacobson},
+         family_i={J\bibinitperiod},
+         given={Guy},
+         given_i={G\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {{IEEE}}%
+    }
+    \strng{namehash}{JG1}
+    \strng{fullhash}{JG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{booktitle}{Foundations of Computer Science, 1989., 30th Annual
+  Symposium on}
+  \field{howpublished}{\url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=63533}}
+    \field{pages}{549\bibrangedash 554}
+    \field{title}{Space-efficient static trees and graphs}
+    \field{year}{1989}
+    \field{urlday}{18}
+    \field{urlmonth}{02}
+    \field{urlyear}{2016}
+  \endentry
+
+  \entry{Jacobson89}{inproceedings}{}
+    \name{author}{1}{}{%
+      {{hash=JG}{%
+         family={Jacobson},
+         family_i={J\bibinitperiod},
+         given={Guy},
+         given_i={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JG1}
+    \strng{fullhash}{JG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{booktitle}{30th Annual Symposium on Foundations of Computer Science,
+  Research Triangle Park, North Carolina, USA, 30 October - 1 November 1989}
+    \verb{doi}
+    \verb 10.1109/SFCS.1989.63533
+    \endverb
+    \field{howpublished}{http://dx.doi.org/10.1109/SFCS.1989.63533}
+    \field{pages}{549\bibrangedash 554}
+    \field{title}{Space-efficient Static Trees and Graphs}
+    \field{year}{1989}
+  \endentry
+
+  \entry{Raman}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=RR}{%
+         family={Raman},
+         family_i={R\bibinitperiod},
+         given={Rajeev},
+         given_i={R\bibinitperiod},
+      }}%
+      {{hash=RV}{%
+         family={Raman},
+         family_i={R\bibinitperiod},
+         given={Venkatesh},
+         given_i={V\bibinitperiod},
+      }}%
+      {{hash=RSS}{%
+         family={Rao},
+         family_i={R\bibinitperiod},
+         given={S.\bibnamedelima Srinivasa},
+         given_i={S\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{2}{%
+      {Society for Industrial}%
+      {Applied Mathematics}%
+    }
+    \strng{namehash}{RR+1}
+    \strng{fullhash}{RRRVRSS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{R}
+    \field{sortinithash}{R}
+    \field{booktitle}{Proceedings of the Thirteenth Annual ACM-SIAM Symposium
+  on Discrete Algorithms}
+    \field{isbn}{0-89871-513-X}
+    \field{pages}{233\bibrangedash 242}
+    \field{series}{SODA '02}
+    \field{title}{Succinct Indexable Dictionaries with Applications to Encoding
+  K-ary Trees and Multisets}
+    \verb{url}
+    \verb \url{http://dl.acm.org/citation.cfm?id=545381.545411}
+    \endverb
+    \list{location}{1}{%
+      {San Francisco, California}%
+    }
+    \field{year}{2002}
+    \warn{\item Can't use 'location' + 'address'}
+  \endentry
+
+  \entry{vigna_quasi-succinct_2013}{inproceedings}{}
+    \name{author}{1}{}{%
+      {{hash=VS}{%
+         family={Vigna},
+         family_i={V\bibinitperiod},
+         given={Sebastiano},
+         given_i={S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {{ACM}}%
+    }
+    \keyw{compressed indices, succinct data structures}
+    \strng{namehash}{VS1}
+    \strng{fullhash}{VS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{booktitle}{Proceedings of the Sixth {ACM} International Conference
+  on Web Search and Data Mining}
+    \verb{doi}
+    \verb 10.1145/2433396.2433409
+    \endverb
+    \field{howpublished}{\url{http://doi.acm.org/10.1145/2433396.2433409}}
+    \field{isbn}{978-1-4503-1869-3}
+    \field{pages}{83\bibrangedash 92}
+    \field{series}{{WSDM} '13}
+    \field{title}{Quasi-succinct Indices}
+    \list{location}{1}{%
+      {New York, {NY}, {USA}}%
+    }
+    \field{year}{2013}
+    \field{urlday}{28}
+    \field{urlmonth}{07}
+    \field{urlyear}{2016}
+  \endentry
+\endsortlist
+\endinput

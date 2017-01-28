@@ -30,8 +30,8 @@ EVALUATOR_path = src/Evaluator
 #Assure that SDSL-Lite library is uptodate and compiled
 #Include & Libary directories should be under Home folder
 
-test: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(BUILD_PATH)/SD_CPTPredictor.o $(BUILD_PATH)/EF_II_bit_vector.o $(BUILD_PATH)/Elias_Fano.o $(BUILD_PATH)/Evaluator.o
-	$(CC) $(FLAGS) $(FLAGS_SDSL_L) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/SD_CPTPredictor.o $(BUILD_PATH)/EF_II_bit_vector.o $(BUILD_PATH)/Elias_Fano.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(BUILD_PATH)/Evaluator.o $(EXEFLAGS) $(LIBS)
+all: $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(BUILD_PATH)/SD_CPTPredictor.o $(BUILD_PATH)/EF_II_bit_vector.o $(BUILD_PATH)/Elias_Fano.o $(BUILD_PATH)/Evaluator.o $(BUILD_PATH)/Encoder.o
+	$(CC) $(FLAGS) $(FLAGS_SDSL_L) $(BUILD_PATH)/InvertedIndex.o $(BUILD_PATH)/sequence.o $(BUILD_PATH)/II_bit_vector.o $(BUILD_PATH)/CPT_Trie.o $(BUILD_PATH)/CPT_SD_Tree.o $(BUILD_PATH)/PredictionTree.o $(BUILD_PATH)/Predictor.o $(BUILD_PATH)/CPTPredictor.o $(BUILD_PATH)/SD_CPTPredictor.o $(BUILD_PATH)/EF_II_bit_vector.o $(BUILD_PATH)/Elias_Fano.o $(BUILD_PATH)/Profile.o $(BUILD_PATH)/DatabaseHelper.o $(BUILD_PATH)/Evaluator.o $(BUILD_PATH)/Encoder.o $(EXEFLAGS) $(LIBS)
 $(BUILD_PATH)/sequence.o: $(SEQUENCE_PATH)/Sequence.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(SEQUENCE_PATH)/Sequence.cpp -o $(BUILD_PATH)/sequence.o
 $(BUILD_PATH)/InvertedIndex.o: $(INTERFACE_PATH)/II/InvertedIndex.cpp $(INCLUDE_PATH)/Sequence.h $(INCLUDE_PATH)/InvertedIndex.h
@@ -60,7 +60,8 @@ $(BUILD_PATH)/Elias_Fano.o: $(INCLUDE_PATH)/Elias_Fano.h $(LIB_path)/Elias_Fano.
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(LIB_path)/Elias_Fano.cpp -o $(BUILD_PATH)/Elias_Fano.o
 $(BUILD_PATH)/Evaluator.o: $(INCLUDE_PATH)/Evaluator.h $(INCLUDE_PATH)/DatabaseHelper.h $(INCLUDE_PATH)/Predictor.h $(INCLUDE_PATH)/Sequence.h $(EVALUATOR_path)/Evaluator.cpp
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(EVALUATOR_path)/Evaluator.cpp -o $(BUILD_PATH)/Evaluator.o
-
+$(BUILD_PATH)/Encoder.o: $(INCLUDE_PATH)/Encoder.h $(INTERFACE_PATH)/Encoder/Encoder.cpp
+	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Encoder/Encoder.cpp -o $(BUILD_PATH)/Encoder.o
 
 clean:
 	$(REM) $(BUILD_PATH)/*$(XF)
