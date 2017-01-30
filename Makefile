@@ -62,7 +62,7 @@ $(BUILD_PATH)/Evaluator.o: $(INCLUDE_PATH)/Evaluator.h $(INCLUDE_PATH)/DatabaseH
 	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(EVALUATOR_path)/Evaluator.cpp -o $(BUILD_PATH)/Evaluator.o
 $(BUILD_PATH)/Encoder.o: $(INCLUDE_PATH)/Encoder.h $(INTERFACE_PATH)/Encoder/Encoder.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(INTERFACE_PATH)/Encoder/Encoder.cpp -o $(BUILD_PATH)/Encoder.o
-$(BUILD_PATH)/FIFRaw.o: $(INCLUDE_PATH)/FIFRaw.h $(LIB_path)/FIFRaw.cpp
+$(BUILD_PATH)/FIFRaw.o: $(INCLUDE_PATH)/FIFRaw.h $(LIB_path)/FIFRaw.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(LIB_path)/FIFRaw.cpp -o $(BUILD_PATH)/FIFRaw.o
 
 clean:
