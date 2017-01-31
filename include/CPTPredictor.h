@@ -12,6 +12,7 @@
 #define CPTPREDICTOR_H
 class CPTPredictor : public Predictor{
 	public:
+		CPTPredictor();
 		CPTPredictor(std::vector<Sequence*>, Profile*);
 		virtual ~CPTPredictor();
 		Sequence* Predict(Sequence*);
@@ -19,7 +20,7 @@ class CPTPredictor : public Predictor{
 		virtual float memoryInMB();
 		virtual void createII();
 	protected:
-		bool Train(std::vector<Sequence*>);
+		virtual bool Train(std::vector<Sequence*>);
 		PredictionTree* root;
 		InvertedIndex *II;
 		PredictionTree** LT;

@@ -8,6 +8,9 @@
 
 using namespace std;
 
+CPTPredictor::CPTPredictor(): Predictor(), root(nullptr), LT(nullptr){
+}
+
 CPTPredictor::CPTPredictor(vector<Sequence*> trainingSequences, Profile* profile) : Predictor(), profile(profile), trainingSequenceNumber(trainingSequences.size()), nodeNumber(1){
 	TAG = "CPT";
 	root = new CPT_Trie();
@@ -29,8 +32,6 @@ float CPTPredictor::memoryInMB(){
 }
 
 void CPTPredictor::deleteTrie(PredictionTree* node){
-   
-
     // recursive case (go to end of trie)
     for (uint64_t i = 0; i < node->getChildren().size(); i++)
     {
@@ -381,7 +382,7 @@ Sequence* CPTPredictor::slice(Sequence* sequence, uint64_t length){
 // 	pf->apply();
 // 	DatabaseHelper* db = new DatabaseHelper("test.txt", DatabaseHelper::TXT, pf);
 // 	CPTPredictor* cpt_pr = new CPTPredictor(db->getDatabase(), pf, db->getSigmaIndex());
-//cpt_pr->createII();
+// cpt_pr->createII();
 
 
 // 	// vector<uint64_t> v = {356, 122};
