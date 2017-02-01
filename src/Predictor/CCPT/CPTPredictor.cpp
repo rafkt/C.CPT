@@ -197,6 +197,8 @@ vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
 		//Going up the tree
 		curNode = curNode->getParent();
 	}
+	for (uint64_t i : branch) cout << i << " ";
+	cout << endl;
 	return branch;
 }
 
@@ -271,6 +273,9 @@ Sequence* CPTPredictor::getBestSequenceFromCountTable(std::unordered_map<uint64_
 	double secondMaxValue = -1;
 	int maxItem = -1;
 	for(unordered_map<uint64_t, float>::iterator it = countTable.begin(); it != countTable.end(); it++) {
+
+		//cout << it->first << ": " << it->second << endl;
+
 		uint64_t cardinality = II->getCardinality(it->first);
 		double lift = it->second / cardinality;
 		double support = cardinality;

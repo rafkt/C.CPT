@@ -66,6 +66,13 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 		//encode sequence and continue like CPT building trie
 		Sequence* encoded = encoder->encode(newTrainingSet[i]);
 		encodedSeqs.push_back(encoded);
+
+		Sequence* decoded_tmp = encoder->decode(encoded, false);
+
+		for (uint64_t d = 0; d < decoded_tmp->size(); d++)
+			if (decoded_tmp->getItems()[d] != newTrainingSet[i]->getItems()[d]) cout << "ERROR" << endl;
+		if (decoded_tmp->size() != newTrainingSet[i]->size()) cout << "SIZE ERROR" << endl;
+
 		//end of encoding, continue as normal
 
 		uint64_t* cur_seq_items = encoded->getItems();//newTrainingSet[i]->getItems();
@@ -104,10 +111,13 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 		//Going up the tree
 		curNode = curNode->getParent();
 	}
+	//reverse(branch.begin(), branch.end()); //implemented in Encoder
 	Sequence* encoded = new Sequence(branch);
-	Sequence* decoded = encoder->decode(encoded);
+	Sequence* decoded = encoder->decode(encoded, true);
 	vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
 	delete encoded;
+	for (uint64_t i : decoded_items) cout << i << " ";
+	cout << endl;
 	return decoded_items;
 }
 
