@@ -13,7 +13,7 @@ class Encoder{
 		uint64_t getId(std::vector<uint64_t>, bool&);
 		uint64_t getIdorAdd(std::vector<uint64_t>);
 		Sequence* encode(Sequence*);
-		Sequence* decode(Sequence*, bool);
+		Sequence* decode(Sequence*);
 		float sizeInMB();
 	private:
 		std::vector<std::vector<uint64_t>> Dict;

@@ -94,18 +94,13 @@ Sequence* Encoder::encode(Sequence* seq){
 }
 // Replace each itemset in the sequence with the original sequential items
 // return a hard decoded copy of the encoded sequence
-Sequence* Encoder::decode(Sequence* seq, bool reverseFlag){
+Sequence* Encoder::decode(Sequence* seq){
 	if(seq == nullptr || seq->size() == 0) {
 		return nullptr;
 	}
 	
 	std::vector<uint64_t> decoded_items;
 	std::vector<uint64_t> seq_items(seq->getItems(), seq->getItems() + seq->size());
-
-	// if the given sequence is retrieved by a CPT trie, it means that is reversed during retrieval
-	// Reverse again here for a correct decoding
-
-	if (reverseFlag) reverse(seq_items.begin(), seq_items.end());
 
 	//for each encoded item, it decodes 
 	//it and adds it in the decoded sequence
@@ -124,9 +119,7 @@ Sequence* Encoder::decode(Sequence* seq, bool reverseFlag){
 			std::cerr << "Could not find item: " << encodedItem << std::endl;
 		}
 	}
-	if (reverseFlag) reverse(decoded_items.begin(), decoded_items.end());
 	Sequence* decoded = new Sequence(decoded_items);
-	
 	return decoded;
 }
 

@@ -197,8 +197,9 @@ vector<uint64_t> CPTPredictor::getBranch(uint64_t index){
 		//Going up the tree
 		curNode = curNode->getParent();
 	}
-	for (uint64_t i : branch) cout << i << " ";
-	cout << endl;
+	reverse(branch.begin(), branch.end());
+	// for (uint64_t i : branch) cout << i << " ";
+	// cout << endl;
 	return branch;
 }
 
@@ -246,19 +247,19 @@ void CPTPredictor::UpdateCountTable(Sequence* target, float weight, std::unorder
 
 
 		set<uint64_t> hashTargetTMP(hashTarget);
-		vector<uint64_t>::reverse_iterator r_it;
-		for (r_it = branch.rbegin(); r_it != branch.rend() && hashTargetTMP.size() > 0; r_it++) hashTargetTMP.erase(*r_it);
+		vector<uint64_t>::iterator it;
+		for (it = branch.begin(); it != branch.end() && hashTargetTMP.size() > 0; it++) hashTargetTMP.erase(*it);
 
-		for (; r_it != branch.rend(); r_it++){
+		for (; it != branch.end(); it++){
 			float oldValue = 0;
-			if(countTable.find(*r_it) != countTable.end()) {
-				oldValue = countTable[*r_it];
+			if(countTable.find(*it) != countTable.end()) {
+				oldValue = countTable[*it];
 			}
 
 		// 	//Update the countable with the right weight and value
 			float curValue = 1.0 /((float)indexes.size());
-			if (!oldValue) countTable.insert({*r_it, oldValue + weight /((float)indexes.size())});
-			else countTable[*r_it] = oldValue + weight /((float)indexes.size());
+			if (!oldValue) countTable.insert({*it, oldValue + weight /((float)indexes.size())});
+			else countTable[*it] = oldValue + weight /((float)indexes.size());
 			
 			gotVisit(hashSidVisited, index);
 		}

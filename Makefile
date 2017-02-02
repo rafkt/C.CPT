@@ -65,7 +65,7 @@ $(BUILD_PATH)/Encoder.o: $(INCLUDE_PATH)/Encoder.h $(INTERFACE_PATH)/Encoder/Enc
 $(BUILD_PATH)/FIFRaw.o: $(INCLUDE_PATH)/FIFRaw.h $(LIB_path)/FIFRaw.cpp $(INCLUDE_PATH)/Sequence.h
 	$(CC) $(OFLAGS) $(FLAGS) $(LIB_path)/FIFRaw.cpp -o $(BUILD_PATH)/FIFRaw.o
 $(BUILD_PATH)/CPTPlusPredictor.o: $(INCLUDE_PATH)/CPTPredictor.h $(CCPT_path)/CPTPlusPredictor.cpp $(INCLUDE_PATH)/CPTPlusPredictor.h $(INCLUDE_PATH)/FIFRaw.h $(INCLUDE_PATH)/Encoder.h
-	$(CC) $(OFLAGS) $(FLAGS) $(CCPT_path)/CPTPlusPredictor.cpp -o $(BUILD_PATH)/CPTPlusPredictor.o
+	$(CC) $(OFLAGS) $(FLAGS) $(FLAGS_SDSL_I) $(CCPT_path)/CPTPlusPredictor.cpp -o $(BUILD_PATH)/CPTPlusPredictor.o
 
 clean:
 	$(REM) $(BUILD_PATH)/*$(XF)

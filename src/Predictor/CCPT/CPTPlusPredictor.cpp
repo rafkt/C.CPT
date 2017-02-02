@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 
-#include "../../../include/DatabaseHelper.h"
+#include "../../../include/DatabaseHelper.h"// comment this in along with main after debugging
 
 
 using namespace std;
@@ -67,11 +67,11 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 		Sequence* encoded = encoder->encode(newTrainingSet[i]);
 		encodedSeqs.push_back(encoded);
 
-		Sequence* decoded_tmp = encoder->decode(encoded, false);
+		// Sequence* decoded_tmp = encoder->decode(encoded);
 
-		for (uint64_t d = 0; d < decoded_tmp->size(); d++)
-			if (decoded_tmp->getItems()[d] != newTrainingSet[i]->getItems()[d]) cout << "ERROR" << endl;
-		if (decoded_tmp->size() != newTrainingSet[i]->size()) cout << "SIZE ERROR" << endl;
+		// for (uint64_t d = 0; d < decoded_tmp->size(); d++)
+		// 	if (decoded_tmp->getItems()[d] != newTrainingSet[i]->getItems()[d]) cout << "ERROR" << endl;
+		// if (decoded_tmp->size() != newTrainingSet[i]->size()) cout << "SIZE ERROR" << endl;
 
 		//end of encoding, continue as normal
 
@@ -111,13 +111,13 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 		//Going up the tree
 		curNode = curNode->getParent();
 	}
-	//reverse(branch.begin(), branch.end()); //implemented in Encoder
+	reverse(branch.begin(), branch.end()); //implemented in Encoder
 	Sequence* encoded = new Sequence(branch);
-	Sequence* decoded = encoder->decode(encoded, true);
+	Sequence* decoded = encoder->decode(encoded);
 	vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
 	delete encoded;
-	for (uint64_t i : decoded_items) cout << i << " ";
-	cout << endl;
+	// for (uint64_t i : decoded_items) cout << i << " ";
+	// cout << endl;
 	return decoded_items;
 }
 

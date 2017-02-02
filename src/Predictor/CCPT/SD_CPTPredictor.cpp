@@ -30,7 +30,13 @@ float SD_CPTPredictor::memoryInMB(){
 }
 
 vector<uint64_t> SD_CPTPredictor::getBranch(uint64_t index){
-	return sd_tree->getNodesToRoot(index);
+	std::vector<uint64_t> branch = sd_tree->getNodesToRoot(index);
+
+	reverse(branch.begin(), branch.end());
+	// for (uint64_t i : branch) cout << i << " ";
+	// cout << endl;
+
+	return branch;
 }
 
 vector<uint64_t> SD_CPTPredictor::getMatchingSequences(Sequence* target){
