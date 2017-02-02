@@ -51,6 +51,12 @@ void Profile::apply(){
 		parameters.insert(make_pair("countTableWeightMultiplier", "2")); // 0 for no weight (1)", "1 for 1/targetSize", "2 for level/targetSize
 		parameters.insert(make_pair("countTableWeightDivided", "1")); // 0 for no divider", "1 for x/(#ofBranches for this sequence)
 
+		//CCF compression
+		parameters.insert(make_pair("CCF", "true"));
+		parameters.insert(make_pair("CCFmin", "2"));
+		parameters.insert(make_pair("CCFmax", "4"));
+		parameters.insert(make_pair("CCFsup", "2"));
+
 		//Others
 		parameters.insert(make_pair("useHashSidVisited", "true"));
 		parameters.insert(make_pair("branchTraversalTopToBottom", "true")); //used for branches with duplicates", "set to true to allow with duplicates

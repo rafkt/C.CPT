@@ -9,7 +9,7 @@
 #define EVALUATOR_H
 class Evaluator{
 	public:
-		enum Predictor_Structures{RAW, SD};
+		enum Predictor_Structures{RAW, SD, PLUS};
 		Evaluator(std::string, DatabaseHelper::Format, Predictor_Structures);
 		~Evaluator();
 		float getMemoryUsageInMB();

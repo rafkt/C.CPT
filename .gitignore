@@ -30,3 +30,6 @@
 
 #Mac OS filesystem
 .DS_Store
+
+#TexPad tmp files
+results/report/.texpadtmp/
