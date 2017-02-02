@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstdint>
+#include "CPTPlusPredictor.h"
 
 #ifndef PREDICTIONTREE_H
 #define PREDICTIONTREE_H
@@ -26,5 +27,7 @@ class PredictionTree{
 		uint64_t item;
 		PredictionTree* parent;
 		std::vector<PredictionTree*> children;
+
+	friend void CPTPlusPredictor::pathCollapse();
 };
 #endif

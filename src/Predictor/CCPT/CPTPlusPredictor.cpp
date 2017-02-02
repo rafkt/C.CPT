@@ -98,6 +98,10 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 	//after train delete the encoder staff that you dont need anymore
 	//delete FIF after train ->> no need
 
+	//Patch collapsing for added compression
+	if(parameters.paramBool("CBS")) {
+		pathCollapse();
+	}
 
 	return true;
 }
@@ -119,6 +123,80 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 	// for (uint64_t i : decoded_items) cout << i << " ";
 	// cout << endl;
 	return decoded_items;
+}
+
+/**
+ * This compression method can be called on a compressed prediction tree
+ * to replace direct branch with a single node.
+ * 
+ * Once one of these branch has been found, each node a decoded and concatenated
+ * to form a single itemset which is then inserted in the encoder and used to
+ * replace the branch with a single node. 
+ * 
+ * As an optimization, the leaf of the branch is the node used to replace the branch,
+ * so the Lookup Table for CPT does not have to be updated since it is already pointing
+ * to this node.
+ */
+void CPTPlusPredictor::pathCollapse() {
+	
+	uint64_t nodeSaved = 0;
+	
+	//for each sequences registered in the Lookup Table (LT)
+	for(uint64_t i; i < trainingSequenceNumber; i++) {
+		
+		PredictionTree* cur = LT[i];
+		PredictionTree* leaf = cur;
+		PredictionTree* last = nullptr;
+		vector<uint64_t> itemset;
+		uint64_t pathLength = 0;
+		boolean singlePath = true;
+		
+		//if this cur is a true leaf
+		if(cur->getChildren().size() == 0) {
+			
+			//while the path is singular (starting from the leaf)
+			while(singlePath == true) {
+				
+				//if the current node has multiple children
+				if(cur.getChildren().size() > 1 || cur == nullptr) {
+					
+					if(pathLength != 1) {
+						//updating the leaf to be a child of cur
+						uint64_t newId = encoder->getIdorAdd(itemset);
+						leaf->item = newId;
+						leaf->Parent = cur;
+						
+						//updating cur to have the leaf has a child
+						//cur->removeChild(last->item);
+						//cur->addChild(leaf);
+						
+						//saving the number of node saved
+						nodeSaved += pathLength - 1;
+					}
+					singlePath = false;
+				}
+				//this node has only one child and so it is added to the itemset 
+				else {
+					vector<uint64_t> curItemset = encoder->getEntry(cur->item);
+					
+					vector<uint64_t> tmp(itemset);
+					vector<uint64_t> itemset_tmp;
+					itemset_tmp.push_back(curItemset.begin(), curItemset.end());
+					itemset_tmp.push_back(tmp.begin(), tmp.end());
+					
+					cur->getChildren().clear();
+					
+					pathLength++;
+					
+					last = cur;
+					cur = cur->parent;
+				}
+			}			
+		}
+	}
+	
+	nodeNumber -= nodeSaved;
+	if (printNodeNumber) cout << "(PathCollpase) Nodes: " << nodeNumber;
 }
 
 int main(){

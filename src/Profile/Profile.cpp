@@ -52,6 +52,7 @@ void Profile::apply(){
 		parameters.insert(make_pair("countTableWeightDivided", "1")); // 0 for no divider", "1 for x/(#ofBranches for this sequence)
 
 		//CCF compression
+		parameters.insert(make_pair("CBS", "true"));
 		parameters.insert(make_pair("CCF", "true"));
 		parameters.insert(make_pair("CCFmin", "2"));
 		parameters.insert(make_pair("CCFmax", "4"));
