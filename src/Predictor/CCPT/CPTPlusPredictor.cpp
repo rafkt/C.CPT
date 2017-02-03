@@ -99,7 +99,7 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 	//delete FIF after train ->> no need
 
 	//Patch collapsing for added compression
-	if(parameters.paramBool("CBS")) {
+	if(profile->paramBool("CBS")) {
 		pathCollapse();
 	}
 
@@ -142,14 +142,14 @@ void CPTPlusPredictor::pathCollapse() {
 	uint64_t nodeSaved = 0;
 	
 	//for each sequences registered in the Lookup Table (LT)
-	for(uint64_t i; i < trainingSequenceNumber; i++) {
+	for(uint64_t i = 0; i < trainingSequenceNumber; i++) {
 		
 		PredictionTree* cur = LT[i];
 		PredictionTree* leaf = cur;
 		PredictionTree* last = nullptr;
 		vector<uint64_t> itemset;
 		uint64_t pathLength = 0;
-		boolean singlePath = true;
+		bool singlePath = true;
 		
 		//if this cur is a true leaf
 		if(cur->getChildren().size() == 0) {
@@ -158,17 +158,20 @@ void CPTPlusPredictor::pathCollapse() {
 			while(singlePath == true) {
 				
 				//if the current node has multiple children
-				if(cur.getChildren().size() > 1 || cur == nullptr) {
+				if(cur->getChildren().size() > 1 || cur == nullptr) {
 					
 					if(pathLength != 1) {
 						//updating the leaf to be a child of cur
 						uint64_t newId = encoder->getIdorAdd(itemset);
 						leaf->item = newId;
-						leaf->Parent = cur;
+						leaf->parent = cur;
 						
 						//updating cur to have the leaf has a child
-						//cur->removeChild(last->item);
-						//cur->addChild(leaf);
+						uint64_t tmp_size = cur->getChildren().size();
+						cur->removeChild(last->item);
+						if (tmp_size != cur->getChildren().size() + 1) cout << "ERROR" << endl;
+						cur->addChild(leaf);
+						if (tmp_size != cur->getChildren().size()) cout << "ERROR" << endl;
 						
 						//saving the number of node saved
 						nodeSaved += pathLength - 1;
@@ -181,10 +184,11 @@ void CPTPlusPredictor::pathCollapse() {
 					
 					vector<uint64_t> tmp(itemset);
 					vector<uint64_t> itemset_tmp;
-					itemset_tmp.push_back(curItemset.begin(), curItemset.end());
-					itemset_tmp.push_back(tmp.begin(), tmp.end());
+					itemset_tmp.insert(itemset_tmp.end(), curItemset.begin(), curItemset.end());
+					itemset_tmp.insert(itemset_tmp.end(), tmp.begin(), tmp.end());
+					itemset = itemset_tmp;
 					
-					cur->getChildren().clear();
+					cur->clearAllLeafs();
 					
 					pathLength++;
 					
@@ -196,7 +200,7 @@ void CPTPlusPredictor::pathCollapse() {
 	}
 	
 	nodeNumber -= nodeSaved;
-	if (printNodeNumber) cout << "(PathCollpase) Nodes: " << nodeNumber;
+	cout << "(PathCollpase) Nodes: " << nodeNumber;
 }
 
 int main(){
