@@ -150,15 +150,21 @@ void CPTPlusPredictor::pathCollapse() {
 		vector<uint64_t> itemset;
 		uint64_t pathLength = 0;
 		bool singlePath = true;
+		bool LTentry = false;
 		
 		//if this cur is a true leaf
 		if(cur->getChildren().size() == 0) {
 			
 			//while the path is singular (starting from the leaf)
 			while(singlePath == true) {
+
+				//another entry of LT is showing to this node
+				for(uint64_t t = 0; t < trainingSequenceNumber; t++){
+					if(LT[t] == cur && t != i) LTentry = true;
+				}
 				
 				//if the current node has multiple children
-				if(cur->getChildren().size() > 1 || cur == nullptr) {
+				if(cur->getChildren().size() > 1 || cur == nullptr || LTentry) {
 					
 					if(pathLength != 1) {
 						//updating the leaf to be a child of cur
@@ -167,28 +173,41 @@ void CPTPlusPredictor::pathCollapse() {
 						leaf->parent = cur;
 						
 						//updating cur to have the leaf has a child
-						uint64_t tmp_size = cur->getChildren().size();
-						cur->removeChild(last->item);
-						if (tmp_size != cur->getChildren().size() + 1) cout << "ERROR" << endl;
-						cur->addChild(leaf->item);
-						if (tmp_size != cur->getChildren().size()) cout << "ERROR" << endl;
+						for (uint64_t nd_ch = 0; nd_ch < cur->getChildren().size(); nd_ch++){
+							if (cur->getChildren()[nd_ch]->item == last->item){
+								delete cur->getChildren()[nd_ch];
+								cur->getChildren().erase(cur->getChildren().begin() + nd_ch);
+								break;
+							}
+						}
+						//delete cur->getChild(last->item)
+						
+						cur->addChild(leaf);
+						
 						
 						//saving the number of node saved
 						nodeSaved += pathLength - 1;
 					}
 					singlePath = false;
+					LTentry = false;
 				}
 				//this node has only one child and so it is added to the itemset 
 				else {
-					vector<uint64_t> curItemset = encoder->getEntry(cur->item);
+
+					itemset = encoder->getEntry(cur->item);
+
+					// vector<uint64_t> curItemset = encoder->getEntry(cur->item);
 					
-					vector<uint64_t> tmp(itemset);
-					vector<uint64_t> itemset_tmp;
-					itemset_tmp.insert(itemset_tmp.end(), curItemset.begin(), curItemset.end());
-					itemset_tmp.insert(itemset_tmp.end(), tmp.begin(), tmp.end());
-					itemset = itemset_tmp;
+					// vector<uint64_t> tmp(itemset);
+					// vector<uint64_t> itemset_tmp;
+					// itemset_tmp.insert(itemset_tmp.end(), curItemset.begin(), curItemset.end());
+					// itemset_tmp.insert(itemset_tmp.end(), tmp.begin(), tmp.end());
+					// itemset = itemset_tmp;
 					
-					cur->clearAllLeafs();
+					if (cur->getChildren().size() > 0) {
+						delete cur->getChildren()[0];
+						cur->getChildren().clear();
+					}
 					
 					pathLength++;
 					
