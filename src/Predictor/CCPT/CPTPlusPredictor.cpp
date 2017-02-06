@@ -170,7 +170,7 @@ void CPTPlusPredictor::pathCollapse() {
 						uint64_t tmp_size = cur->getChildren().size();
 						cur->removeChild(last->item);
 						if (tmp_size != cur->getChildren().size() + 1) cout << "ERROR" << endl;
-						cur->addChild(leaf);
+						cur->addChild(leaf->item);
 						if (tmp_size != cur->getChildren().size()) cout << "ERROR" << endl;
 						
 						//saving the number of node saved

@@ -45,15 +45,18 @@ vector<PredictionTree*>& PredictionTree::getChildren(){
 	return children;
 }
 bool PredictionTree::removeChild(uint64_t item){
-	for (uint64_t nd = 0; nd < children.size(); nd++)
+	for (uint64_t nd = 0; nd < children.size(); nd++){
 		if (children[nd]->item == item){
-			for (uint64_t nd_ch = 0; nd_ch < children[nd]->children.size(); nd_ch++)
-				children[nd]->children[nd_ch]->parent = children[nd]->parent;
-			children[nd]->parent->children.insert(children[nd]->parent->children.end(), children[nd]->children.begin(), children[nd]->children.end());
+			if (children[nd]->children.size() > 0){
+				for (uint64_t nd_ch = 0; nd_ch < children[nd]->children.size(); nd_ch++)
+					children[nd]->children[nd_ch]->parent = this;
+				children.insert(children.end(), children[nd]->children.begin(), children[nd]->children.end());
+			}
 			delete children[nd];
 			children.erase(children.begin() + nd);
 			return true;
 		}
+	}
 	return false;
 }
 
