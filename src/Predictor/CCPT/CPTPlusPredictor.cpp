@@ -166,9 +166,13 @@ void CPTPlusPredictor::pathCollapse() {
 				//if the current node has multiple children
 				if(cur->getChildren().size() > 1 || cur == nullptr || LTentry) {
 					
-					if(pathLength != 1) {
+					if(pathLength > 1) {
 						//updating the leaf to be a child of cur
-						uint64_t newId = encoder->getIdorAdd(itemset);
+						reverse(itemset.begin(), itemset.end());
+						Sequence* encoded = new Sequence(itemset);
+						Sequence* decoded = encoder->decode(encoded);
+						vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
+						uint64_t newId = encoder->getIdorAdd(decoded_items);
 						leaf->item = newId;
 						leaf->parent = cur;
 						
@@ -194,7 +198,8 @@ void CPTPlusPredictor::pathCollapse() {
 				//this node has only one child and so it is added to the itemset 
 				else {
 
-					itemset = encoder->getEntry(cur->item);
+					itemset.push_back(cur->item);
+					//itemset = encoder->getEntry(cur->item);
 
 					// vector<uint64_t> curItemset = encoder->getEntry(cur->item);
 					

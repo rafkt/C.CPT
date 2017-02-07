@@ -162,5 +162,8 @@ Sequence* Encoder::decode(Sequence* seq){
 // 	seq1->print();
 // 	encoded->print();
 // 	en.decode(encoded)->print();
+// 	std::vector<uint64_t> v1({2, 1});
+// 	Sequence* seq2 = new Sequence(v1);
+// 	en.decode(seq2)->print();
 	
 // }
