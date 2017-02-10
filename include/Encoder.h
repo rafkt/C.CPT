@@ -15,6 +15,7 @@ class Encoder{
 		Sequence* encode(Sequence*);
 		Sequence* decode(Sequence*);
 		float sizeInMB();
+		void clearInvDict();
 	private:
 		std::vector<std::vector<uint64_t>> Dict;
 		std::map<std::vector<uint64_t>, uint64_t> InvDict;

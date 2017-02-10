@@ -10,6 +10,10 @@ Encoder::~Encoder(){
 float Encoder::sizeInMB(){
 	return 0.0;
 }
+void Encoder::clearInvDict(){
+	InvDict.clear(); //this is only needed during encoding - no need to keep if we only decode items.
+	//Either call after Train is finished or after pathCollapse (if implemented) is finished.
+}
 // Add an itemset in the dictionary
 // return the Id of the itemset
 uint64_t Encoder::addEntry(std::vector<uint64_t> entry){

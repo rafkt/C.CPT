@@ -21,6 +21,7 @@ CPTPlusPredictor::CPTPlusPredictor(vector<Sequence*> trainingSequences, Profile*
 	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPlusPredictor::~CPTPlusPredictor(){
+	CPTPredictor::~CPTPredictor();
 	delete encoder;
 }
 float CPTPlusPredictor::memoryInMB(){
@@ -98,7 +99,7 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 	//after train delete the encoder staff that you dont need anymore
 	//delete FIF after train ->> no need
 
-
+	encoder->clearInvDict();
 	return true;
 }
 std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
