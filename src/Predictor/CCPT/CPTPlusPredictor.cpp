@@ -1,7 +1,7 @@
 #include "../../../include/CPTPlusPredictor.h"
 #include <vector>
 #include <iostream>
-
+#include <algorithm>
 #include "../../../include/DatabaseHelper.h"// comment this in along with main after debugging
 
 
@@ -21,7 +21,6 @@ CPTPlusPredictor::CPTPlusPredictor(vector<Sequence*> trainingSequences, Profile*
 	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPlusPredictor::~CPTPlusPredictor(){
-	CPTPredictor::~CPTPredictor();
 	delete encoder;
 }
 float CPTPlusPredictor::memoryInMB(){
