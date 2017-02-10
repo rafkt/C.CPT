@@ -25,7 +25,7 @@ CPTPlusPredictor::~CPTPlusPredictor(){
 	delete encoder;
 }
 float CPTPlusPredictor::memoryInMB(){
-	return 0.0;
+	return CPTPredictor::memoryInMB() + encoder->sizeInMB();
 }
 
 bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
@@ -117,6 +117,7 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 	Sequence* decoded = encoder->decode(encoded);
 	vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
 	delete encoded;
+	delete decoded;
 	// for (uint64_t i : decoded_items) cout << i << " ";
 	// cout << endl;
 	return decoded_items;
