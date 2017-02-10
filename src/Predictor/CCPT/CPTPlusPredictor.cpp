@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "../../../include/DatabaseHelper.h"// comment this in along with main after debugging
-
+//#include "../../../include/DatabaseHelper.h"// comment this in along with main after debugging
+//#include "../../../include/SD_CPTPredictor.h"
 
 using namespace std;
 
@@ -24,6 +24,7 @@ CPTPlusPredictor::~CPTPlusPredictor(){
 	delete encoder;
 }
 float CPTPlusPredictor::memoryInMB(){
+	cout << "Endoder size in MB: " << encoder->sizeInMB() << endl;
 	return CPTPredictor::memoryInMB() + encoder->sizeInMB();
 }
 
@@ -122,25 +123,25 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 	return decoded_items;
 }
 
-int main(){
-	Profile* pf = new Profile();
-	pf->apply();
-	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
-	CPTPredictor* cpt_pr = new CPTPlusPredictor(db->getDatabase(), pf);
-	cpt_pr->createII();
+// int main(){
+// 	Profile* pf = new Profile();
+// 	pf->apply();
+// 	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
+// 	CPTPredictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf);
+// 	cpt_pr->createII();
 
 
-	vector<uint64_t> v = {356, 122};
-	Sequence* target = new Sequence(v);
-	Sequence* predicted = cpt_pr->Predict(target);
-	cout << "Prtedicted: " << endl;
-	predicted->print();
-	cout << endl;
-	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+// 	vector<uint64_t> v = {356, 122};
+// 	Sequence* target = new Sequence(v);
+// 	Sequence* predicted = cpt_pr->Predict(target);
+// 	cout << "Prtedicted: " << endl;
+// 	predicted->print();
+// 	cout << endl;
+// 	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
-	delete cpt_pr;
-	delete pf;
-	delete db;
-	delete target;
-	delete predicted;
-}
+// 	delete cpt_pr;
+// 	delete pf;
+// 	delete db;
+// 	delete target;
+// 	delete predicted;
+// }

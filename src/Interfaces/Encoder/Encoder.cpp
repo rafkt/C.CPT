@@ -2,13 +2,17 @@
 #include <vector>
 #include <deque>
 #include <iostream>
+#include <math.h>
 
 Encoder::Encoder(){
 }
 Encoder::~Encoder(){
 }
+//it will return the size of the dictionary only - since InvDict is erased after training
 float Encoder::sizeInMB(){
-	return 0.0;
+	float total = 0.0;
+	for (std::vector<uint64_t> v : Dict) total += (8 + v.size() * 8) * 8 * 1.25 * pow(10, -7);
+	return total;
 }
 void Encoder::clearInvDict(){
 	InvDict.clear(); //this is only needed during encoding - no need to keep if we only decode items.
