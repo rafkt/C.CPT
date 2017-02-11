@@ -4,7 +4,7 @@
 \end{comment}
 
 \section*{Abstract}
-Predicting the next item of a sequence over a finite alphabet has important approaches in various domains. emph{Lossless} approach is a new approach  recently introduced by \citeauthor{gueniche_fournier-viger_tseng_2013} \citeyear{gueniche_fournier-viger_tseng_2013} with CPT. CPT (Compact Prediction Tree) keeps all the training data in order for all the relevant information to be available for each prediction and yield more accurate predictions. Later, CPT+ \cite{gueniche_fournier-viger_raman_tseng_2015} stood as an improved version over CPT. CPT+ improved the high space and time complexity of CPT and increased its accuracy. Compared to other state-of-the-art models from the literature: TDAG, PPM, Lz78, DG, PPM, All-K-order, CPT, CPT+ has the best overall accuracy under evaluation on real life datasets. Recently, CPT+ was used in SPiCe \cite{balle:hal-01399429} competition where it ranked among the best 10 accurate predictors. The competition used a different way of evaluating the predictors from the way that CPT/+ originally evaluated. Hence, its accuracy success is not based on only one particular evaluation, highlighting its importance. However, even the improved CPT+ utilises a fairly big amount of memory in order to losslessly keep all the training data. This puts some constrains on the size of the training data which will fed CPT+. Tested under real life datasets, CPT+ utilises space from .. to .. times more than a \emph{compact representation} of training data (\(\Gamma\)). Below, it is presented a \emph{succinct} representation of CPT+ (sCPT) where it consistently utilises from .. to .. space in comparison to \(\Gamma\), without any significant performance loss in regards to speed. Therefore, sCPT is able to hold undoubtedly more training data, leading to an improved accuracy.
+Predicting the next item of a sequence over a finite alphabet has important approaches in various domains. emph{Lossless} approach is a new approach  recently introduced by \citeauthor{gueniche_fournier-viger_tseng_2013} \citeyear{gueniche_fournier-viger_tseng_2013} with CPT. CPT (Compact Prediction Tree) keeps all the training data in order for all the relevant information to be available for each prediction and yield more accurate predictions. Later, CPT+ \cite{gueniche_fournier-viger_raman_tseng_2015} stood as an improved version over CPT. CPT+ improved the high space and time complexity of CPT and increased its accuracy. Compared to other state-of-the-art models from the literature: TDAG, PPM, Lz78, DG, PPM, All-K-order, CPT, CPT+ has the best overall accuracy under evaluation on real life datasets. Recently, CPT+ was used in SPiCe \cite{balle:hal-01399429} competition where it ranked among the best 10 accurate predictors. The competition used a different way of evaluating the predictors from the way that CPT/+ originally evaluated. Hence, its accuracy success is not based on only one particular evaluation, highlighting its importance. However, even the improved CPT+ utilises a fairly big amount of memory in order to losslessly keep all the training data. This puts some constrains on the size of the training data which will fed CPT+. Tested under real life datasets, CPT+ utilises space from 15 to 175 times more than a \emph{compact representation} of training data (\(\Gamma\)). Below, it is presented a \emph{succinct} representation of CPT+ (sCPT) where it consistently utilises from 1.2 to 3 times the space of \(\Gamma\), without any significant performance loss in regards to speed. Therefore, sCPT is able to hold undoubtedly more training data, leading to an improved accuracy.
 
 
 \section{Introduction}
@@ -74,7 +74,7 @@ CPT and CPT+ (as lossless approaches) utilise all the available sequences in a t
 
 \section{Succinct CPT}\label{ccpt}
 Succinct CPT copes with all the memory disadvantages of CPT by introducing different succinct data structures for the roles of PT, II and LT. By using succinct data structures, fast operations like \emph{rank/select} (Appendix \ref{App:rank_select}) are offered. Thus, a significant memory reduction is achieved and the performance of CPT+ is relatively retained. The predictor of CPT+ remains the same. In order for this to be achieved, the combined succinct data structures offer the same functionalities and instructions as the former CPT+ structures (II, PT, LT).
-\subsection{Elias-Fano for Inverted indicies}
+\subsection{Elias-Fano for Inverted indices}\label{elicas_fano}
 The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item is contained in which sequence. However, every bit-vector can be treated as an inverted list of the positions of the set bits. Hence, the bit-vector for item \(A\) of the Figure \ref{fig:CPT-structure} can be written as \(\langle 1, 2, 3\rangle\). Since, every position in the bit-vector is correlated with a sequence serial number (1\textsuperscript{st}, 2\textsuperscript{nd}, \dots, l\textsuperscript{th} sequence) it is obvious to conclude that the aforementioned inverted list is monotone sequence of numbers. Thist is important because  the compression technique which is mainly being used and described next, is based on \emph{gap encoding}. As it will be proved later, gap encoding will make possible to store the II in space smaller or at least same as the space of the initial dataset. The techniques described below are based on a paper by Elias \cite{elias_efficient_1974} and a paper which demonstrates IIs which use such techiques \cite{vigna_quasi-succinct_2013}.
 \subsubsection*{Elias Techinque}
 \par It is clear that every bit-vector of the II can be seen as an inverted list of the sequences that the alphabet item is contained. Because the list is monotone can be seen as \[0 \leq x\textsubscript{0} \leq x\textsubscript{1} \leq \dots \leq x\textsubscript{n - 2} \leq x\textsubscript{n - 1} \leq u \] where \(u > 0 \) as a known upper bound. That bound is always known because during prediction phase the dataset size is known too. Now, this list of numbers can be split in two bit arrays according to the formulas below:
@@ -135,7 +135,7 @@ Similarly, we can continue accessing all the values sequentially by keeping trac
 CPT predictor uses the II in order to determine which sequences contain specific alphabet items. With an II which uses bit-vectors this can be done by applying a bit-wise AND to the relevant bit-vectors. In inverted indices that follow the Elias a gap encoding way, the same functionality can be achieved by \emph{decoding} every list of values for every alphabet item and them by applying an intersection among the relevant lists. However, intersecting lists that might contain a relative big amount of values is inefficient because every intersection will depend on the length of the largest list. With Elias-Fano II we can take advantage of the fact that we can \emph{jump in} a specific value of a list and complete an intersection in relation to the smallest list. Therefore, the overall speed performance is not affected much as shown in experimental evaluation.
 
 \subsection{PT in sCPT}
-Currently CPT uses trie as a structure in order to store the sequences of a dataset and retrieve the sequences back during prediction phase (Figure \ref{fig:CPT-structure}). However as it has already been mentioned the pointers need to every child node and to parent to represent this linking relation among the nodes, make this kind of representation wasteful of space. On the other hand, having pointer to link nodes together, provide us fast with a convenient and a rapid traversal of the trie. Below, it is described a way to reduce the space by a factor of 20 times (in most cases) and without sacrificing speed performance in terms of the CPT predictor needs.
+Currently CPT uses trie as a structure in order to store the sequences of a dataset and retrieve the sequences back during prediction phase (Figure \ref{fig:CPT-structure}). However as it has already been mentioned the pointers need to every child node and to parent to represent this linking relation among the nodes, make this kind of representation wasteful of space. On the other hand, having pointer to link nodes together, provide us fast with a convenient and a rapid traversal of the trie. Below, it is described a way to reduce the space by a factor of 20 times and without sacrificing speed performance in terms of the CPT predictor needs.
 \subsubsection*{Binary Tree as a Level-order Bitmap}
 
 \begin{figure}
@@ -146,33 +146,64 @@ Currently CPT uses trie as a structure in order to store the sequences of a data
 \end{figure}
 
 A binary tree can be represented as a series of bits, called \emph{bitmap} \cite{jacobson_space-efficient_1989} . Later, it will be shown how relations among nodes can be achieved, same as having a normal binary tree and it can be generalised for any \emph{k-ary} trees. Figure \ref{fig:binary_bm} shows a bitmap representation of a binary tree. In order to produce the bitmap of the binary tree, the tree has to be traversed in level order beginning from the root and writing down the first $1$ of the bitmap. Then, the next level should be traversed where an $1$ is put in the bitmap if there is a node or $0$ in case a node does not exist at the appropriate position. As it can be seen from the figure, the number of $1_s$ written in the bitmap equals to the number of nodes of the binary tree. The overall length of the bitmap is $2 \cdot \eta  + 1$ where $\eta$ is the overall number of nodes of binary tree.
-\par Accessing a child or parent node of the tree can now be achieved by applying rank/select operations on the bitmap itself.
+\par Accessing a child or parent node of the tree can now be achieved by applying rank/select operations on the bitmap itself. 
 \begin{description}
-	\item [get child]
-	\item [get sibling]
-	\item [get parent]
+	\item [get child] \(rank_1(i) \cdot 2 - 1\)
+	\item [get right sibling] \(rank_1(i) \cdot 2 + 1\)
+	\item [get parent] \(select_1(\frac{i + 1}{2} )\)
 \end{description}
 
+Where \(i\) is the index of the node in the bitmap. Looking at Figure \ref{fig:binary_bm}, an example of find the index of parent node located at $9_{th}$ position would be node located at $4_{th}$ position of the bitmap. That is because the parent node will be the $t_{th}$ 1 in the bitmap, which is at position 4. Similarly, it can be checked, at any position, whether there is a right sibling or not. If the remaining of the position index divided by 2 is not zero, then there is a right sibling. Accessing a child and getting a sibling is achieved by using rank operation as shown.
+
 \subsubsection*{K-ary Trees as Level-order Bitmap}
+The binary tree bitmap can easily be generalised to any k-ary tree as shown in Figure \ref{fig:k-ary-bm}. Then accessing child, getting sibling and getting parent are generalised as:
+
+\begin{description}
+	\item [get child] \(rank_1(i) \cdot K - 1\)
+	\item [get right sibling] \(rank_1(i) \cdot K + 1\)
+	\item [get parent] \(select_1(\frac{i + 1}{K} )\)
+	\item [sibling exist if] remaining of \(\frac{i}{k}\) is not zero
+\end{description}
 
 \begin{figure}
 	 \centering
     \includegraphics[width=0.75\textwidth]{k-ary_bitmap}
     \caption{Generalized Jacobson encoding of a 4-ary tree: 1111 1111 1111 1011 1110 1101 1001 0000 0011 0000 1111 0010 1111 1001 1101 1100 0011 1101 1011 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000--- 200 bits}
-    \label{fig:binary_bm}
+    \label{fig:k-ary-bm}
 \end{figure}
 
 \subsubsection*{Storing bitmap}
-
-
-
-
-
+A relative serious drawback of the described approach for representing a tree using a binary bitmap is the fact that the bitmap gets quite long. The overall length is twice as long as the total number of nodes. Usually, rank/select operations have a space and time overhead that depends upon the type of the bit-vector that they support. Deciding how to store the bitmap could affect both the memory utilisation and the speed performance. According to SDSL-lite library \cite{gog_2015}, a rank which supports a bit-vector has a 25\% of its total length bits overhead and an \(\mathcal{O}(1)\) time complexity. These stats vary according to the representation of the bit-vector (such other bit-vector representation is RRR-vectors \cite{Raman}). CPT+ predictor is mainly depended on accessing parents nodes since LT points to the end of sequences. Elias Fano representation of bit-vectors, as described in section \ref{elicas_fano}, is implement with sd-vector by SDSL-lite library. Getting the parent node in a bitmap requires only select operation. The select operation on a sd-vector has a space overhead of 64 bits and an \(mathcal{O}(1)\) time complexity. These properties and the way the bitmap is stored (as already explained for inverted indices) make it an ideal option for storing the bitmap of the PT. Accessing the parent node will be achieved quite as fast as in the PT while representing it almost succinctly and saving a big amount of space. 
+ 
 \subsection{Look-Up Table Omission}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{cpt-lt-ommission}
+    \caption{WRIRE CAPTION}
+    \label{fig:LT-ommission}
+\end{figure}
+
 \section{Experimental Results and Performance Comparison} \label{experimental}
+
+
+
 \subsection{Space Comparison}
 \subsection{Speed Comparison}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{sdvsCPTplus}
+    \caption{WRIRE CAPTION}
+    \label{fig:sdvsCPTplus}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{sdIIvsII}
+    \caption{WRIRE CAPTION}
+    \label{fig:sdIIvsII}
+\end{figure}
 
 
 \newpage
