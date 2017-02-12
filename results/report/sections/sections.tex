@@ -18,9 +18,6 @@ Lossless sequence prediction is a relatively new approach and therefore appears 
 \par On contrary, a \emph{lossy} approach can be less memory hungry by representing the given information of a dataset through models (like \emph{dependency graphs}) \cite{Padmanabhan:1996:UPP:235160.235164}. This leads to implementation that sometimes utilises less space and can be potentially faster. However, a lossy approach lacks accuracy especially in hard cases when information in a dataset is not repeating as other parts of informations or a repetition is either generalised or ignored by a model having a partly loss of information that is not reversible. Often such hard cases lead to more complex models that along with Big data is hard to make algorithms that produce predictions with efficiency and performance.
 
 \section{CPT and CPT+}\label{CPT}
-then do predictor
-then CPT+ data structures improvement
-Memory for II, LT, Trie Encoder (QUEST)
 
 \subsection{Data structures of CPT}
 
@@ -182,7 +179,7 @@ In CPT+ Look-Up table is used for pointing in the last node of a sequence within
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{cpt-lt-ommission}
-    \caption{WRIRE CAPTION}
+    \caption{Illustration of how LT can be omitted and have LT take its role}
     \label{fig:LT-ommission}
 \end{figure}
 
@@ -191,24 +188,25 @@ For the experimental results a C++ version of CPT and CPT+ implemented. The desi
 \par To evaluate memory, both CPT+ and sCPT were trained with the whole dataset and then the memory calculation performed upon the total memory retained in C++ Heap segment after the training is finished. The speed performance evaluated by feeding the predictor with queries of length 3 items which are generated through the same dataset that trained CPT+ and sCPT respectively. Since the accuracy of the prediction is not currently evaluated and the purpose of this evaluation was to perform a full prediction process (to evaluate speed when predictor does all its steps), a K-Fold \cite{Kohavi} validation environment was not set up. It should pointed out that both CPT+ and sCPT use exact the same predictor. What changes is the instruction call to their data structures respectively (achieved through Encapsulation).
 
 \subsection*{Space Comparison}
-
-\subsection*{Speed Comparison}
-
+For the space comparisons the compact representation of training data usage ($\Gamma$) will be used as a metric between CPT+ and sCPT. CPT+ utilises $15 \cdot \Gamma$ to $174 \cdot \Gamma$ (Figure \ref{fig:sdvsCPTplus}). sCPT space utilisation lies between $1.2 \cdot \Gamma$ to $4.7 \cdot \Gamma$. The succinct representation of CPT+ can be considered more consistent and predictable since its variance range for memory is much less than CPT+. The inverted indices that correspond to the biggest structure in regards of memory consumption among the other structures in CPT+, is presented opposite the II representation in sCPT at Figure \ref{fig:sdIIvsII}. II in CPT+ takes $0.2 \cdot \Gamma$ to $163 \cdot \Gamma$ while in sCPT $0.5 \cdot \Gamma$ to $2.9 \cdot \Gamma$. These comparisons illustrate the memory benefits of sCPT over CPT. Therefore, the ability for sCPT to scale is much greater than this of CPT+.
+ \subsection*{Speed Comparison}
+Figure \ref{fig:sdvsCPTplus} depicts the speed performance of sCPT opposite to CPT+. Positive number means that sCPT is slower and negative that it is faster. sCPT through experiments found to be 10\% to 60\% slower in half of the datasets while its performance considered the same or slightly faster in the rest of the datasets. The performance differences lie only only on the data structures instructions which used for each approach and not in any variations of the predictor. 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{sdvsCPTplus}
-    \caption{WRIRE CAPTION}
+    \caption{at right: sCPT and CPT+ over $\Gamma$, at left: execution time ratio of sCPT over CPT+. The execution time (clock time) measured for 1000 queries, same for both implementations.}
     \label{fig:sdvsCPTplus}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.75\textwidth]{sdIIvsII}
-    \caption{WRIRE CAPTION}
+    \caption{II of sCPT over $\Gamma$ and II of CPT+ over $\Gamma$. Negative number means that the structure takes less space than the compact representation of training data}
     \label{fig:sdIIvsII}
 \end{figure}
 
 \section{Conclusion}
+CPT+ is proven to be one of the state-of-the-art predictors which ranked among the best in SPiCe competition. However its memory consumption lack of consistency and predictability which make it difficult for CPT+ to scale up as a lossless approach. sCPT overcomes these weaknesses of CPT+ and offers a consistent and predictable memory utilisation without sacrificing any serious amount of performance. With sCPT the ability of greater scalability is offered. As already proven by CPT and CPT+, losslessly keeping all the available training data offers greater accuracy. As a future work for sCPT would be to evaluate the fact that scaling the lossless predictor in a factor where much more training data is available, would improve prediction accuracy even more.
 
 
 \newpage
