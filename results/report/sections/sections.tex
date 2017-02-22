@@ -163,10 +163,10 @@ Where \(i\) is the index of the node in the bitmap. Looking at Figure \ref{fig:b
 The binary tree bitmap can easily be generalised to any K-ary tree as shown in Figure \ref{fig:k-ary-bm}. Then accessing child, getting sibling and getting parent are generalised as:
 
 \begin{description}
-	\item [get child] \(rank_1(i) \cdot K - 1\)
-	\item [get right sibling] \(rank_1(i) \cdot K + 1\)
-	\item [get parent] \(select_1(\frac{i + 1}{K} )\)
-	\item [sibling exist if] remaining of \(\frac{i}{k}\) is not zero
+	\item [get child: ] \(rank_1(i) \cdot K - 1\)
+	\item [get right sibling: ] \(rank_1(i) \cdot K + 1\)
+	\item [get parent: ] \(select_1(\frac{i + 1}{K} )\)
+	\item [sibling exist if: ] remaining of \(\frac{i}{K}\) is not zero
 \end{description}
 
 \begin{figure}
@@ -178,9 +178,57 @@ The binary tree bitmap can easily be generalised to any K-ary tree as shown in F
 
 \subsubsection*{Storing bitmap}
 A relative serious drawback of the described approach for representing a tree using a binary bitmap is the fact that the bitmap gets quite long. The overall length is twice as long as the total number of nodes (for a binary tree). Usually, rank/select operations have a space and time overhead that depends upon the type of the bit-vector that they support. Deciding how to store the bitmap could affect both the memory utilisation and the speed performance. According to SDSL-lite library \cite{gog_2015}, a rank which supports a bit-vector has a 25\% of its total length bits overhead and an \(\mathcal{O}(1)\) time complexity. These stats vary according to the representation of the bit-vector (such other bit-vector representation is RRR-vectors \cite{Raman}). CPT+ predictor is mainly depended on accessing parents nodes since LT points to the end of sequences. Elias Fano representation of bit-vectors, as described in section \ref{elicas_fano}, is implemented with sd-vectors by SDSL-lite library. Getting the parent node in a bitmap requires only select operation. The select operation on a sd-vector has a space overhead of 64 bits and an \(\mathcal{O}(1)\) time complexity. These properties and the way the bitmap is stored (as already explained for inverted indices) make it an ideal option for storing the bitmap of the PT. Accessing the parent node will be achieved quite as fast as in the trie representation of CPT+. At the same time the representation will be succinct which will save a big amount of space. 
+
+\todo[inline]{
+Proof that a bitmap stored with Elias Fano will take space up to $\Gamma + 2\cdot M$ 
+
+\[N = \textnormal{ total number of trie nodes}\]
+\[M = k \cdot l (\textnormal{ length of the dataset}) \]
+
+The space for the bitmap with Elias Fano is:
+
+\begin{equation} \label{bitmap_mem}
+	\begin{gathered}
+		N \leq M \\
+		\bigg(\log\Big( \frac{(N + 1)\cdot \sigma}{(N + 1)}\Big) + 2\bigg)\cdot N = (\log\sigma + 2)\cdot N = (\log\sigma + 2)\cdot  M = \\
+		= \log\sigma\cdot M + 2 \cdot M = \Gamma + 2\cdot M, \textnormal{using definition for } \Gamma
+	\end{gathered}
+\end{equation}
+}
  
 \subsection{Look-Up Table Omission}
 In CPT+ Look-Up table is used for pointing in the last node of a sequence within the trie. However shown in Figure \ref{fig:LT-ommission}, the nodes of the trie can be counted in a level-order way and thus an II upon the node count would be easy to be constructed. The $1^{st}$ sequence will be the $6_{th}$ column in the inverted index due to the fact that this sequence ends on node 6 in the trie. However, the II length now depends on the total number of trie nodes. The total number of nodes is usually much higher than the total number of sequences (in case that is less due to high sequence repetition then this approach is even better for the II memory utilisation). As a result, the II would contain longer bit-vectors for every alphabet item. It is common to assume that no memory is saved but the opposite happens. On the other hand, sCPT uses bit-vectors coded with Elias Fano technique. It can be proven that the extra overhead per bit-vector will be $log_2(M)$, where $M$ is the ratio of nodes count over sequence number (assuming that node count is higher than sequence number). Also, in most datasets the sequence number is greater than the alphabet size. Thus, this overhead will be less than the 64 bits per sequence which is required by LT. 
+
+\todo[inline]{
+In equation (\ref{II_ef_mem_final}), it was proved that an II with Elias Fano represenations takes up to $1\cdot \Gamma$.
+However, with the LT omission, we construct II upon the total number of trie nodes ($N$). If $N\leq l$ then (\ref{II_ef_mem_final}) still holds. If $N\geq l$ then the II will take space:
+\begin{equation} \label{II_LT_mem}
+	\begin{gathered}
+		\sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{N}{n_{\iota}}) + 2 ), \textnormal{ where: } N = x\cdot l \\
+		\Rightarrow \sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{x\cdot l}{n_{\iota}}) + 2 ) \\
+		\Rightarrow \sum_{\iota = 1}^{\sigma} n_{\iota}\cdot (\log(x) + \log(\frac{l}{n_{\iota}}) + 2 )\\
+		\Rightarrow \log(x)\cdot \sum_{\iota = 1}^{\sigma}n_{\iota} + \sum_{\iota = 1}^{\sigma} n_{\iota}\cdot (\log(\frac{l}{n_{\iota}}) + 2 )\\
+		\Rightarrow \log(x)\cdot M + \Gamma, \textnormal{using equation (\ref{II_ef_mem_final})} \\
+		\Rightarrow \Gamma + \log(\frac{N}{l})\cdot M
+	\end{gathered}
+\end{equation}
+
+\begin{equation} \label{seq_length}
+	\begin{gathered}
+		N \leq M \\
+		\frac{M}{l} = k, \textnormal{ sequence length}\\
+	\end{gathered}
+\end{equation}
+
+\par Using  equations (\ref{bitmap_mem}), (\ref{II_LT_mem}) and (\ref{seq_length}), then the total pessimistic memory usage of sCPT will be:
+
+\begin{equation}
+	\begin{gathered}
+		\Gamma + \log(k)\cdot M + \Gamma + 2\cdot M =\\
+		= 2\cdot \Gamma + 2\cdot M + \log(k)\cdot M = \\ = 2\cdot \Gamma + M\cdot (2 + \log(k))
+	\end{gathered}
+\end{equation}
+}
 
 \begin{figure}[h]
     \centering
@@ -192,6 +240,7 @@ In CPT+ Look-Up table is used for pointing in the last node of a sequence within
 \section{Experimental Results and Performance Comparison} \label{experimental}
 For the experimental results a C++ version of CPT and CPT+ implemented. The design and architecture is the same as CPT and CPT+ original implementation in Java 8 (provided at http://goo.gl/LE4uYO). The experiments performed on a Intel Xeon CPU E5-2620 v3 at 2.40GHz, Cache 15MB, 16GB Ram DDR4 at 1866MHz. The datasets that were used are available through SPMF library \cite{spmf} and constitute real life datasets. The BMS, Kosarak, MSNBC Fifa, Nasa\_07 and Nasa\_08 datasets consist of webpages logs by users on webpages. SIGN dataset is transcribed from videos, in sign language. BIBLE is constituted by the set of sentences divided into words which represents a sequence. 
 \par To evaluate memory, both CPT+ and sCPT were trained with the whole dataset and then the memory calculation performed upon the total memory retained in C++ Heap segment after the training is finished. The speed performance evaluated by feeding the predictor with queries of length 3 items which are generated through the same dataset that trained CPT+ and sCPT respectively. Since the accuracy of the prediction is not currently evaluated and the purpose of this evaluation was to perform a full prediction process (to evaluate speed when predictor does all its steps), a K-Fold \cite{Kohavi} validation environment was not set up. It should pointed out that both CPT+ and sCPT use the exact same predictor. What changes is the instruction call to their data structures respectively.
+
 
 \subsection*{Space Comparison}
 For the space comparisons the compact representation of training data usage ($\Gamma$) will be used as a metric between CPT+ and sCPT. CPT+ utilises $15 \cdot \Gamma$ to $174 \cdot \Gamma$ (Figure \ref{fig:sdvsCPTplus}). sCPT space utilisation lies between $1.2 \cdot \Gamma$ to $4.7 \cdot \Gamma$. The succinct representation of CPT+ can be considered more consistent and predictable since its variance range for memory is much less than CPT+. The inverted indices correspond to the biggest structure in regards of memory consumption among the other structures in CPT+. II in CPT+ takes $0.2 \cdot \Gamma$ to $163 \cdot \Gamma$ while in sCPT $0.5 \cdot \Gamma$ to $2.9 \cdot \Gamma$ (Figure \ref{fig:sdIIvsII}). These comparisons illustrate the memory benefits of sCPT over CPT. Therefore, the ability for sCPT to scale is much greater than this of CPT+.
