@@ -6,6 +6,9 @@
 \usepackage{url}
 \usepackage{hyperref}
 
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{marginnote}
+
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{amsmath}
@@ -29,12 +32,18 @@
 
 \usepackage{geometry}
  \geometry{
- a4paper,
- total={210mm,297mm},
- left=20mm,
- right=20mm,
+ inner=20mm,
+ outer=50mm,% = marginparsep + marginparwidth 
+                       %   + 5mm (between marginpar and page border)
  top=20mm,
- bottom=20mm,
+ bottom=25mm,
+ marginparsep=5mm,
+ marginparwidth=40mm,
+ %a4paper,
+ %total={170mm,257mm},
+ %left=20mm,
+ %top=20mm,
+ showframe% for show your page design, normaly not used
  }
 
 \usepackage{enumitem} 
