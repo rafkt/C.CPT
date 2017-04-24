@@ -1,0 +1,131 @@
+SD_CPT
+BMS1_spmf
+Trie node number: 33464
+Sigma: 497
+Sequnce Number: 59601
+Total CPT RAW size in megabytes: Endoder size in MB: 0.544706
+Marisa Size in MB: 0.116872
+6.07368
+-----------------------------------
+II size in megabytes: 3.7136
+Trie size in megabytes: 1.33856
+LT size in megabytes: 0.476816
+Endoder size in MB: 0.544706
+Marisa Size in MB: 0.116872
+BMS2
+Trie node number: 134957
+Sigma: 3340
+Sequnce Number: 77512
+Total CPT RAW size in megabytes: Endoder size in MB: 1.71135
+Marisa Size in MB: 0.1686
+40.1678
+-----------------------------------
+II size in megabytes: 32.4381
+Trie size in megabytes: 5.39828
+LT size in megabytes: 0.620104
+Endoder size in MB: 1.71135
+Marisa Size in MB: 0.1686
+Kosarak
+Trie node number: 240517
+Sigma: 21145
+Sequnce Number: 69999
+Total CPT RAW size in megabytes: Endoder size in MB: 3.70669
+Marisa Size in MB: 0.158032
+199.287
+-----------------------------------
+II size in megabytes: 185.399
+Trie size in megabytes: 9.62068
+LT size in megabytes: 0.56
+Endoder size in MB: 3.70669
+Marisa Size in MB: 0.158032
+SIGN
+Trie node number: 18872
+Sigma: 267
+Sequnce Number: 730
+Total CPT RAW size in megabytes: Endoder size in MB: 0.282075
+Marisa Size in MB: 0.006824
+1.07272
+-----------------------------------
+II size in megabytes: 0.02992
+Trie size in megabytes: 0.75488
+LT size in megabytes: 0.005848
+Endoder size in MB: 0.282075
+Marisa Size in MB: 0.006824
+BIBLE
+Trie node number: 283527
+Sigma: 13906
+Sequnce Number: 36369
+Total CPT RAW size in megabytes: Endoder size in MB: 6.80925
+Marisa Size in MB: 0.087904
+81.9639
+-----------------------------------
+II size in megabytes: 63.5226
+Trie size in megabytes: 11.3411
+LT size in megabytes: 0.29096
+Endoder size in MB: 6.80925
+Marisa Size in MB: 0.087904
+LEVIATHAN
+Trie node number: 94388
+Sigma: 9025
+Sequnce Number: 5834
+Total CPT RAW size in megabytes: Endoder size in MB: 1.47208
+Marisa Size in MB: 0.021312
+12.0811
+-----------------------------------
+II size in megabytes: 6.78682
+Trie size in megabytes: 3.77552
+LT size in megabytes: 0.04668
+Endoder size in MB: 1.47208
+Marisa Size in MB: 0.021312
+MSNBC
+Trie node number: 85184
+Sigma: 17
+Sequnce Number: 31790
+Total CPT RAW size in megabytes: Endoder size in MB: 0.769123
+Marisa Size in MB: 0.095512
+4.49869
+-----------------------------------
+II size in megabytes: 0.06788
+Trie size in megabytes: 3.40736
+LT size in megabytes: 0.254328
+Endoder size in MB: 0.769123
+Marisa Size in MB: 0.095512
+FIFA
+Trie node number: 253903
+Sigma: 2990
+Sequnce Number: 20450
+Total CPT RAW size in megabytes: Endoder size in MB: 5.75995
+Marisa Size in MB: 0.049328
+23.7819
+-----------------------------------
+II size in megabytes: 7.70226
+Trie size in megabytes: 10.1561
+LT size in megabytes: 0.163608
+Endoder size in MB: 5.75995
+Marisa Size in MB: 0.049328
+NASA_access_log_Aug95
+Trie node number: 102044
+Sigma: 4018
+Sequnce Number: 70730
+Total CPT RAW size in megabytes: Endoder size in MB: 1.94168
+Marisa Size in MB: 0.188272
+42.2049
+-----------------------------------
+II size in megabytes: 35.6156
+Trie size in megabytes: 4.08176
+LT size in megabytes: 0.565848
+Endoder size in MB: 1.94168
+Marisa Size in MB: 0.188272
+NASA_access_log_Jul95
+Trie node number: 139398
+Sigma: 4718
+Sequnce Number: 87749
+Total CPT RAW size in megabytes: Endoder size in MB: 2.6742
+Marisa Size in MB: 0.195024
+60.8124
+-----------------------------------
+II size in megabytes: 51.8603
+Trie size in megabytes: 5.57592
+LT size in megabytes: 0.702
+Endoder size in MB: 2.6742
+Marisa Size in MB: 0.195024
