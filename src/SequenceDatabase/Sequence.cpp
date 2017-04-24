@@ -36,6 +36,13 @@ void Sequence::operator = (const Sequence& S){
 		for (uint64_t i = 0; i < S.size(); i++) this->sequenceItems[i] = s_items[i];
 	}
 }
+std::ostream& operator<<(std::ostream &strm, const Sequence &seq) {
+	for(uint64_t i = 0; i < seq._size; i++){
+		if (i < seq._size - 1) strm << seq.sequenceItems[i] << " ";
+		else strm << seq.sequenceItems[i];
+	}
+	return strm;
+}
 
 // int main(){
 // 	vector<uint64_t> seq = {1, 2, 3, 4, 5};
