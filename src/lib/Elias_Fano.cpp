@@ -105,7 +105,7 @@ void Elias_Fano::printArray(){
 }
 
 double Elias_Fano::size_in_MB(){
-	return (8 + (ceil((m + size)/(double) 64)) * 8) / (double) 1048576 + size_in_mega_bytes(*l_part);
+	return (8 + (ceil((m + size)/(double) 64)) * 8) / (double) 1048576 + size_in_mega_bytes(*l_part) + size_in_mega_bytes(*rank_h_part) + size_in_mega_bytes(*select_h_part);
 }
 
 Elias_Fano::~Elias_Fano(){
