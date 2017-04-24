@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 //#include "../../../include/DatabaseHelper.h"// comment this in along with main after debugging
 //#include "../../../include/SD_CPTPredictor.h"
 
@@ -17,14 +18,22 @@ CPTPlusPredictor::CPTPlusPredictor(vector<Sequence*> trainingSequences, Profile*
 	root = new CPT_Trie();
 	LT = new PredictionTree*[trainingSequences.size()];
 	encoder = new Encoder();
+	marisa_keyset = new marisa::Keyset();
+	marisa_trie = new marisa::Trie();
 	Train(trainingSequences);
+	marisa_trie->build(*marisa_keyset);
 	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPlusPredictor::~CPTPlusPredictor(){
 	delete encoder;
+	//deleting marisa trie
+	delete marisa_keyset;
+	delete marisa_trie;
 }
 float CPTPlusPredictor::memoryInMB(){
 	cout << "Endoder size in MB: " << encoder->sizeInMB() << endl;
+	//print marisa stats
+	cout << "Marisa Size in MB: " << marisa_trie->io_size() * 8 * 1.25 * pow(10, -7) << endl;
 	return CPTPredictor::memoryInMB() + encoder->sizeInMB();
 }
 
@@ -60,6 +69,12 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 	
 	// //For each line (sequence) in file
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) {
+
+		std::stringstream ss;
+		ss << newTrainingSet[i];
+		marisa::Key key;
+		key.set_str(ss.str().c_str());
+		marisa_keyset->push_back(key);
 		
 		PredictionTree* curNode = root;
 		
@@ -91,6 +106,9 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 		LT[seqId++] = curNode; //adding <sequence id, last node in sequence>
 		 //increment sequence id number
 	}
+
+	//build marisa trie
+	marisa_trie->build(*marisa_keyset);
 
 	//pathColapse to be implemented.
 

@@ -7,7 +7,7 @@ FLAGS=-O3 -g -DNDEBUG -DSD_CONSTRACTION
 FLAGS_SDSL_I=-I ~/include
 FLAGS_SDSL_L=-L ~/lib
 OFLAGS=-c
-LIBS=-lsdsl -ldivsufsort -ldivsufsort64
+LIBS=-lsdsl -ldivsufsort -ldivsufsort64 -lmarisa
 
 EXEFLAGS=-o ./program.out
 

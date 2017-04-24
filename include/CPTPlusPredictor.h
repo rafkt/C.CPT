@@ -1,6 +1,7 @@
 #include "CPTPredictor.h"
 #include "FIFRaw.h"
 #include "Encoder.h"
+#include <marisa.h>
 
 #ifndef CPTPLUSPREDICTOR_H
 #define CPTPLUSPREDICTOR_H
@@ -13,5 +14,8 @@ class CPTPlusPredictor : public CPTPredictor{
 		virtual bool Train(std::vector<Sequence*>);
 		virtual std::vector<uint64_t> getBranch(uint64_t);
 		Encoder* encoder;
+		marisa::Keyset *marisa_keyset;
+		marisa::Trie *marisa_trie;
+
 };
 #endif
