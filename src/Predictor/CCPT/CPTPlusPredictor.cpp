@@ -21,7 +21,7 @@ CPTPlusPredictor::CPTPlusPredictor(vector<Sequence*> trainingSequences, Profile*
 	marisa_keyset = new marisa::Keyset();
 	marisa_trie = new marisa::Trie();
 	Train(trainingSequences);
-	marisa_trie->build(*marisa_keyset, 2);
+	marisa_trie->build(*marisa_keyset, 4);
 	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPlusPredictor::~CPTPlusPredictor(){
