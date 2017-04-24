@@ -1,5 +1,6 @@
 #include <vector>
 #include <cstdint>
+#include <string>
 
 #ifndef SEQUENCE_H
 #define SEQUENCE_H
@@ -16,5 +17,6 @@ class Sequence
 	private:
 		uint64_t* sequenceItems;
 		uint64_t _size;
+		friend std::ostream& operator<<(std::ostream&, const Sequence&);
 };
 #endif
