@@ -21,7 +21,7 @@ Let \(B\) be a sequence of \(n\) items. Then \textbf{rank(c)} and \textbf{select
 The time complexity of rank/select queries depends on the structure where these two operation are built on. For example, it is possible to execute rank/select in constant \(\mathcal{O}(1)\) time for some bit-vectors, like rrr-vectors \cite{Raman}, or another binary rank index \cite{dillabaugh_2007}.
 
 \section{Prediction Tasks} \label{App:predtask}
-The adoption of which item is predicted after the context and in \(\langle q_{j+1},q_{j+2},\ldots\rangle\) is only specified by the prediction task.
+The prediction algorithm is given a context \(\langle q_1, q_2,\ldots, q_j,\rangle\) and the predictor aims to say something about what is in \(\langle q_{j+1},q_{j+2},\ldots\rangle\). The adoption of which item is predicted after the context and in \(\langle q_{j+1},q_{j+2},\ldots\rangle\) is only specified by a prediction task:
 \begin{description}
   \item[Right next item:] The prediction algorithm gives one prediction for the \(q_{j+1}\) coming after the given context.
   \item[Top $K$ predictions:]  The prediction algorithm gives $K$ alternative predictions for the \(q_{j+1}\) item of the given context.
