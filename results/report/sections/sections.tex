@@ -81,7 +81,7 @@ Succinct CPT copes with all the memory disadvantages of CPT by introducing diffe
 \subsection{Elias-Fano for Inverted indices}\label{elicas_fano}
 The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item is contained in which sequence. However, every bit-vector can be treated as an inverted list of the positions of the set bits. Hence, the bit-vector for item \(A\) of the Figure \ref{fig:CPT-structure} can be written as \(\langle 1, 2, 3\rangle\). The inverted list is for an obvious reason a monotone sequence of numbers. This is important because  the compression technique which is mainly being used and described next, is based on \emph{gap encoding}. As it will be proved later, gap encoding will make possible to store the II in space smaller or at least same as the space of the initial dataset. The techniques described below are based on a paper by Elias \cite{elias_efficient_1974} and a paper which demonstrates similar ideas for representing Inverted Indices \cite{vigna_quasi-succinct_2013}.
 \subsubsection*{Elias Techinque}
-\par It is clear that every bit-vector of the II can be seen as an inverted list of the sequences that the alphabet item is contained. Because the list is monotone can be seen as \[0 \leq x\textsubscript{0} \leq x\textsubscript{1} \leq \dots \leq x\textsubscript{n - 2} \leq x\textsubscript{n - 1} \leq u \] where \(u > 0 \) as a known upper bound. That bound is always known because during prediction phase the dataset size is known too. Now, this list of numbers can be split in two bit arrays according to the formulas below:
+\par It is clear that every bit-vector of the II can be seen as an inverted list of the sequences that the alphabet item is contained. Because the list is monotone can be seen as \[0 \leq x\textsubscript{0} \leq x\textsubscript{1} \leq \dots \leq x\textsubscript{n - 2} \leq x\textsubscript{n - 1} \leq u \] where \(u > 0 \) as a known upper bound (sequence number in the training set). That bound is always known because during prediction phase the dataset size is known too. Now, this list of numbers can be split in two bit arrays according to the formulas below:
 	\begin{description}
   	\item[lower bit array:] for every item of the list, the array continuously stores its lower $\lambda$ bits where \(\lambda = max\{0, \lfloor \log(u/n)\rfloor\}\).
   	\item[upper bit array:] then the upper bits are stored in a sequence of unary-coded gaps (see Figure \ref{fig:ef_ex})
@@ -94,19 +94,19 @@ The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item i
     \label{fig:ef_ex}
 \end{figure}	
 \subsubsection*{Space property}
-\par Space wise, it can be proven \cite{vigna_quasi-succinct_2013} that for every item of a list it is used at most \(2 + \lceil\log(u/n)\rceil\) bits. The dataset containing the sequences, from where the II will be created, can be considered as a memoryless source. Then, every symbol appears with a probability of \(p_{\kappa} = \frac{1}{\sigma} \) in the dataset. The bits needed to code a symbol will be \( \sum_{\kappa = 1}^{\sigma} p_{\kappa} \cdot \log(\frac{1}{p_{\kappa}}) = \log(\sigma)\). An II that uses Elias way of recording the set bit positions for every bit-vector, will take a total space:
+\par Storing $u$ numbers with the above way takes at most \(2 + \lceil\log(u/n)\rceil\) bits \cite{vigna_quasi-succinct_2013}. Every symbol of the training set appears with a probability of \(p_{\kappa} = \frac{1}{\sigma} \). The space which is needed to code a symbol will be at most\( \sum_{\kappa = 1}^{\sigma} p_{\kappa} \cdot \log(\frac{1}{p_{\kappa}}) = \log(\sigma)\) bits. An II that uses Elias way of recording the set bit positions for every bit-vector, will take a total space:
 
 \begin{equation} \label{II_ef_mem}
 \sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{l}{n_{\iota}}) + 2 )
 \end{equation}
 
-We set as \(M\) to be the total length of the dataset. Then:
+Then:
 
 \begin{equation} \label{II_dataset}
 	M \geq l 
 \end{equation} 
 
-Using (\ref{II_ef_mem}), we can oversimplify it as:
+Using (\ref{II_ef_mem}), we can set an upper bound:
 
 \begin{equation}\label{II_em_simplified}
 	\sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{M}{n_{\iota}}) + 2 )
