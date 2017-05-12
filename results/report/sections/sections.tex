@@ -9,7 +9,7 @@ Predicting the next item of a sequence over a finite alphabet has important appl
 
 
 \section{Introduction}
-Let a finite set of items (symbols) \(\Sigma = \{e_1, e_2,\ldots,e_\sigma\}\) be called \emph{alphabet}, then a \emph{sequence} \(S\) is a list of ordered items \(S=\langle i_1,i_2,\ldots,i_k\rangle\) where \(i_m \in \Sigma\ \textnormal{for} \ 1\leq m \leq k\). A multiset of sequences \(D = \langle S_1, S_2,\ldots,S_l\rangle\) also called \emph{dataset} is constituted by sequences which share same characteristics. The total sum of all the sequences items defines the length of the dataset $M$. Given a dataset, a prediction algorithm is \emph{trained} on this dataset.  Once the prediction algorithm is trained, it will repeatedly accept a \emph{context} which is another sequence of symbols, and outputs a \emph{prediction}. The context is obtained from an unknown \emph{query sequence} which does not belong to the dataset but shares common characteristics with the dataset.  Loosely speaking, the context is derived from a part of the query sequence, and the prediction is about what comes \emph{after} the context in the query. What comes after can take different meanings depending on the application that we target.The process of what the predictor predicts is defined by a prediction task (Appendix \ref{App:predtask}). Each prediction task can be correlated with numerous applications such as, products recommendationt, web page prefetching, compression algorithms etc. 
+Let a finite set of items (symbols) \(\Sigma = \{e_1, e_2,\ldots,e_\sigma\}\) be called \emph{alphabet}, then a \emph{sequence} \(S\) is a list of ordered items \(S=\langle i_1,i_2,\ldots,i_k\rangle\) where \(i_m \in \Sigma\ \textnormal{for} \ 1\leq m \leq k\). A multiset of sequences \(D = \langle S_1, S_2,\ldots,S_l\rangle\) also called \emph{dataset} is constituted by sequences which share same characteristics. The total sum of all the sequences items defines the length of the dataset $M$. Similarly, we define $M^{\prime}$ as $M$ excluding the duplicate items from every sequence. Given a dataset, a prediction algorithm is \emph{trained} on this dataset.  Once the prediction algorithm is trained, it will repeatedly accept a \emph{context} which is another sequence of symbols, and outputs a \emph{prediction}. The context is obtained from an unknown \emph{query sequence} which does not belong to the dataset but shares common characteristics with the dataset.  Loosely speaking, the context is derived from a part of the query sequence, and the prediction is about what comes \emph{after} the context in the query. What comes after can take different meanings depending on the application that we target.The process of what the predictor predicts is defined by a prediction task (Appendix \ref{App:predtask}). Each prediction task can be correlated with numerous applications such as, products recommendationt, web page prefetching, compression algorithms etc. 
 
 \par Compact Representation of training data (\(\Gamma\)) will play an important role as a comparison measure of memory utilisation, in this report. It captures the total size of training data that is given as an input to a predictor. It is defined as \(\Gamma = \log(\sigma) \cdot M \) bits and constitutes a base for comparison among different predictors and their memory utilisations.
 
@@ -103,27 +103,30 @@ The II as shown in Figure \ref{fig:CPT-structure} contains which alphabet item i
 Then:
 
 \begin{equation} \label{II_dataset}
-	M \geq l 
+	M\geq M^{\prime} \geq l 
 \end{equation} 
 
 Using (\ref{II_ef_mem}), we can set an upper bound:
 
 \begin{equation}\label{II_em_simplified}
-	\sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{M}{n_{\iota}}) + 2 )
+	\sum_{\iota = 1}^{\sigma} n_{\iota}\cdot ( \log(\frac{M^{\prime}}{n_{\iota}}) + 2 )
 \end{equation}
 For any bit-vector of the II:
 \begin{equation} \label{bit_vector_prob}
-	p_{\iota} = \frac{n_{\iota}}{M} \textnormal{, using (\ref{II_dataset})}
+	p_{\iota} = \frac{n_{\iota}}{M^{\prime}} \textnormal{, using (\ref{II_dataset})}
 \end{equation}
 Finally, using (\ref{II_em_simplified} and (\ref{bit_vector_prob})), the total memory of an II using Elias technique will be:
 
 \begin{equation} \label{II_ef_mem_final}
-	\sum_{\iota = 1}^{\sigma} M\cdot p_{\iota}\cdot ( \log(\frac{1}{p_{\iota}}) + 2 )
+	\begin{gathered}
+		\sum_{\iota = 1}^{\sigma} M^{\prime}\cdot p_{\iota}\cdot ( \log(\frac{1}{p_{\iota}}) + 2 ) \\ 
+		M^{\prime}\cdot\Big(\sum_{\iota = 1}^{\sigma} p_{\iota}\cdot \log(\frac{1}{p_{\iota}}) + 2\Big)
+	\end{gathered}
 \end{equation}
 
-In last equation (\ref{II_ef_mem_final}) and by claiming that the oversimplification at (\ref{II_em_simplified}) is usually \(M > l \), it can be assumed for most cases that the total memory is less than the memory needed to code the whole dataset. So:
+In last equation (\ref{II_ef_mem_final}) we can show that it has an upper bound of $M^{\prime}\cdot log(\sigma)$ when $p_1 = p_2 = \dots = p_\iota$ (uniform distribution). Thus by using (\ref{II_dataset}) we conclude that:
 \begin{equation}
-	\sum_{\iota = 1}^{\sigma} M\cdot p_{\iota}\cdot ( \log(\frac{1}{p_{\iota}})) \leq M\cdot log(\sigma)
+	M^{\prime}\cdot\Big(\sum_{\iota = 1}^{\sigma} p_{\iota}\cdot \log(\frac{1}{p_{\iota}})\Big) \leq M\cdot \log(\sigma)
 \end{equation}
 This final statement is important due to the fact that most of the times a usual data structure consumes space that is at least an order of magnitude of the initial input data size. In the above case, the space which is used by an inverted index with Elias Fano representaions, is usually less or the same as the size of the input data.
 \subsubsection*{Accessing Values}
@@ -184,7 +187,6 @@ A relative serious drawback of the described approach for representing a tree us
 Proof that a bitmap stored with Elias Fano will take space up to $\Gamma + 2\cdot M$ 
 
 \[N = \textnormal{ total number of trie nodes}\]
-\[M = k \cdot l (\textnormal{ length of the dataset}) \]
 
 The space for the bitmap with Elias Fano is:
 
@@ -217,7 +219,7 @@ However, with the LT omission, we construct II upon the total number of trie nod
 \begin{equation} \label{seq_length}
 	\begin{gathered}
 		N \leq M \\
-		\frac{M}{l} = k, \textnormal{ sequence length}\\
+		\frac{M}{l}\\
 	\end{gathered}
 \end{equation}
 
@@ -225,8 +227,8 @@ However, with the LT omission, we construct II upon the total number of trie nod
 
 \begin{equation}
 	\begin{gathered}
-		\Gamma + \log(k)\cdot M + \Gamma + 2\cdot M =\\
-		= 2\cdot \Gamma + 2\cdot M + \log(k)\cdot M = \\ = 2\cdot \Gamma + M\cdot (2 + \log(k))
+		\Gamma + \log(\frac{M}{l})\cdot M + \Gamma + 2\cdot M =\\
+		= 2\cdot \Gamma + 2\cdot M + \log(\frac{M}{l})\cdot M = \\ = 2\cdot \Gamma + M\cdot (2 + \log(\frac{M}{l}))
 	\end{gathered}
 \end{equation}
 }
