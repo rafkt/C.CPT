@@ -99,7 +99,11 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 	//after train delete the encoder staff that you dont need anymore
 	//delete FIF after train ->> no need
 
-	encoder->clearInvDict();
+	//Patch collapsing for added compression
+	if(profile->paramBool("CBS")) {
+		pathCollapse();
+	}
+
 	return true;
 }
 std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
@@ -117,31 +121,132 @@ std::vector<uint64_t> CPTPlusPredictor::getBranch(uint64_t index){
 	Sequence* decoded = encoder->decode(encoded);
 	vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
 	delete encoded;
-	delete decoded;
 	// for (uint64_t i : decoded_items) cout << i << " ";
 	// cout << endl;
 	return decoded_items;
 }
 
-// int main(){
-// 	Profile* pf = new Profile();
-// 	pf->apply();
-// 	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
-// 	CPTPredictor* cpt_pr = new SD_CPTPredictor(db->getDatabase(), pf);
-// 	cpt_pr->createII();
+/**
+ * This compression method can be called on a compressed prediction tree
+ * to replace direct branch with a single node.
+ * 
+ * Once one of these branch has been found, each node a decoded and concatenated
+ * to form a single itemset which is then inserted in the encoder and used to
+ * replace the branch with a single node. 
+ * 
+ * As an optimization, the leaf of the branch is the node used to replace the branch,
+ * so the Lookup Table for CPT does not have to be updated since it is already pointing
+ * to this node.
+ */
+void CPTPlusPredictor::pathCollapse() {
+	
+	uint64_t nodeSaved = 0;
+	
+	//for each sequences registered in the Lookup Table (LT)
+	for(uint64_t i = 0; i < trainingSequenceNumber; i++) {
+		
+		PredictionTree* cur = LT[i];
+		PredictionTree* leaf = cur;
+		PredictionTree* last = nullptr;
+		vector<uint64_t> itemset;
+		uint64_t pathLength = 0;
+		bool singlePath = true;
+		bool LTentry = false;
+		
+		//if this cur is a true leaf
+		if(cur->getChildren().size() == 0) {
+			
+			//while the path is singular (starting from the leaf)
+			while(singlePath == true) {
+
+				//another entry of LT is showing to this node
+				for(uint64_t t = 0; t < trainingSequenceNumber; t++){
+					if(LT[t] == cur && t != i) LTentry = true;
+				}
+				
+				//if the current node has multiple children
+				if(cur->getChildren().size() > 1 || cur == nullptr || LTentry) {
+					
+					if(pathLength > 1) {
+						//updating the leaf to be a child of cur
+						reverse(itemset.begin(), itemset.end());
+						Sequence* encoded = new Sequence(itemset);
+						Sequence* decoded = encoder->decode(encoded);
+						vector<uint64_t> decoded_items(decoded->getItems(), decoded->getItems() + decoded->size());
+						uint64_t newId = encoder->getIdorAdd(decoded_items);
+						leaf->item = newId;
+						leaf->parent = cur;
+						
+						//updating cur to have the leaf has a child
+						for (uint64_t nd_ch = 0; nd_ch < cur->getChildren().size(); nd_ch++){
+							if (cur->getChildren()[nd_ch]->item == last->item){
+								delete cur->getChildren()[nd_ch];
+								cur->getChildren().erase(cur->getChildren().begin() + nd_ch);
+								break;
+							}
+						}
+						//delete cur->getChild(last->item)
+						
+						cur->addChild(leaf);
+						
+						
+						//saving the number of node saved
+						nodeSaved += pathLength - 1;
+					}
+					singlePath = false;
+					LTentry = false;
+				}
+				//this node has only one child and so it is added to the itemset 
+				else {
+
+					itemset.push_back(cur->item);
+					//itemset = encoder->getEntry(cur->item);
+
+					// vector<uint64_t> curItemset = encoder->getEntry(cur->item);
+					
+					// vector<uint64_t> tmp(itemset);
+					// vector<uint64_t> itemset_tmp;
+					// itemset_tmp.insert(itemset_tmp.end(), curItemset.begin(), curItemset.end());
+					// itemset_tmp.insert(itemset_tmp.end(), tmp.begin(), tmp.end());
+					// itemset = itemset_tmp;
+					
+					if (cur->getChildren().size() > 0) {
+						delete cur->getChildren()[0];
+						cur->getChildren().clear();
+					}
+					
+					pathLength++;
+					
+					last = cur;
+					cur = cur->parent;
+				}
+			}			
+		}
+	}
+	
+	nodeNumber -= nodeSaved;
+	cout << "(PathCollpase) Nodes: " << nodeNumber;
+}
+
+//int main(){
+//	Profile* pf = new Profile();
+//	pf->apply();
+//	DatabaseHelper* db = new DatabaseHelper("BIBLE.txt", DatabaseHelper::TXT, pf);
+//	CPTPredictor* cpt_pr = new CPTPlusPredictor(db->getDatabase(), pf);
+//	cpt_pr->createII();
 
 
-// 	vector<uint64_t> v = {356, 122};
-// 	Sequence* target = new Sequence(v);
-// 	Sequence* predicted = cpt_pr->Predict(target);
-// 	cout << "Prtedicted: " << endl;
-// 	predicted->print();
-// 	cout << endl;
-// 	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+//	vector<uint64_t> v = {356, 122};
+//	Sequence* target = new Sequence(v);
+//	Sequence* predicted = cpt_pr->Predict(target);
+//	cout << "Prtedicted: " << endl;
+//	predicted->print();
+//	cout << endl;
+//	cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
 
-// 	delete cpt_pr;
-// 	delete pf;
-// 	delete db;
-// 	delete target;
-// 	delete predicted;
-// }
+//	delete cpt_pr;
+//	delete pf;
+//	delete db;
+//	delete target;
+//	delete predicted;
+//}

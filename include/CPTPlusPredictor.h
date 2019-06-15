@@ -12,6 +12,7 @@ class CPTPlusPredictor : public CPTPredictor{
 	private:
 		virtual bool Train(std::vector<Sequence*>);
 		virtual std::vector<uint64_t> getBranch(uint64_t);
+		void pathCollapse();
 		Encoder* encoder;
 };
 #endif

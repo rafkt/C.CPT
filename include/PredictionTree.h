@@ -12,8 +12,11 @@ class PredictionTree{
 		std::vector<PredictionTree*>& getChildren();
 		uint64_t getChildrenCount();
 		virtual void addChild(uint64_t);
+		void addChild(PredictionTree*);
+		void clearAllLeafs();
 		virtual bool hasChild(uint64_t);
 		virtual PredictionTree* getChild(uint64_t);
+		bool removeChild(uint64_t);
 		bool operator < (const PredictionTree&) const;
 		#ifdef SD_CONSTRACTION
 		uint64_t id;
@@ -26,5 +29,8 @@ class PredictionTree{
 		uint64_t item;
 		PredictionTree* parent;
 		std::vector<PredictionTree*> children;
+		friend class CPTPlusPredictor;
+
+	//friend void CPTPlusPredictor::pathCollapse();
 };
 #endif

@@ -5,7 +5,7 @@
 #include <set>
 #include <iostream>
 #include <math.h>
-#include <algorithm>
+
 using namespace std;
 
 CPTPredictor::CPTPredictor(): Predictor(), root(nullptr), LT(nullptr){

@@ -60,17 +60,17 @@ int main(){
 	cout << "SD_CPT" << endl;
 
 	cout << "BMS1_spmf" << endl;
-	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::SD);
+	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::PLUS);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	cout << "BMS2" << endl;
-	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::SD);
+	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::PLUS);
 	ev2->getMemoryUsageInMB();
 	ev2->runPredictor();
 
 	cout << "Kosarak" << endl;
-	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::SD);
+	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::PLUS);
 	ev3->getMemoryUsageInMB();
 	ev3->runPredictor();
 
