@@ -26,11 +26,11 @@ float SD_CPTPredictor::memoryInMB(){
 	//to implemented after II and LT finalisation
 	// sd_tree->get_memory_in_mega_bytes() + II_EF
 	// LT should be part of II_EF so no need to add any extra calculation
-	return sd_tree->memoryInMB() + II->memoryInMB();
+	return sd_tree->memoryInMB() + II->memoryInMB() + ((8 + 8 * trainingSequenceNumber) * 8 * 1.25 * pow(10, -7));
 }
 
 vector<uint64_t> SD_CPTPredictor::getBranch(uint64_t index){
-	std::vector<uint64_t> branch = sd_tree->getNodesToRoot(index);
+	std::vector<uint64_t> branch = sd_tree->getNodesToRoot(LT_SD[index]);
 
 	reverse(branch.begin(), branch.end());
 	// for (uint64_t i : branch) cout << i << " ";
@@ -52,14 +52,14 @@ void SD_CPTPredictor::createII(){
 	II = new EF_II_bit_vector(newTrainingSet, LT_SD, nodeNumber);
 	//delete newTrainingSet since it is not longer needed
 	for(uint64_t i = 0; i < newTrainingSet.size(); i++) delete newTrainingSet[i];
-	delete[] LT_SD; LT_SD = nullptr;
+	//delete[] LT_SD; LT_SD = nullptr;
 	
 	cout << "Total CPT SD size in megabytes: " << memoryInMB() << endl;
 	cout << "-----------------------------------" << endl;
 	cout << "II size in megabytes (bv length is node number): " << II->memoryInMB() << endl;;
 	cout << "SD tree (bitstring) size in megabytes: " << sd_tree->memoryInMB() << endl;
-	cout << "LT size in megabytes: 0, LT is now contained in II" << endl;
-
+	//cout << "LT size in megabytes: 0, LT is now contained in II" << endl;
+	cout << "LT size in megabytes: " << ((8 + 8 * trainingSequenceNumber) * 8 * 1.25 * pow(10, -7)) <<endl;
 }
 
 bool SD_CPTPredictor::visited(set<uint64_t>& hashSidVisited, uint64_t index){

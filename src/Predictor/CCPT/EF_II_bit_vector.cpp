@@ -9,9 +9,9 @@ EF_II_bit_vector::EF_II_bit_vector(vector<Sequence*> trainingSet, uint64_t* LT, 
 
 	for (unordered_map<uint64_t, vector<uint64_t>>::iterator it = alphabet2sequences_table.begin(); it != alphabet2sequences_table.end(); it++){
 		vector<uint64_t> v = it->second;
-		for (uint64_t i = 0; i < v.size(); i++){
-			v[i] = LT[v[i]];
-		}
+		// for (uint64_t i = 0; i < v.size(); i++){
+		// 	v[i] = LT[v[i]];
+		// }
 		sort(v.begin(), v.end());
 		Elias_Fano* ef_arr = new Elias_Fano(&v[0], v.size());
 		EF_II_bvs.insert({it->first, ef_arr});
