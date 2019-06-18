@@ -45,7 +45,7 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length){
 void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length){
 	ifstream file(getFullPath(filename));
 	string line;
-	_length = 0
+	_length = 0;
 	while(getline(file, line)){
 		stringstream linestream(line);
 		vector<uint64_t> tmp_v;
@@ -63,7 +63,7 @@ string DatabaseHelper::getFullPath(string filename){
 	return "./datasets/" + filename;
 }
 
-int DatabaseHelper::getLength(){return _length}
+int DatabaseHelper::getLength(){return _length;}
 
 // int main(){
 // 	DatabaseHelper db("BIBLE.txt", DatabaseHelper::TXT);
