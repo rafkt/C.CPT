@@ -18,7 +18,6 @@ CPTPlusPredictor::CPTPlusPredictor(vector<Sequence*> trainingSequences, Profile*
 	LT = new PredictionTree*[trainingSequences.size()];
 	encoder = new Encoder();
 	Train(trainingSequences);
-	cout << "Trie node number: " << nodeNumber << endl;
 }
 CPTPlusPredictor::~CPTPlusPredictor(){
 	delete encoder;
@@ -98,6 +97,8 @@ bool CPTPlusPredictor::Train(std::vector<Sequence*> trainingSequences){
 
 	//after train delete the encoder staff that you dont need anymore
 	//delete FIF after train ->> no need
+
+	cout << "Trie node number: " << nodeNumber << endl;
 
 	//Patch collapsing for added compression
 	if(profile->paramBool("CBS")) {
@@ -211,7 +212,7 @@ void CPTPlusPredictor::pathCollapse() {
 					// itemset = itemset_tmp;
 					
 					if (cur->getChildren().size() > 0) {
-						delete cur->getChildren()[0];
+						if (cur->getChildren()[0] != leaf) delete cur->getChildren()[0];
 						cur->getChildren().clear();
 					}
 					
@@ -225,7 +226,7 @@ void CPTPlusPredictor::pathCollapse() {
 	}
 	
 	nodeNumber -= nodeSaved;
-	cout << "(PathCollpase) Nodes: " << nodeNumber;
+	cout << "(PathCollpase) Nodes: " << nodeNumber << endl;
 }
 
 //int main(){
