@@ -195,3 +195,47 @@ bool Elias_Fano::find(uint64_t value){
 // }
 
 
+// int main(){
+
+// 	//constructing random bit-vector
+// 	bit_vector bv;
+
+//     bool default_value = 0;//ID[ID.length()-1]-'0';
+//     bv = bit_vector(10000000000, default_value);
+//     std::mt19937_64 rng;
+//     std::uniform_int_distribution<uint64_t> distribution(0, bv.size()-1);
+//     auto dice = bind(distribution, rng);
+//     // populate vectors with some other bits
+//     for (uint64_t i=0; i < bv.size()/100; ++i) {
+//         uint64_t x = dice();
+//         bv[x] = !default_value;
+//     }
+
+//     sdsl::select_support_mcl<0,1>* bvs  = new select_support_mcl<0,1>(&bv);
+//     sdsl::rank_support_v<1,1>* bvr  = new rank_support_v<1,1>(&bv);
+
+//     uint64_t set_bits_number = bvr->rank(bv.size());
+//     uint64_t* set_bits = new uint64_t[set_bits_number];
+
+//     uint64_t counter = 0;
+//     for (uint64_t i = 0; i < bv.size(); i++){
+//     	if (bv[i] == 1) set_bits[counter++] = i;
+//     }
+
+//     Elias_Fano* my_ef = new Elias_Fano(set_bits, set_bits_number);
+//     sdsl::sd_vector<>* sd_bitstring = new sd_vector<>(bv);
+//     sdsl::select_support_sd<1>* sd_bitstring_select = new select_support_sd<1>(sd_bitstring);
+
+
+//     cout << "My EF: " << my_ef->size_in_MB() << endl;
+//     cout << "sd_vector: " << size_in_mega_bytes(*sd_bitstring) << endl;
+//     cout << "select_support_sd: " << size_in_bytes(*sd_bitstring_select) << endl;
+
+
+    
+//     for (uint64_t i = 0; i < set_bits_number; i++){
+//     	if (!my_ef->find(set_bits[i])) {cout << "BUG1" << endl; return 0;}
+//     }
+
+// 	return 0;
+// }
