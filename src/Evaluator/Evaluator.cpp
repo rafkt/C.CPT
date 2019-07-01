@@ -35,7 +35,9 @@ void Evaluator::runPredictor(){
 	auto duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
 	duration = 0;
 	uint64_t counter = 0;
-	for(Sequence* s : db->getDatabase()){
+	std::vector<Sequence*> db_v = db->getDatabase();
+	std::random_shuffle(db_v.begin(), db_v.end());
+	for(Sequence* s :db_v){
 		if (s->size() < 3) continue;
 		if (counter == 1000) break; 
 		vector<uint64_t> v;
@@ -70,7 +72,7 @@ int main(){
 	ev2->runPredictor();
 
 	cout << "Kosarak" << endl;
-	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::TXT, Evaluator::SD);
+	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::SPMF, Evaluator::SD);
 	ev3->getMemoryUsageInMB();
 	ev3->runPredictor();
 
