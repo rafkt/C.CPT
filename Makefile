@@ -1,9 +1,10 @@
 CC=g++ -std=c++11
 
-FLAGS=-O3 -g -DNDEBUG -DSD_CONSTRACTION
+FLAGS=-O3 -g -DNDEBUG -DSD_CONSTRACTION -DSD_HYBRID
 #-DSD_CONSTRACTION is used for adding an extra variable on PredictionTree node.
 #If the flag is not defined then currently the SD_Tree cannot be compiled.
 #So remove it from compile chain
+#-SD_HYBRID or -SD_FAST -SD_SLOW defines the kind of SD_CPT rank/select dictionaries
 FLAGS_SDSL_I=-I ~/include
 FLAGS_SDSL_L=-L ~/lib
 OFLAGS=-c

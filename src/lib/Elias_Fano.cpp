@@ -84,7 +84,21 @@ Elias_Fano::Elias_Fano(uint64_t* array, uint64_t size): size(size){
 	// Work-around, use O(1) dicrtionaries in expense for memory but for longer bit-vectors.
 	// The overhead will be minimised to an upper bound of ~0.2n (look sdsl)
 
-	dictionariesSpeed speed = SLOW;
+	#ifdef SD_SLOW
+		dictionariesSpeed speed = SLOW;
+		// cout << "SD_CPT constructed with slow dictionaries" << endl;
+	#elif SD_FAST
+		dictionariesSpeed speed = FAST;
+		// cout << "SD_CPT constructed with fast dictionaries" << endl;
+	#elif SD_HYBRID
+		dictionariesSpeed speed = HYBRID;
+		// cout << "SD_CPT constructed with hybrid dictionaries" << endl;
+	#else 
+		dictionariesSpeed speed = FAST;
+		// cout << "SD_CPT constructed with fast dictionaries" << endl;
+	#endif
+
+	//dictionariesSpeed speed = SLOW;
 	switch(speed){
 		case HYBRID:
 			if (h_part_sdsl_bv->size() > 2800){
