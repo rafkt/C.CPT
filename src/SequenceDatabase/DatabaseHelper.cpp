@@ -17,6 +17,7 @@ DatabaseHelper::DatabaseHelper(string filename, Format fm, Profile* pf){
 			loadTXTFormat(filename, pf->paramInt("sequenceMinSize"));
 			break;
 	}
+	//std::random_shuffle(_database.begin(), _database.end());
 }
 DatabaseHelper::~DatabaseHelper(){
 	for (uint64_t i = 0; i < _database.size(); i++) delete _database[i];	

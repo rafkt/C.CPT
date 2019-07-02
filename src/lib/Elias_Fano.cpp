@@ -71,12 +71,42 @@ Elias_Fano::Elias_Fano(uint64_t* array, uint64_t size): size(size){
 
 	h_part = tmpBV_raw;
 
-	select_h_part = new bit_vector::select_0_type(h_part_sdsl_bv);
+	//select_h_part = new bit_vector::select_0_type(h_part_sdsl_bv);
 
 	rank_support_v<0> rs(h_part_sdsl_bv);
 	total_zeros = rs.rank(ceil(m + size));
 
-	rank_h_part =new rank_support_v<1>(h_part_sdsl_bv);
+	//we can create dictionaries based on threashold; which was experimentally found
+	// rank_support_v(5) is fast O(1) but has a ~50 bytes fixed overhead (theoretic lower bound) for short bit-vectors
+	// same for select_support_mcl O(1) but overhead for short bit-vectors.
+	// rank/select_support_scan, no overhead at all for any bit-vector length.
+	// But makes the implementation slower.
+	// Work-around, use O(1) dicrtionaries in expense for memory but for longer bit-vectors.
+	// The overhead will be minimised to an upper bound of ~0.2n (look sdsl)
+
+	dictionariesSpeed speed = FAST;
+	switch(speed){
+		case HYBRID:
+			if (h_part_sdsl_bv->size() > 2800){
+				select_h_part = new select_support_mcl<0>(h_part_sdsl_bv);
+			}else{
+				select_h_part = new select_support_scan<0>(h_part_sdsl_bv);
+			}
+			if (h_part_sdsl_bv->size() > 1024){
+				rank_h_part = new rank_support_v5<1>(h_part_sdsl_bv);	
+			}else{
+				rank_h_part = new rank_support_scan<1>(h_part_sdsl_bv);
+			}
+			break;
+		case SLOW:
+			select_h_part = new select_support_scan<0>(h_part_sdsl_bv);
+			rank_h_part = new rank_support_scan<1>(h_part_sdsl_bv);
+			break;
+		case FAST:
+			select_h_part = new select_support_mcl<0>(h_part_sdsl_bv);
+			rank_h_part = new rank_support_v5<1>(h_part_sdsl_bv);
+			break;
+	}
 }
 
 void Elias_Fano::printArray(){
@@ -195,18 +225,20 @@ bool Elias_Fano::find(uint64_t value){
 // }
 
 
-// int main(){
+// int main(int argc, char* argv[]){
+
+// 	cout << "Bit-length: " << argv[1] << endl;
 
 // 	//constructing random bit-vector
 // 	bit_vector bv;
 
 //     bool default_value = 0;//ID[ID.length()-1]-'0';
-//     bv = bit_vector(10000000000, default_value);
+//     bv = bit_vector(atoi(argv[1]), default_value);
 //     std::mt19937_64 rng;
 //     std::uniform_int_distribution<uint64_t> distribution(0, bv.size()-1);
 //     auto dice = bind(distribution, rng);
 //     // populate vectors with some other bits
-//     for (uint64_t i=0; i < bv.size()/100; ++i) {
+//     for (uint64_t i=0; i < atoi(argv[2]); ++i) {
 //         uint64_t x = dice();
 //         bv[x] = !default_value;
 //     }
@@ -222,20 +254,25 @@ bool Elias_Fano::find(uint64_t value){
 //     	if (bv[i] == 1) set_bits[counter++] = i;
 //     }
 
-//     Elias_Fano* my_ef = new Elias_Fano(set_bits, set_bits_number);
-//     sdsl::sd_vector<>* sd_bitstring = new sd_vector<>(bv);
-//     sdsl::select_support_sd<1>* sd_bitstring_select = new select_support_sd<1>(sd_bitstring);
+//     //Elias_Fano* my_ef = new Elias_Fano(set_bits, set_bits_number);
+//     //sdsl::sd_vector<>* sd_bitstring = new sd_vector<>(bv);
+//     //sdsl::select_support_sd<1>* sd_bitstring_select = new select_support_sd<1>(sd_bitstring);
 
 
-//     cout << "My EF: " << my_ef->size_in_MB() << endl;
-//     cout << "sd_vector: " << size_in_mega_bytes(*sd_bitstring) << endl;
-//     cout << "select_support_sd: " << size_in_bytes(*sd_bitstring_select) << endl;
+//     // cout << "My EF: " << my_ef->size_in_MB() << endl;
+//     // cout << "sd_vector: " << size_in_mega_bytes(*sd_bitstring) << endl;
+//     // cout << "select_support_sd: " << size_in_bytes(*sd_bitstring_select) << endl;
+
+//     sdsl::select_support_mcl<0>* _select = new select_support_mcl<0>(&bv);
+//     sdsl::rank_support_v5<1>* _rank = new rank_support_v5<1>(&bv);
+//     cout << "rank_support_v5: " << size_in_bytes(*_rank) << " Expected: " << 0.0625 * atoi(argv[1]) / 8 << endl;
+//     cout << "select_support_mcl: " << size_in_bytes(*_select) << " Expected: " << 0.375 * atoi(argv[1]) / 8 << endl;
 
 
     
-//     for (uint64_t i = 0; i < set_bits_number; i++){
-//     	if (!my_ef->find(set_bits[i])) {cout << "BUG1" << endl; return 0;}
-//     }
+//     // for (uint64_t i = 0; i < set_bits_number; i++){
+//     // 	if (!my_ef->find(set_bits[i])) {cout << "BUG1" << endl; return 0;}
+//     // }
 
 // 	return 0;
 // }

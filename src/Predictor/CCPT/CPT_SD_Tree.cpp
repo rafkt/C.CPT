@@ -23,7 +23,8 @@ CPT_SD_Tree::CPT_SD_Tree(PredictionTree* trie, map<uint64_t, uint64_t> sigmaInde
 	levelOrderTraverse(trie, sigmaIndex);
 	sd_bitstring = new sd_vector<>(*bitstring);
 
-	sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
+	//sd_bitstring_select = new sd_vector<>::select_1_type(sd_bitstring);
+	sd_bitstring_select = new select_support_sd<1>(sd_bitstring);
 	
 	delete bitstring;// we don't need this since we 've created an sd-vector from that.
 }

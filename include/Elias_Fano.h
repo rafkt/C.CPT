@@ -22,10 +22,11 @@ class Elias_Fano{
 		uint64_t getL();
 		sdsl::int_vector<> get_L_part();
 	private:
+		enum dictionariesSpeed{HYBRID, SLOW, FAST}; //in expense or favour of memory overhead
 		uint64_t* h_part;
 		sdsl::bit_vector* h_part_sdsl_bv;
-		sdsl::bit_vector::select_0_type* select_h_part;
-		sdsl::rank_support_v<1>* rank_h_part;
+		sdsl::select_support* select_h_part;
+		sdsl::rank_support* rank_h_part;
 		sdsl::int_vector<>* l_part;
 		uint64_t m;
 		uint64_t l;
