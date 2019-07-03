@@ -70,66 +70,40 @@ void Evaluator::runPredictor(){
 
 int main(){
 
-	cout << "BMS1_spmf" << endl;
-	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
+	cout << "QUEST 100K" << endl;
+	Evaluator* ev1 = new Evaluator("var_seq/data.slen_20.ncust_2000.tlen_1.nitems_1.txt", DatabaseHelper::TXT, Evaluator::SD, 100000);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
-	cout << "BMS2" << endl;
-	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev2->getMemoryUsageInMB();
-	ev2->runPredictor();
+	delete ev1;
 
-	cout << "Kosarak" << endl;
-	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
-	ev3->getMemoryUsageInMB();
-	ev3->runPredictor();
-
-	cout << "SIGN" << endl;
-	Evaluator* ev4 = new Evaluator("SIGN.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev4->getMemoryUsageInMB();
-	ev4->runPredictor();
-
-	cout << "BIBLE" << endl;
-	Evaluator* ev5 = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev5->getMemoryUsageInMB();
-	ev5->runPredictor();
-
-	cout << "LEVIATHAN" << endl;
-	Evaluator* ev6 = new Evaluator("LEVIATHAN.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev6->getMemoryUsageInMB();
-	ev6->runPredictor();
-
-	cout << "MSNBC" << endl;
-	Evaluator* ev7 = new Evaluator("MSNBC.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev7->getMemoryUsageInMB();
-	ev7->runPredictor();
-
-	cout << "FIFA" << endl;
-	Evaluator* ev8 = new Evaluator("FIFA.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev8->getMemoryUsageInMB();
-	ev8->runPredictor();
-
-	cout << "NASA_access_log_Aug95" << endl;
-	Evaluator* ev9 = new Evaluator("NASA_access_log_Aug95.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev9->getMemoryUsageInMB();
-	ev9->runPredictor();
-
-	cout << "NASA_access_log_Jul95" << endl;
-	Evaluator* ev10 = new Evaluator("NASA_access_log_Jul95.txt", DatabaseHelper::TXT, Evaluator::SD, -1);
-	ev10->getMemoryUsageInMB();
-	ev10->runPredictor();
+	cout << "QUEST 200K" << endl;
+	ev1 = new Evaluator("var_seq/data.slen_20.ncust_2000.tlen_1.nitems_1.txt", DatabaseHelper::TXT, Evaluator::SD, 200000);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
 
 	delete ev1;
-	delete ev2;
-	delete ev3;
-	delete ev4;
-	delete ev5;
-	delete ev6;
-	delete ev7;
-	delete ev8;
-	delete ev9;
-	delete ev10;
-	//cout << "Memory size of Predictor: " << cpt_pr->memoryInMB() << "MB";
+
+	cout << "QUEST 400K" << endl;
+	ev1 = new Evaluator("var_seq/data.slen_20.ncust_2000.tlen_1.nitems_1.txt", DatabaseHelper::TXT, Evaluator::SD, 400000);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
+
+	delete ev1;
+
+	cout << "QUEST 800K" << endl;
+	ev1 = new Evaluator("var_seq/data.slen_20.ncust_2000.tlen_1.nitems_1.txt", DatabaseHelper::TXT, Evaluator::SD, 800000);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
+
+	delete ev1;
+	
+	cout << "QUEST 1.6KK" << endl;
+	ev1 = new Evaluator("var_seq/data.slen_20.ncust_2000.tlen_1.nitems_1.txt", DatabaseHelper::TXT, Evaluator::SD, 1600000);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
+
+	delete ev1;
+	
 	
 }
