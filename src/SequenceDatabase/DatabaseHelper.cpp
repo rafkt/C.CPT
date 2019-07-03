@@ -25,7 +25,7 @@ DatabaseHelper::~DatabaseHelper(){
 vector<Sequence*>& DatabaseHelper::getDatabase(){
 	return _database;
 }
-void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length){
+void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, uint64_t seq__number){
 	ifstream file(getFullPath(filename));
 	string line;
 	_length = 0;
@@ -40,10 +40,12 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length){
 		}
 		Sequence* s = new Sequence(tmp_v);
 		_database.push_back(s);
+		seq__number--;
+		if (seq__number >= 0) if (seq__number == 0) break;
 	}
 	cout << "Overall dataset length: " << _length << endl;
 }
-void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length){
+void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length, uint64_t seq__number){
 	ifstream file(getFullPath(filename));
 	string line;
 	_length = 0;
@@ -57,6 +59,7 @@ void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length){
 		}
 		Sequence* s = new Sequence(tmp_v);
 		_database.push_back(s);
+		if (seq__number  >= 0) if (seq__number == 0) break;
 	}
 	cout << "Overall dataset length: " << _length << endl;
 }
