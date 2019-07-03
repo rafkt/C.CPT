@@ -8,13 +8,13 @@
 using namespace std;
 
 
-DatabaseHelper::DatabaseHelper(string filename, Format fm, Profile* pf){
+DatabaseHelper::DatabaseHelper(string filename, Format fm, Profile* pf, int seq__number){
 	switch (fm){
 		case SPMF:
-			loadSPMFFormat(filename, pf->paramInt("sequenceMinSize"));
+			loadSPMFFormat(filename, pf->paramInt("sequenceMinSize"), seq__number);
 			break;
 		case TXT:
-			loadTXTFormat(filename, pf->paramInt("sequenceMinSize"));
+			loadTXTFormat(filename, pf->paramInt("sequenceMinSize"), seq__number);
 			break;
 	}
 	//std::random_shuffle(_database.begin(), _database.end());
@@ -25,7 +25,7 @@ DatabaseHelper::~DatabaseHelper(){
 vector<Sequence*>& DatabaseHelper::getDatabase(){
 	return _database;
 }
-void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, uint64_t seq__number){
+void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, int seq__number){
 	ifstream file(getFullPath(filename));
 	string line;
 	_length = 0;
@@ -45,7 +45,7 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, uint6
 	}
 	cout << "Overall dataset length: " << _length << endl;
 }
-void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length, uint64_t seq__number){
+void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length, int seq__number){
 	ifstream file(getFullPath(filename));
 	string line;
 	_length = 0;
