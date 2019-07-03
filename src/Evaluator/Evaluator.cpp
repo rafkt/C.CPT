@@ -9,18 +9,25 @@ Evaluator::Evaluator(string datasetName, DatabaseHelper::Format fm, Predictor_St
 	pf = new Profile();
 	pf->apply();
 	db = new DatabaseHelper(datasetName, fm, pf);
+	auto begin_time = clock();
 	switch(type){
 		case RAW:
+			cout << "CPT" << endl;
 			pr = new CPTPredictor(db->getDatabase(), pf);
 			break;
 		case SD:
+			cout << "SD_CPT" << endl;
 			pr = new SD_CPTPredictor(db->getDatabase(), pf);
 			break;
 		case PLUS:
+			cout << "CPT+" << endl;
 			pr = new CPTPlusPredictor(db->getDatabase(), pf);
 			break;
 	}
 	pr->createII();
+	auto end_time = clock();
+	auto duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
+	cout << "Train (s): " << duration << endl;
 }
 Evaluator::~Evaluator(){
 	delete pr;
@@ -63,95 +70,53 @@ void Evaluator::runPredictor(){
 
 int main(){
 
-	cout << "SD_CPT" << endl;
-
 	cout << "BMS1_spmf" << endl;
-	auto begin_time = clock();
 	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::SD);
-	auto end_time = clock();
-	auto duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	cout << "BMS2" << endl;
-	begin_time = clock();
 	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev2->getMemoryUsageInMB();
 	ev2->runPredictor();
 
 	cout << "Kosarak" << endl;
-	begin_time = clock();
 	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::SPMF, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev3->getMemoryUsageInMB();
 	ev3->runPredictor();
 
 	cout << "SIGN" << endl;
-	begin_time = clock();
 	Evaluator* ev4 = new Evaluator("SIGN.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev4->getMemoryUsageInMB();
 	ev4->runPredictor();
 
 	cout << "BIBLE" << endl;
-	begin_time = clock();
 	Evaluator* ev5 = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev5->getMemoryUsageInMB();
 	ev5->runPredictor();
 
 	cout << "LEVIATHAN" << endl;
-	begin_time = clock();
 	Evaluator* ev6 = new Evaluator("LEVIATHAN.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev6->getMemoryUsageInMB();
 	ev6->runPredictor();
 
 	cout << "MSNBC" << endl;
-	begin_time = clock();
 	Evaluator* ev7 = new Evaluator("MSNBC.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev7->getMemoryUsageInMB();
 	ev7->runPredictor();
 
 	cout << "FIFA" << endl;
-	begin_time = clock();
 	Evaluator* ev8 = new Evaluator("FIFA.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev8->getMemoryUsageInMB();
 	ev8->runPredictor();
 
 	cout << "NASA_access_log_Aug95" << endl;
-	begin_time = clock();
 	Evaluator* ev9 = new Evaluator("NASA_access_log_Aug95.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev9->getMemoryUsageInMB();
 	ev9->runPredictor();
 
 	cout << "NASA_access_log_Jul95" << endl;
-	begin_time = clock();
 	Evaluator* ev10 = new Evaluator("NASA_access_log_Jul95.txt", DatabaseHelper::TXT, Evaluator::SD);
-	end_time = clock();
-	duration = ((double)(end_time - begin_time))/CLOCKS_PER_SEC;
-	cout << "Train (s): " << duration << endl;
 	ev10->getMemoryUsageInMB();
 	ev10->runPredictor();
 
