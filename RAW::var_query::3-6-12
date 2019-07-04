@@ -1,0 +1,42 @@
+Query length: 3
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT
+Trie node number: 1634580
+Sigma: 916
+Sequnce Number: 100000
+Total CPT RAW size in megabytes: 77.6515
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 65.3832
+LT size in megabytes: 0.800008
+Train (s): 2.2779
+Duration (s): 0.295451
+Query length: 6
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT
+Trie node number: 1634580
+Sigma: 916
+Sequnce Number: 100000
+Total CPT RAW size in megabytes: 77.6515
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 65.3832
+LT size in megabytes: 0.800008
+Train (s): 2.36908
+Duration (s): 0.237784
+Query length: 12
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT
+Trie node number: 1634580
+Sigma: 916
+Sequnce Number: 100000
+Total CPT RAW size in megabytes: 77.6515
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 65.3832
+LT size in megabytes: 0.800008
+Train (s): 2.29777
+Duration (s): 0.248613
