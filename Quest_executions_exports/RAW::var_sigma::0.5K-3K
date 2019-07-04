@@ -1,0 +1,84 @@
+QUEST 0.5_Sigma
+Overall dataset length: 4761705
+Average sequence length: 8.39011
+CPT
+Trie node number: 3282218
+Sigma: 474
+Sequnce Number: 567538
+Total CPT RAW size in megabytes: 169.464
+-----------------------------------
+II size in megabytes: 33.6351
+Trie size in megabytes: 131.289
+LT size in megabytes: 4.54031
+Train (s): 21.4396
+Duration (s): 1.15421
+QUEST 1_Sigma
+Overall dataset length: 4766822
+Average sequence length: 8.39763
+CPT
+Trie node number: 3381201
+Sigma: 917
+Sequnce Number: 567639
+Total CPT RAW size in megabytes: 204.874
+-----------------------------------
+II size in megabytes: 65.085
+Trie size in megabytes: 135.248
+LT size in megabytes: 4.54112
+Train (s): 12.9565
+Duration (s): 1.17106
+QUEST 1.5_Sigma
+Overall dataset length: 4765510
+Average sequence length: 8.39276
+CPT
+Trie node number: 3419827
+Sigma: 1307
+Sequnce Number: 567812
+Total CPT RAW size in megabytes: 234.133
+-----------------------------------
+II size in megabytes: 92.797
+Trie size in megabytes: 136.793
+LT size in megabytes: 4.5425
+Train (s): 10.6866
+Duration (s): 1.15377
+QUEST 2_Sigma
+Overall dataset length: 4761937
+Average sequence length: 8.38967
+CPT
+Trie node number: 3441017
+Sigma: 1705
+Sequnce Number: 567595
+Total CPT RAW size in megabytes: 263.182
+-----------------------------------
+II size in megabytes: 121
+Trie size in megabytes: 137.641
+LT size in megabytes: 4.54077
+Train (s): 9.29645
+Duration (s): 1.2139
+QUEST 2.5_Sigma
+Overall dataset length: 4768081
+Average sequence length: 8.39826
+CPT
+Trie node number: 3464448
+Sigma: 2017
+Sequnce Number: 567746
+Total CPT RAW size in megabytes: 286.311
+-----------------------------------
+II size in megabytes: 143.191
+Trie size in megabytes: 138.578
+LT size in megabytes: 4.54198
+Train (s): 8.73045
+Duration (s): 1.16013
+QUEST 3_Sigma
+Overall dataset length: 4767858
+Average sequence length: 8.39429
+CPT
+Trie node number: 3472507
+Sigma: 2325
+Sequnce Number: 567988
+Total CPT RAW size in megabytes: 308.556
+-----------------------------------
+II size in megabytes: 165.112
+Trie size in megabytes: 138.9
+LT size in megabytes: 4.54391
+Train (s): 8.1456
+Duration (s): 1.24444

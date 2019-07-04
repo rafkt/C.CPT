@@ -1,0 +1,84 @@
+QUEST 0.5_Sigma
+Overall dataset length: 4761705
+Average sequence length: 8.39011
+SD_CPT
+Trie node number: 3282218
+Sigma: 474
+Sequnce Number: 567538
+Total CPT SD size in megabytes: 10.4183
+-----------------------------------
+II size in megabytes (bv length is node number): 5.78697
+SD tree (bitstring) size in megabytes: 4.63129
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 23.4746
+Duration (s): 3.26298
+QUEST 1_Sigma
+Overall dataset length: 4766822
+Average sequence length: 8.39763
+SD_CPT
+Trie node number: 3381201
+Sigma: 917
+Sequnce Number: 567639
+Total CPT SD size in megabytes: 11.5436
+-----------------------------------
+II size in megabytes (bv length is node number): 6.38866
+SD tree (bitstring) size in megabytes: 5.15495
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 15.4912
+Duration (s): 1.35916
+QUEST 1.5_Sigma
+Overall dataset length: 4765510
+Average sequence length: 8.39276
+SD_CPT
+Trie node number: 3419827
+Sigma: 1307
+Sequnce Number: 567812
+Total CPT SD size in megabytes: 12.314
+-----------------------------------
+II size in megabytes (bv length is node number): 6.7009
+SD tree (bitstring) size in megabytes: 5.61314
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 13.5718
+Duration (s): 0.933576
+QUEST 2_Sigma
+Overall dataset length: 4761937
+Average sequence length: 8.38967
+SD_CPT
+Trie node number: 3441017
+Sigma: 1705
+Sequnce Number: 567595
+Total CPT SD size in megabytes: 12.5895
+-----------------------------------
+II size in megabytes (bv length is node number): 6.94435
+SD tree (bitstring) size in megabytes: 5.64511
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 12.5456
+Duration (s): 0.67769
+QUEST 2.5_Sigma
+Overall dataset length: 4768081
+Average sequence length: 8.39826
+SD_CPT
+Trie node number: 3464448
+Sigma: 2017
+Sequnce Number: 567746
+Total CPT SD size in megabytes: 12.7943
+-----------------------------------
+II size in megabytes (bv length is node number): 7.1146
+SD tree (bitstring) size in megabytes: 5.67968
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 12.1496
+Duration (s): 0.564779
+QUEST 3_Sigma
+Overall dataset length: 4767858
+Average sequence length: 8.39429
+SD_CPT
+Trie node number: 3472507
+Sigma: 2325
+Sequnce Number: 567988
+Total CPT SD size in megabytes: 12.9291
+-----------------------------------
+II size in megabytes (bv length is node number): 7.23745
+SD tree (bitstring) size in megabytes: 5.69161
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 11.8602
+Duration (s): 0.525778

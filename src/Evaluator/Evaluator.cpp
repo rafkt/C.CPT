@@ -71,42 +71,42 @@ void Evaluator::runPredictor(){
 int main(){
 
 	cout << "QUEST 0.5_Sigma" << endl;
-	Evaluator* ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_0.5.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	Evaluator* ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_0.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 
 	cout << "QUEST 1_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 
 	cout << "QUEST 1.5_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.5.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 
 	cout << "QUEST 2_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 	
 	cout << "QUEST 2.5_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.5.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 
 	cout << "QUEST 3_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_3.txt", DatabaseHelper::SPMF, Evaluator::SD, -1);
+	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_3.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
