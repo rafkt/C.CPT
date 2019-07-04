@@ -42,6 +42,7 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length){
 		_database.push_back(s);
 	}
 	cout << "Overall dataset length: " << _length << endl;
+	cout << "Average sequence length: " << _length / (float) _database.size() << endl;
 }
 void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length){
 	ifstream file(getFullPath(filename));
@@ -59,6 +60,7 @@ void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length){
 		_database.push_back(s);
 	}
 	cout << "Overall dataset length: " << _length << endl;
+	cout << "Average sequence length: " << _length / (float) _database.size() << endl;
 }
 string DatabaseHelper::getFullPath(string filename){
 	return "./datasets/" + filename;
