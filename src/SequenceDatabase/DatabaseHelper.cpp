@@ -35,6 +35,7 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, int s
 		for(string word; linestream >> word;){
 			uint64_t tmp = atoi(word.c_str());
 			if (tmp == -1 || tmp == -2) continue;
+			if (tmp == 0) tmp = 10; //I cannot accept 0 as an item in my SD_CPT implementation; easier to replace it with something else since I am testing scalability in memory/speed with Quest
 			tmp_v.push_back(tmp);
 			_length++;
 		}
@@ -44,6 +45,7 @@ void DatabaseHelper::loadSPMFFormat(string filename, uint64_t seq__length, int s
 		if (seq__number >= 0) if (seq__number == 0) break;
 	}
 	cout << "Overall dataset length: " << _length << endl;
+	cout << "Average sequence length: " << _length / (float) _database.size() << endl;
 }
 void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length, int seq__number){
 	ifstream file(getFullPath(filename));
@@ -62,6 +64,7 @@ void DatabaseHelper::loadTXTFormat(string filename, uint64_t seq__length, int se
 		if (seq__number  >= 0) if (seq__number == 0) break;
 	}
 	cout << "Overall dataset length: " << _length << endl;
+	cout << "Average sequence length: " << _length / (float) _database.size() << endl;
 }
 string DatabaseHelper::getFullPath(string filename){
 	return "./datasets/" + filename;

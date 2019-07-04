@@ -1,0 +1,65 @@
+QUEST 100K
+Overall dataset length: 1783405
+SD_CPT
+Trie node number: 1634580
+Sigma: 916
+Sequnce Number: 100000
+Total CPT SD size in megabytes: 4.84529
+-----------------------------------
+II size in megabytes (bv length is node number): 2.33766
+SD tree (bitstring) size in megabytes: 2.50763
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 2.79672
+Duration (s): 1.12113
+QUEST 200K
+Overall dataset length: 3565014
+SD_CPT
+Trie node number: 3241114
+^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[ASigma: 917
+Sequnce Number: 200000
+Total CPT SD size in megabytes: 9.61384
+-----------------------------------
+II size in megabytes (bv length is node number): 4.64634
+SD tree (bitstring) size in megabytes: 4.9675
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 8.63174
+Duration (s): 3.88668
+QUEST 400K
+Overall dataset length: 7129393
+SD_CPT
+Trie node number: 6421930
+Sigma: 917
+Sequnce Number: 400000
+Total CPT SD size in megabytes: 19.1026
+-----------------------------------
+II size in megabytes (bv length is node number): 9.25885
+SD tree (bitstring) size in megabytes: 9.84377
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 32.7727
+Duration (s): 14.3887
+QUEST 800K
+Overall dataset length: 14261856
+SD_CPT
+Trie node number: 12718827
+Sigma: 917
+Sequnce Number: 800000
+Total CPT SD size in megabytes: 37.9866
+-----------------------------------
+II size in megabytes (bv length is node number): 18.4767
+SD tree (bitstring) size in megabytes: 19.5099
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 132.755
+Duration (s): 57.1641
+QUEST 1.6KK
+Overall dataset length: 28525176
+SD_CPT
+Trie node number: 25176789
+Sigma: 917
+Sequnce Number: 1600000
+Total CPT SD size in megabytes: 75.5437
+-----------------------------------
+II size in megabytes (bv length is node number): 36.8835
+SD tree (bitstring) size in megabytes: 38.6602
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 537.002
+Duration (s): 227.706

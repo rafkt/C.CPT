@@ -1,0 +1,80 @@
+QUEST 100K
+Overall dataset length: 1783405
+CPT+
+Trie node number: 856362
+(PathCollpase) Nodes: 114384
+Sigma: 916
+Sequnce Number: 100000
+Endoder size in MB: 22.4957
+Total CPT RAW size in megabytes: 39.3394
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 4.57536
+LT size in megabytes: 0.800008
+Train (s): 136.616
+Endoder size in MB: 22.4957
+Duration (s): 0.21464
+QUEST 200K
+Overall dataset length: 3565014
+CPT+
+Trie node number: 1618321
+(PathCollpase) Nodes: 232356
+Sigma: 917
+Sequnce Number: 200000
+Endoder size in MB: 43.7695
+Total CPT RAW size in megabytes: 77.6035
+-----------------------------------
+II size in megabytes: 22.9397
+Trie size in megabytes: 9.29424
+LT size in megabytes: 1.60001
+Train (s): 475.08
+Endoder size in MB: 43.7695
+Duration (s): 0.414498
+QUEST 400K
+Overall dataset length: 7129393
+CPT+
+Trie node number: 3067317
+(PathCollpase) Nodes: 470652
+Sigma: 917
+Sequnce Number: 400000
+Endoder size in MB: 87.2437
+Total CPT RAW size in megabytes: 155.134
+-----------------------------------
+II size in megabytes: 45.8647
+Trie size in megabytes: 18.8261
+LT size in megabytes: 3.20001
+Train (s): 1926.85
+Endoder size in MB: 87.2437
+Duration (s): 0.825367
+QUEST 800K
+Overall dataset length: 14261856
+CPT+
+Trie node number: 5811969
+(PathCollpase) Nodes: 944658
+Sigma: 917
+Sequnce Number: 800000
+Endoder size in MB: 174.819
+Total CPT RAW size in megabytes: 310.72
+-----------------------------------
+II size in megabytes: 91.7147
+Trie size in megabytes: 37.7863
+LT size in megabytes: 6.40001
+Train (s): 8722.54
+Endoder size in MB: 174.819
+Duration (s): 1.62079
+QUEST 1.6KK
+Overall dataset length: 28525176
+CPT+
+Trie node number: 11010576
+(PathCollpase) Nodes: 1883015
+Sigma: 917
+Sequnce Number: 1600000
+Endoder size in MB: 356.587
+Total CPT RAW size in megabytes: 628.123
+-----------------------------------
+II size in megabytes: 183.415
+Trie size in megabytes: 75.3206
+LT size in megabytes: 12.8
+Train (s): 35947.9
+Endoder size in MB: 356.587
+Duration (s): 3.26339
