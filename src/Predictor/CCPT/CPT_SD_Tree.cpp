@@ -70,7 +70,7 @@ void CPT_SD_Tree::levelOrderTraverse(PredictionTree* root, map<uint64_t, uint64_
 }
 
 float CPT_SD_Tree::memoryInMB() const{
-	return size_in_mega_bytes(*sd_bitstring) + size_in_mega_bytes(*sd_bitstring_select) + (8 * sigma + 8) * 8 * 1.25 * pow(10, -7);
+	return size_in_mega_bytes(*sd_bitstring) + size_in_mega_bytes(*sd_bitstring_select);// + (8 * sigma + 8) * 8 * 1.25 * pow(10, -7);
 }
 
 PredictionTree* CPT_SD_Tree::getParent(){

@@ -71,52 +71,52 @@ void Evaluator::runPredictor(){
 int main(){
 
 	cout << "BMS1_spmf" << endl;
-	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev1 = new Evaluator("BMS1_spmf.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	cout << "BMS2" << endl;
-	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev2 = new Evaluator("BMS2.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev2->getMemoryUsageInMB();
 	ev2->runPredictor();
 
 	cout << "Kosarak" << endl;
-	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::SPMF, Evaluator::PLUS);
+	Evaluator* ev3 = new Evaluator("Kosarak_converted.txt", DatabaseHelper::SPMF, Evaluator::SD);
 	ev3->getMemoryUsageInMB();
 	ev3->runPredictor();
 
 	cout << "SIGN" << endl;
-	Evaluator* ev4 = new Evaluator("SIGN.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev4 = new Evaluator("SIGN.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev4->getMemoryUsageInMB();
 	ev4->runPredictor();
 
 	cout << "BIBLE" << endl;
-	Evaluator* ev5 = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev5 = new Evaluator("BIBLE.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev5->getMemoryUsageInMB();
 	ev5->runPredictor();
 
 	cout << "LEVIATHAN" << endl;
-	Evaluator* ev6 = new Evaluator("LEVIATHAN.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev6 = new Evaluator("LEVIATHAN.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev6->getMemoryUsageInMB();
 	ev6->runPredictor();
 
 	cout << "MSNBC" << endl;
-	Evaluator* ev7 = new Evaluator("MSNBC.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev7 = new Evaluator("MSNBC.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev7->getMemoryUsageInMB();
 	ev7->runPredictor();
 
 	cout << "FIFA" << endl;
-	Evaluator* ev8 = new Evaluator("FIFA.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev8 = new Evaluator("FIFA.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev8->getMemoryUsageInMB();
 	ev8->runPredictor();
 
 	cout << "NASA_access_log_Aug95" << endl;
-	Evaluator* ev9 = new Evaluator("NASA_access_log_Aug95.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev9 = new Evaluator("NASA_access_log_Aug95.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev9->getMemoryUsageInMB();
 	ev9->runPredictor();
 
 	cout << "NASA_access_log_Jul95" << endl;
-	Evaluator* ev10 = new Evaluator("NASA_access_log_Jul95.txt", DatabaseHelper::TXT, Evaluator::PLUS);
+	Evaluator* ev10 = new Evaluator("NASA_access_log_Jul95.txt", DatabaseHelper::TXT, Evaluator::SD);
 	ev10->getMemoryUsageInMB();
 	ev10->runPredictor();
 
