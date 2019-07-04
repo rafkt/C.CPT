@@ -43,10 +43,10 @@ void Evaluator::runPredictor(){
 	auto begin_time = clock();
 	uint64_t counter = 0;
 	for(Sequence* s :db_v){
-		if (s->size() < 6) continue;
+		if (s->size() < 5) continue;
 		if (counter == 1000) break; 
 		vector<uint64_t> v;
-		v.assign(s->getItems(), s->getItems() + 5);
+		v.assign(s->getItems(), s->getItems() + 4);
 		Sequence* target = new Sequence(v);
 		//begin_time = clock();
 		Sequence* predicted = pr->Predict(target);
@@ -70,47 +70,37 @@ void Evaluator::runPredictor(){
 
 int main(){
 
-	cout << "QUEST 0.5_Sigma" << endl;
-	Evaluator* ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_0.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
-	ev1->getMemoryUsageInMB();
-	ev1->runPredictor();
-
-	delete ev1;
-
-	cout << "QUEST 1_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
-	ev1->getMemoryUsageInMB();
-	ev1->runPredictor();
-
-	delete ev1;
-
-	cout << "QUEST 1.5_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_1.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
-	ev1->getMemoryUsageInMB();
-	ev1->runPredictor();
-
-	delete ev1;
-
-	cout << "QUEST 2_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
-	ev1->getMemoryUsageInMB();
-	ev1->runPredictor();
-
-	delete ev1;
 	
-	cout << "QUEST 2.5_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_2.5.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
+	  
+	  
+	  
+
+	cout << "QUEST 5_long" << endl;
+	Evaluator* ev1 = new Evaluator("var_length/data.slen_5.ncust_1200.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
 
-	cout << "QUEST 3_Sigma" << endl;
-	ev1 = new Evaluator("var_sigma/data.slen_10.ncust_600.tlen_1.nitems_3.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
+	cout << "QUEST 10_long" << endl;
+	ev1 = new Evaluator("var_length/data.slen_10.ncust_600.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
 	ev1->getMemoryUsageInMB();
 	ev1->runPredictor();
 
 	delete ev1;
-	
+
+	cout << "QUEST 20_long" << endl;
+	ev1 = new Evaluator("var_length/data.slen_20.ncust_300.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
+
+	delete ev1;
+
+	cout << "QUEST 40_long" << endl;
+	ev1 = new Evaluator("var_length/data.slen_40.ncust_150.tlen_1.nitems_1.txt", DatabaseHelper::SPMF, Evaluator::PLUS, -1);
+	ev1->getMemoryUsageInMB();
+	ev1->runPredictor();
+
+	delete ev1;
 	
 }
