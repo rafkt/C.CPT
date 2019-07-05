@@ -1,0 +1,70 @@
+QUEST 100K
+Overall dataset length: 1783405
+Average sequence length: 17.834
+SD_CPT
+Trie node number: 1634580
+Sigma: 916
+Sequnce Number: 100000
+Total CPT SD size in megabytes: 5.03444
+-----------------------------------
+II size in megabytes (bv length is node number): 2.5268
+SD tree (bitstring) size in megabytes: 2.50763
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 2.88701
+Duration (s): 0.397945
+QUEST 200K
+Overall dataset length: 3565014
+Average sequence length: 17.8251
+SD_CPT
+Trie node number: 3241114
+Sigma: 917
+Sequnce Number: 200000
+Total CPT SD size in megabytes: 9.90484
+-----------------------------------
+II size in megabytes (bv length is node number): 4.93734
+SD tree (bitstring) size in megabytes: 4.9675
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 8.6703
+Duration (s): 0.933876
+QUEST 400K
+Overall dataset length: 7129393
+Average sequence length: 17.8235
+SD_CPT
+Trie node number: 6421930
+Sigma: 917
+Sequnce Number: 400000
+Total CPT SD size in megabytes: 19.6005
+-----------------------------------
+II size in megabytes (bv length is node number): 9.75677
+SD tree (bitstring) size in megabytes: 9.84377
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 32.8544
+Duration (s): 2.45975
+QUEST 800K
+Overall dataset length: 14261856
+Average sequence length: 17.8273
+SD_CPT
+Trie node number: 12718827
+Sigma: 917
+Sequnce Number: 800000
+Total CPT SD size in megabytes: 39.1509
+-----------------------------------
+II size in megabytes (bv length is node number): 19.6409
+SD tree (bitstring) size in megabytes: 19.5099
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 133.116
+Duration (s): 9.40901
+QUEST 1.6KK
+Overall dataset length: 28525176
+Average sequence length: 17.8282
+SD_CPT
+Trie node number: 25176789
+Sigma: 917
+Sequnce Number: 1600000
+Total CPT SD size in megabytes: 78.856
+-----------------------------------
+II size in megabytes (bv length is node number): 40.1958
+SD tree (bitstring) size in megabytes: 38.6602
+LT size in megabytes: 0, LT is now contained in II
+Train (s): 536.35
+Duration (s): 35.7414

@@ -1,0 +1,51 @@
+Query length: 3
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT+
+Trie node number: 856362
+(PathCollpase) Nodes: 114384
+Sigma: 916
+Sequnce Number: 100000
+Endoder size in MB: 22.4957
+Total CPT RAW size in megabytes: 39.3394
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 4.57536
+LT size in megabytes: 0.800008
+Train (s): 161.556
+Endoder size in MB: 22.4957
+Duration (s): 0.330656
+Query length: 6
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT+
+Trie node number: 856362
+(PathCollpase) Nodes: 114384
+Sigma: 916
+Sequnce Number: 100000
+Endoder size in MB: 22.4957
+Total CPT RAW size in megabytes: 39.3394
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 4.57536
+LT size in megabytes: 0.800008
+Train (s): 163.347
+Endoder size in MB: 22.4957
+Duration (s): 0.240132
+Query length: 12
+Overall dataset length: 1783405
+Average sequence length: 17.834
+CPT+
+Trie node number: 856362
+(PathCollpase) Nodes: 114384
+Sigma: 916
+Sequnce Number: 100000
+Endoder size in MB: 22.4957
+Total CPT RAW size in megabytes: 39.3394
+-----------------------------------
+II size in megabytes: 11.4683
+Trie size in megabytes: 4.57536
+LT size in megabytes: 0.800008
+Train (s): 160.651
+Endoder size in MB: 22.4957
+Duration (s): 0.251453
