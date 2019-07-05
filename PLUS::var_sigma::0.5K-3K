@@ -1,0 +1,102 @@
+QUEST 0.5_Sigma
+Overall dataset length: 4761705
+Average sequence length: 8.39011
+CPT+
+Trie node number: 1598610
+(PathCollpase) Nodes: 547460
+Sigma: 474
+Sequnce Number: 567538
+Endoder size in MB: 49.4567
+Total CPT RAW size in megabytes: 109.53
+-----------------------------------
+II size in megabytes: 33.6351
+Trie size in megabytes: 21.8984
+LT size in megabytes: 4.54031
+Train (s): 1566.79
+Endoder size in MB: 49.4567
+Duration (s): 1.1841
+QUEST 1_Sigma
+Overall dataset length: 4766822
+Average sequence length: 8.39763
+CPT+
+Trie node number: 1738989
+(PathCollpase) Nodes: 545831
+Sigma: 917
+Sequnce Number: 567639
+Endoder size in MB: 48.8076
+Total CPT RAW size in megabytes: 140.267
+-----------------------------------
+II size in megabytes: 65.085
+Trie size in megabytes: 21.8332
+LT size in megabytes: 4.54112
+Train (s): 1660.87
+Endoder size in MB: 48.8076
+Duration (s): 1.1791
+QUEST 1.5_Sigma
+Overall dataset length: 4765510
+Average sequence length: 8.39276
+CPT+
+Trie node number: 1815239
+(PathCollpase) Nodes: 536718
+Sigma: 1307
+Sequnce Number: 567812
+Endoder size in MB: 50.0425
+Total CPT RAW size in megabytes: 168.851
+-----------------------------------
+II size in megabytes: 92.797
+Trie size in megabytes: 21.4687
+LT size in megabytes: 4.5425
+Train (s): 2483.03
+Endoder size in MB: 50.0425
+Duration (s): 1.22388
+QUEST 2_Sigma
+Overall dataset length: 4761937
+Average sequence length: 8.38967
+CPT+
+Trie node number: 1878346
+(PathCollpase) Nodes: 530306
+Sigma: 1705
+Sequnce Number: 567595
+Endoder size in MB: 50.4075
+Total CPT RAW size in megabytes: 197.161
+-----------------------------------
+II size in megabytes: 121
+Trie size in megabytes: 21.2122
+LT size in megabytes: 4.54077
+Train (s): 3158.45
+Endoder size in MB: 50.4075
+Duration (s): 1.28361
+QUEST 2.5_Sigma
+Overall dataset length: 4768081
+Average sequence length: 8.39826
+CPT+
+Trie node number: 1928358
+(PathCollpase) Nodes: 523957
+Sigma: 2017
+Sequnce Number: 567746
+Endoder size in MB: 50.36
+Total CPT RAW size in megabytes: 219.051
+-----------------------------------
+II size in megabytes: 143.191
+Trie size in megabytes: 20.9583
+LT size in megabytes: 4.54198
+Train (s): 2834.51
+Endoder size in MB: 50.36
+Duration (s): 1.30987
+QUEST 3_Sigma
+Overall dataset length: 4767858
+Average sequence length: 8.39429
+CPT+
+Trie node number: 1968867
+(PathCollpase) Nodes: 521575
+Sigma: 2325
+Sequnce Number: 567988
+Endoder size in MB: 49.9864
+Total CPT RAW size in megabytes: 240.506
+-----------------------------------
+II size in megabytes: 165.112
+Trie size in megabytes: 20.863
+LT size in megabytes: 4.54391
+Train (s): 2536.2
+Endoder size in MB: 49.9864
+Duration (s): 1.38421
