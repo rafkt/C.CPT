@@ -1,2 +1,2 @@
-# C.CPT
+# sCPT
 compact implementation of CPT
